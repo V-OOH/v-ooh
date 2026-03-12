@@ -10,9 +10,10 @@ CREATE TABLE empresa (
     razaoSocial VARCHAR(100),
     token CHAR(64),
     email VARCHAR(100),
-    senha VARCHAR(100),
+    cep CHAR(8),
+    numero VARCHAR(10),
     contato VARCHAR(20)
-)auto_increment=1000;
+)  AUTO_INCREMENT=1000;
 
 -- User
 CREATE TABLE usuario (
@@ -41,7 +42,7 @@ CREATE TABLE componente (
     idComponente INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(50),
     descricao VARCHAR(100),
-    limite INT -- add limite dinamico
+    medida varchar(50)
 );
 
 -- relação maquina x comp - usando a dica do brandao
@@ -49,6 +50,7 @@ CREATE TABLE maquina_componente (
     id INT AUTO_INCREMENT PRIMARY KEY,
     fkMaquina INT,
     fkComponente INT,
+    limite DOUBLE,
     FOREIGN KEY (fkMaquina) 
 		REFERENCES maquina(idMaquina),
     FOREIGN KEY (fkComponente) 
@@ -57,7 +59,7 @@ CREATE TABLE maquina_componente (
 
 
 
-INSERT INTO componente (nome, descricao, limite) VALUES
-('CPU', 'Uso do processador'),
-('RAM', 'Uso da memória RAM'),
-('DISCO', 'Uso do disco');
+INSERT INTO componente (nome, medida, descricao) VALUES
+('CPU', '%', 'Uso do processador'),
+('RAM', '%', 'Uso da memória RAM'),
+('DISCO', '%', 'Uso do disco');
