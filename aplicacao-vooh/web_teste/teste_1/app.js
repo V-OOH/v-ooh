@@ -25,22 +25,18 @@ app.use("/usuarios", usuarioRouter);
 app.use("/empresa", empresaRouter);
 
 app.listen(PORTA_APP, function () {
- console.log(
-    
-    `
-        '     ___      ___         ________  ________  ___  ___     
-        '    |\  \    /  /|       |\   __  \|\   __  \|\  \|\  \    
-        '    \ \  \  /  / /       \ \  \|\  \ \  \|\  \ \  \\\  \   
-        '     \ \  \/  / /         \ \  \\\  \ \  \\\  \ \   __  \  
-        '      \ \    / /           \ \  \\\  \ \  \\\  \ \  \ \  \ 
-        '       \ \__/ /             \ \_______\ \_______\ \__\ \__\
-        '        \|__|/               \|_______|\|_______|\|__|\|__|
-        '                                                           
-        '                                                           
-        '                                                           
-        http://${HOST_APP}:${PORTA_APP} :. \n\n
-        Você está rodando sua aplicação em ambiente de ${process.env.AMBIENTE_PROCESSO} \n\n
-    `
-
-)
+ console.log(`
+                '     ___      ___         ________  ________  ___  ___     
+                '    |\  \    /  /|       |\   __  \|\   __  \|\  \|\  \    
+                '    \ \  \  /  / /       \ \  \|\  \ \  \|\  \ \  \\\  \   
+                '     \ \  \/  / /         \ \  \\\  \ \  \\\  \ \   __  \  
+                '      \ \    / /           \ \  \\\  \ \  \\\  \ \  \ \  \ 
+                '       \ \__/ /             \ \_______\ \_______\ \__\ \__\
+                '        \|__|/               \|_______|\|_______|\|__|\|__|
+                '                                                           
+                '                                                           
+                '                                                           
+                http://${HOST_APP}:${PORTA_APP} :. \n\n
+                Você está rodando sua aplicação em ambiente de ${process.env.AMBIENTE_PROCESSO} \n\n
+            `)
 });

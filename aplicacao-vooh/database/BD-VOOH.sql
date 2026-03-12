@@ -1,28 +1,26 @@
 CREATE DATABASE VOOH;
 USE VOOH;
 
--- drop database VOOH;
-
 -- empresa
 CREATE TABLE empresa (
     idEmpresa INT AUTO_INCREMENT PRIMARY KEY,
-    cnpj VARCHAR(18),
-    razaoSocial VARCHAR(100),
-    token CHAR(64),
-    email VARCHAR(100),
-    cep CHAR(8),
-    numero VARCHAR(10),
-    contato VARCHAR(20)
+    cnpj VARCHAR(18) NOT NULL,
+    razaoSocial VARCHAR(100) NOT NULL,
+    token CHAR(64) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    cep CHAR(8) NOT NULL,
+    numero VARCHAR(10) NOT NULL,
+    contato VARCHAR(20) NOT NULL
 )  AUTO_INCREMENT=1000;
 
 -- User
 CREATE TABLE usuario (
     idUsuario INT AUTO_INCREMENT PRIMARY KEY,
-    fkEmpresa INT,
-    nome VARCHAR(100),
-    cpf VARCHAR(14),
-    email VARCHAR(100),
-    senha VARCHAR(100),
+    fkEmpresa INT NOT NULL,
+    nome VARCHAR(100) NOT NULL,
+    cpf VARCHAR(14) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    senha VARCHAR(100) NOT NULL,
     CONSTRAINT FK_empresa
 		FOREIGN KEY (fkEmpresa) 
 			REFERENCES empresa(idEmpresa)
@@ -31,8 +29,8 @@ CREATE TABLE usuario (
 -- mauina
 CREATE TABLE maquina (
     idMaquina INT AUTO_INCREMENT PRIMARY KEY,
-    fkEmpresa INT,
-    nomeMaquina VARCHAR(100),
+    fkEmpresa INT NOT NULL,
+    nomeMaquina VARCHAR(100) NOT NULL,
     FOREIGN KEY (fkEmpresa) 
 		REFERENCES empresa(idEmpresa)
 );
@@ -40,21 +38,21 @@ CREATE TABLE maquina (
 -- componentes q podem ser cadastrados dps
 CREATE TABLE componente (
     idComponente INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(50),
-    descricao VARCHAR(100),
-    medida varchar(50)
+    nome VARCHAR(50) NOT NULL,
+    descricao VARCHAR(100) NOT NULL,
+    medida VARCHAR(50)NOT NULL
 );
 
 -- relação maquina x comp - usando a dica do brandao
 CREATE TABLE maquina_componente (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    fkMaquina INT,
-    fkComponente INT,
-    limite DOUBLE,
+    fkMaquina INT NOT NULL,
+    fkComponente INT NOT NULL,
+    limite DOUBLE NOT NULL,
     FOREIGN KEY (fkMaquina) 
 		REFERENCES maquina(idMaquina),
     FOREIGN KEY (fkComponente) 
-		REFERENCES componente(idComponente)
+		REFERENCES componente(idComponente),
+	PRIMARY KEY (fkMaquina, fkComponente)
 );
 
 
