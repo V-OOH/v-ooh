@@ -11,7 +11,7 @@
 
 </head>
 
-<body>
+<body id="body_html" onload="verificarSessao()" style="display: none;">
     <nav class="navbar">
         <div class="container">
             <a class="navbar-logo" href="./homeDashboard.html">
@@ -26,9 +26,9 @@
                     <li class="nav-item"><a class="nav-link" href="homeDashboard.html">Empresa</a></li>
                 </ul>
             </div>
-            <a class="btn-home" href="./login.html">
+            <a class="btn-home" onclick="limparStorage()" href="./login.html">
                 <img src="assets/img/icon_perfil.png" alt="">
-                <p>Perfil</p>
+                <p>Sair</p>
             </a>
         </div>
         <ul class="cont-links-mobile">
@@ -69,6 +69,18 @@
 </body>
 <script>
 
+    function verificarSessao() {
+        if (!sessionStorage.EMAIL_USUARIO) {
+            alert("Permissão negada!")
+            window.location = "login.html"
+        } else{
+            body_html.style.display = "block"
+        }
+    }
+
+    function limparStorage() {
+        sessionStorage.EMAIL_USUARIO = null
+    }
     function montarGraficoPizza() {
         var percentual_picos = 25
         var total = 100 - percentual_picos

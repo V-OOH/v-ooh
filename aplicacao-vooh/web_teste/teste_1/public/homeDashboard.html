@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="assets/style/styleHomeDashboard.css">
 </head>
 
-<body id="body_html">
+<body id="body_html" style="display: none;" onload="verificarSessao()">
     <div class="cont-pop-up" id="id_cont_pop_up">
         <div class="pop-up" id="pop_up">
         </div>
@@ -28,9 +28,9 @@
                     <li class="nav-item"><a class="nav-link" href="homeDashboard.html">Empresa</a></li>
                 </ul>
             </div>
-            <a class="btn-home" href="./login.html">
+            <a class="btn-home" onclick="limparStorage()" href="./login.html">
                 <img src="assets/img/icon_perfil.png" alt="">
-                <p>Perfil</p>
+                <p>Sair</p>
             </a>
         </div>
         <ul class="cont-links-mobile">
@@ -62,6 +62,18 @@
 </body>
 
 <script>
+
+    function verificarSessao() {
+        if (!sessionStorage.EMAIL_USUARIO) {
+            alert("Permissão negada!")
+            window.location = "login.html"
+        } else {
+            body_html.style.display = "block"
+        }
+    }
+    function limparStorage() {
+        sessionStorage.EMAIL_USUARIO = null
+    }
     async function ativarPopUp(tipo_pop_up) {
         pop_up.innerHTML = ""
         if (tipo_pop_up == "Maquina") {
