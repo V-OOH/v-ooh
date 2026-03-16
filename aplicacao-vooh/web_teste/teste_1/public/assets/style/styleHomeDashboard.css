@@ -150,6 +150,7 @@ input::placeholder {
     height: 100%;
     display: flex;
     justify-content: space-around;
+    cursor: pointer;
     align-items: center;
     border-bottom: 1px solid #bbbbbb;
 }
@@ -162,6 +163,7 @@ input::placeholder {
     display: none;
 }
 
+
 .cont-links {
     margin: 0;
     padding: 0;
@@ -173,6 +175,7 @@ input::placeholder {
 
 .nav-link {
     color: black;
+    cursor: pointer;
     text-decoration: none;
 }
 
@@ -206,11 +209,16 @@ input::placeholder {
 }
 
 .line-cards {
+    font-weight: 200;
     width: 70%;
     height: 40%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    transition: ease-in-out background-color 0.3s;
+}
+.line-cards :hover{
+    background-color: #dddddd;
 }
 
 .card-cadastrar {
@@ -220,11 +228,13 @@ input::placeholder {
     align-items: center;
     box-shadow: 0 0 15px #00000050;
     width: 25vw;
+    cursor: pointer;
     height: 100%;
     border-radius: 30px;
     text-align: center;
-
+    
 }
+
 
 .card-dashboard {
     text-align: center;
@@ -236,6 +246,10 @@ input::placeholder {
     width: 70%;
     height: 50%;
     border-radius: 30px;
+    transition: ease-in-out background-color 0.3s;
+}
+.card-dashboard:hover{
+    background-color: #dddddd;
 }
 
 @media (max-width: 1400px) {
