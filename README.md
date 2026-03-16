@@ -61,7 +61,7 @@ npm start
 
 ## 👨‍💻 Autores
 
-### Erick Vieira
+### Erick Vieiro
 - **📘 SPTech School**
 - **🔗 GitHub:** https://github.com/ErickSPT
 
