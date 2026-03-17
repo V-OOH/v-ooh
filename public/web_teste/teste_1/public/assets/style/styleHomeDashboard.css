@@ -1,0 +1,316 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+body {
+    font-family: 'Montserrat', 'Courier New', Courier, monospace;
+    text-decoration: none;
+    overflow-x: hidden;
+    overflow-y: auto;
+    margin: 0;
+}
+
+.cont-pop-up {
+    position: fixed;
+    z-index: 10001;
+    width: 100%;
+    height: 100%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background-color: #00000025;
+}
+
+.pop-up {
+    width: 50%;
+    height: 70%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 30px;
+}
+
+.cont-title {
+    width: 80%;
+    margin: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.cont-title h2 {
+    width: 90%;
+    text-align: center;
+}
+
+.cont-title #btn_voltar {
+    width: 35px;
+    font-weight: bolder;
+    height: 35px;
+    background: none;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 0 2.5px #00000050;
+}
+
+.pop-up .btn-home {
+    width: 50%;
+    margin: 30px;
+}
+
+.btn-home {
+    width: 75%;
+    height: 5vh;
+    background-color: #6b3cff;
+    color: #fff;
+    border: none;
+    border-radius: 40px;
+}
+
+.text-desc {
+    width: 80%;
+    margin: 20px;
+}
+
+.cont-input {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+}
+
+.cont-checkboxes {
+    width: 80%;
+    height: 30vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin: 20px;
+    gap: 2.5vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+.cont-check {
+    width: 100%;
+    height: 10vh;
+    margin: 2.5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.cont-check label {
+    width: 60%;
+}
+
+.cont-check label .important {
+    color: #ff6600;
+}
+
+.cont-check .check {
+    width: 10%;
+}
+input::placeholder {
+    color: #1d1d1d;
+}
+
+.cont-check .input {
+    width: 10%;
+    height: 100%;
+    border-radius: 20px;
+    border: none;
+    color: #1d1d1d;
+    background-color: #CDCDCD;
+}
+
+.input {
+    width: 100%;
+    height: 5vh;
+    border: none;
+    border-radius: 20px;
+    background-color: #CDCDCD;
+}
+
+.navbar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: 0 0 15px #00000050;
+    height: 12.5vh;
+    width: 100%;
+    background-color: white;
+    align-items: center;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+
+}
+
+.navbar .container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+    cursor: pointer;
+    align-items: center;
+    border-bottom: 1px solid #bbbbbb;
+}
+
+.navbar-logo {
+    border: none;
+}
+
+.cont-links-mobile {
+    display: none;
+}
+
+
+.cont-links {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    width: 30vw;
+    justify-content: space-between;
+    list-style: none;
+}
+
+.nav-link {
+    color: black;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.navbar .container .btn-home {
+    background: #6b3cff;
+    border-color: #6b3cff;
+    filter: brightness(.95);
+    text-decoration: none;
+    color: white;
+    border-radius: 10px;
+    border: none;
+    height: 5vh;
+    width: 7.5vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-home p {
+    margin: 0;
+}
+
+.cont-cards {
+    width: 100%;
+    height: 90vh;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    margin: 1vh;
+}
+
+.line-cards {
+    font-weight: 200;
+    width: 70%;
+    height: 40%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: ease-in-out background-color 0.3s;
+}
+.line-cards :hover{
+    background-color: #dddddd;
+}
+
+.card-cadastrar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    box-shadow: 0 0 15px #00000050;
+    width: 25vw;
+    cursor: pointer;
+    height: 100%;
+    border-radius: 30px;
+    text-align: center;
+    
+}
+
+
+.card-dashboard {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    box-shadow: 0 0 15px #00000050;
+    width: 70%;
+    height: 50%;
+    border-radius: 30px;
+    transition: ease-in-out background-color 0.3s;
+}
+.card-dashboard:hover{
+    background-color: #dddddd;
+}
+
+@media (max-width: 1400px) {
+    .cont-pop-up .pop-up {
+        width: 75%;
+        height: 70%;
+    }
+
+}
+
+@media (max-width: 1024px) {
+    .navbar-logo {
+        order: 2;
+    }
+
+    .cont-links-mobile {
+        margin: 10px;
+        padding: 0;
+        display: flex;
+        width: 75%;
+        justify-content: space-between;
+        list-style: none;
+    }
+
+    .navbar-links {
+        display: none;
+    }
+
+    .menu-btn {
+        display: block;
+    }
+
+    .cont-links {
+        order: 1;
+    }
+
+    .btn-home {
+
+        height: 40px;
+        width: 40px;
+        order: 3;
+    }
+
+    .btn-home p {
+        display: none;
+    }
+
+    .line-cards {
+        flex-direction: column;
+        height: 100vh;
+        width: auto;
+        margin: 2.5vh;
+    }
+
+    .card-cadastrar {
+        width: 75vw;
+        height: 30vh;
+    }
+
+    .card-dashboard {
+        width: 75vw;
+        height: 35vh;
+    }
+}

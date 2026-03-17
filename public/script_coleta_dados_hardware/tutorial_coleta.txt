@@ -1,0 +1,39 @@
+Como configurar o script de coleta e leitura de dados na EC2?
+
+Após a criação da EC2 e acessá-la via SSH, siga os seguinte passos
+
+1° Atualizar o sistema
+    sudo apt update && sudo apt upgrade -y
+
+
+2° Verificar o Python
+    python3 --version
+
+
+3° Instalar o PIP
+    sudo apt install python3-pip python3-venv -y 
+
+
+4° Criar e entrar no diretório
+    mkdir arquivo_python 
+    cd arquivo_python
+    *Recomendável criar um diretório para realizar a coleta de dados em CSV
+
+4° Criar o arquivo
+    nano coleta.py
+    nano leitura.py
+    *O "nano" cria o arquivo onde você poderá colocar o seu código, já o comando "scp -i myssh.pem main.py ubuntu@44.203.196.167:~/script-python", copia o arquivo do script e o coloca na EC2 configurada. Lembre-se de mudar o nome da chave .pem e do arquivo do scpript.py
+
+
+5° Instalar dependências
+    sudo apt install python3-psutil
+    *O sudo, é apenas para caso o usuário não seja o usuário root
+
+
+6°Executar o programa
+    python3 coleta.py
+    python3 leitura.py
+    *Caso queira que ambos os scripts funcionem simultaneamente, use o seguinte comando: python3 coleta.py & python3 leitura.py
+
+
+

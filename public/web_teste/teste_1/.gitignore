@@ -1,0 +1,14 @@
+# A linha abaixo determina que o diretório node_modules não será enviado ao repositório remoto
+.env
+
+.env.dev
+
+env
+
+env.dev
+
+node_modules
+
+package-lock.json
+
+.github

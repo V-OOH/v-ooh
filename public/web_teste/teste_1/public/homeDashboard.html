@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="./assets/img/logo.png" />
+    <title>V-OOH: Home Dashboard</title>
+    <link rel="stylesheet" href="assets/style/styleHomeDashboard.css">
+</head>
+
+<body id="body_html" style="display: none;" onload="verificarSessao()">
+    <div class="cont-pop-up" id="id_cont_pop_up">
+        <div class="pop-up" id="pop_up">
+        </div>
+    </div>
+    <nav class="navbar">
+        <div class="container">
+            <a class="navbar-logo" href="./homeDashboard.html">
+                <span class="logo" aria-hidden="true">
+                    <img src="./assets/img/logo.png" style="max-width: 4rem; height: 36px" />
+                </span>
+            </a>
+            <div class="navbar-links" id="nav">
+                <ul class="cont-links">
+                    <li class="nav-item"><a class="nav-link" href="homeDashboard.html">Início</a></li>
+                    <li class="nav-item"><a class="nav-link" href="homeDashboard.html">Máquinas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="homeDashboard.html">Empresa</a></li>
+                </ul>
+            </div>
+            <a class="btn-home" onclick="limparStorage()" href="./login.html">
+                <img src="assets/img/icon_perfil.png" alt="">
+                <p>Sair</p>
+            </a>
+        </div>
+        <ul class="cont-links-mobile">
+            <li class="nav-item"><a class="nav-link" href="homeDashboard.html">Início</a></li>
+            <li class="nav-item"><a class="nav-link" href="homeDashboard.html">Máquinas</a></li>
+            <li class="nav-item"><a class="nav-link" href="homeDashboard.html">Empresa</a></li>
+        </ul>
+    </nav>
+
+    <main class="cont-cards">
+        <div class="line-cards">
+            <div onclick="ativarPopUp(`Maquina`)" class="card-cadastrar">
+                <h2>Cadastrar maquina</h2>
+                <img src="assets/img/icon-dooh.png" alt="">
+            </div>
+            <div onclick="ativarPopUp(`Componente`)" class="card-cadastrar">
+                <h2>Cadastrar componente</h2>
+                <img src="assets/img/icon-componente.png" alt="">
+            </div>
+        </div>
+
+        <div onclick="window.location = `dashboard.html`" class="card-dashboard">
+            <h2>Dashboard</h2>
+            <img src="assets/img/icon-metrica.png" alt="">
+        </div>
+
+    </main>
+
+</body>
+
+<script>
+
+    function verificarSessao() {
+        if (!sessionStorage.EMAIL_USUARIO) {
+            alert("Permissão negada!")
+            window.location = "login.html"
+        } else {
+            body_html.style.display = "block"
+        }
+    }
+    function limparStorage() {
+        sessionStorage.EMAIL_USUARIO = null
+    }
+    async function ativarPopUp(tipo_pop_up) {
+        pop_up.innerHTML = ""
+        if (tipo_pop_up == "Maquina") {
+            buscarComponentes()
+            pop_up.innerHTML = `
+                <div class="cont-title">
+                    <h2>Cadastrar máquina</h2>
+                    <button onclick="desativarPopUp()" id="btn_voltar">&lt;</button>
+                </div>
+                <div class="cont-input">
+                    <label for="input_nome_maquina">Nome da máquina</label>
+                    <input type="text" class="input" id="input_nome_maquina" placeholder="Insira o nome da máquina: ">
+                </div>
+                <p class="text-desc">Componentes</p>
+                
+                <div class="cont-checkboxes" id="id_cont_checkboxes">
+                </div>
+                <button class="btn-home" href="">Cadastrar</button>
+            `
+        } else {
+            pop_up.innerHTML = `
+                <div class="cont-title">
+                    <h2>Cadastrar componente</h2>
+                    <button onclick="desativarPopUp()" id="btn_voltar">&lt;</button>
+                </div>
+                <div class="cont-input">
+                    <label for="input_nome_componente">Nome do componente</label>
+                    <input type="text" class="input" id="input_nome_componente" placeholder="Insira o nome do componente: ">
+                </div>
+                <div class="cont-input">
+                    <label for="input_descricao_componente">Descrição do componente (O que coletar)</label>
+                    <input type="text" class="input" id="input_descricao_componente"
+                        placeholder="Insira a descrição do componente: ">
+                </div>
+                <div class="cont-input">
+                    <label for="input_unidade_medida">Unidade de medida</label>
+                    <input type="text" class="input" id="input_unidade_medida" placeholder="Insira a unidade de medida: ">
+                </div>
+                <button class="btn-home" onclick="cadastrarComponente()">Cadastrar</button>
+
+            `
+        }
+        id_cont_pop_up.style.display = "flex"
+    }
+    function desativarPopUp() {
+        body_html.style.overflowy = "auto"
+        id_cont_pop_up.style.display = "none"
+    }
+
+    async function buscarComponentes() {
+        var requisicaoBuscaComponentes = await fetch(`/componente/buscar`)
+        console.log(requisicaoBuscaComponentes);
+
+        if (requisicaoBuscaComponentes.status == 200) {
+            var requisicaoJson = await requisicaoBuscaComponentes.json()
+            if (requisicaoJson.length > 1) {
+                for (var i = 0; i < requisicaoJson.length; i++) {
+                    var componenteAtual = requisicaoJson[i];
+                    id_cont_checkboxes.innerHTML += `
+                    <div class="cont-check">
+                        <label for="limite_${componenteAtual.nome}">${componenteAtual.nome} - ${componenteAtual.descricao} (${componenteAtual.medida})</label>
+                        <input type="checkbox" name="check_${componenteAtual.nome}" class="check" id="">
+                        <input type="text" placeholder="Limite:" class="input" id="limite_${componenteAtual.nome}">
+                        </div>
+                        `
+                }
+            } else {
+                id_cont_checkboxes.innerHTML = `
+                    <div class="cont-check">
+                        <label for="limite_cpu">${requisicaoJson.nome} - ${requisicaoJson.descricao} (${requisicaoJson.unidadeMedida})</label>
+                        <input type="checkbox" name="check_${requisicaoJson.nome}" class="check" id="">
+                        <input type="text" placeholder="Limite:" class="input" id="limite_${requisicaoJson.nome}">
+                    </div>
+                `
+            }
+        } else {
+            alert("Erro aop buscar componentes!")
+        }
+
+
+    }
+
+    async function cadastrarComponente() {
+        var nomeVar = input_nome_componente.value
+        var descricaoVar = input_descricao_componente.value
+        var unidadeMedidaVar = input_unidade_medida.value
+
+        if (nomeVar == "" ||
+            descricaoVar == "" ||
+            unidadeMedidaVar == ""
+        ) {
+            alert("Erro ao cadastrar componente")
+        } else {
+            const requisicaoCadastro = await fetch("/componente/cadastrar", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    nomeServer: nomeVar,
+                    descricaoServer: descricaoVar,
+                    unidadeMedidaServer: unidadeMedidaVar
+                }),
+            })
+
+            alert(requisicaoCadastro)
+            if (requisicaoCadastro.status == 200) {
+                var respostaJson = await requisicaoCadastro.json()
+                alert("Componente cadastrado!")
+                desativarPopUp()
+            } else {
+                alert("Erro ao cadastrar componente")
+            }
+        }
+    }
+
+</script>
+
+</html>

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="./assets/img/logo.png" />
+    <title>V-OOH: Dashboard</title>
+    <link rel="stylesheet" href="assets/style/styleDashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body id="body_html" style="display: flex;">
+    <nav class="navbar">
+        <div class="container">
+            <a class="navbar-logo" href="./homeDashboard.html">
+                <span class="logo" aria-hidden="true">
+                    <img src="./assets/img/logo.png" style="max-width: 4rem; height: 36px" />
+                </span>
+            </a>
+            <div class="navbar-links" id="nav">
+                <ul class="cont-links">
+                    <li class="nav-item"><a class="nav-link" href="homeDashboard.html">Início</a></li>
+                    <li class="nav-item"><a class="nav-link" href="homeDashboard.html">Máquinas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="homeDashboard.html">Empresa</a></li>
+                </ul>
+            </div>
+            <a class="btn-home" onclick="limparStorage()" href="./login.html">
+                <img src="assets/img/icon_perfil.png" alt="">
+                <p>Sair</p>
+            </a>
+        </div>
+        <ul class="cont-links-mobile">
+            <li class="nav-item"><a class="nav-link" href="homeDashboard.html">Início</a></li>
+            <li class="nav-item"><a class="nav-link" href="homeDashboard.html">Máquinas</a></li>
+            <li class="nav-item"><a class="nav-link" href="homeDashboard.html">Empresa</a></li>
+        </ul>
+    </nav>
+
+    <main class="dashboard" id="id_dashboard">
+        <div class="container">
+            <h1>Dashboard</h1>
+            <div class="cont-filtros">
+                <select name="" id="" class="filtro-maquina">
+                    <option value="#" selected disabled>Filtrar por máquina</option>
+                </select>
+                <select name="" id="" class="filtro-componente">
+                    <option value="#" selected disabled>Filtrar por componente</option>
+                </select>
+            </div>
+            
+            <div class="line-graficos ">
+                <div class="grafico-place">
+                    
+                    <canvas id="myChart"></canvas>
+                </div>
+                
+            </div>
+            <div class="cont-graficos">
+                <div class="line-graficos">
+                    <div class="grafico" id="id_grafico_pizza_pico_componente">
+                        <p>Máquinas com pico de <span id="txt_componente">CPU</span></p>
+                        <canvas id="grafico_de_pizza_componente"></canvas>
+                    </div>
+                    <div class="grafico" id="id_grafico_medidor_qte_chamados">
+                        <p>Número de chamados</p>
+                        <canvas id="grafico_de_medidor_componente"></canvas>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+<script>
+const ctx = document.getElementById("myChart");
+
+let current = new Date();
+let hora = current.getHours();
+let minuto = current.getMinutes();
+let segundo = current.getSeconds();
+let horario = `${hora}:${minuto}:${segundo}`;
+  const config = {
+    type: "line",
+    data: {
+      labels: [
+        horario,
+        horario,
+        horario,
+        horario,
+        horario,
+        horario,
+        horario,
+        horario,
+        horario,
+        horario,
+        horario,
+        horario,
+      ],
+      datasets: [
+        {
+          label: "Limite",
+          data: [90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90],
+          borderColor: "red",
+          backgroundColor: "red",
+          pointRadius: 0,
+          borderWidth: 1,
+        },
+        {
+          label: "CPU (%)",
+          data: [66, 66, 66, 66, 66, 66, 66, 66, 66,66, 66, 66, 66],
+          borderColor: "green",
+          backgroundColor: "green",
+          pointRadius: 0,
+          borderWidth: 2,
+          tension: 0.5
+        },
+        {
+          label: "RAM (%)",
+          data: [66, 66, 66, 66, 66, 66, 66, 66, 66,66, 66, 66, 66],
+          borderColor: "blue",
+          backgroundColor: "blue",
+          pointRadius: 0,
+          borderWidth: 2,
+          tension: 0.5
+        },
+      ],
+    },
+    options: {
+      animation: false,
+      scales: {
+        y: {
+          min: 0,
+          max: 100,
+          ticks: {
+            stepSize: 10,
+          },
+        },
+      },
+    },
+  };
+
+  let myChart = new Chart(document.getElementById("myChart"), config);
+
+  let value = 80;
+  add_liniar()
+  
+
+
+  function add_liniar(){
+    current = new Date();
+    hora = current.getHours();
+    minuto = current.getMinutes();
+    segundo = current.getSeconds();
+    horario = `${hora}:${minuto}:${segundo}`;
+    // labels.push(horario);
+    value = ((Math.random()) * 20);
+    myChart.data.labels.shift();
+    myChart.data.labels.push(horario)
+    myChart.data.datasets[1].data.shift();
+    myChart.data.datasets[1].data.push(value);
+    myChart.update();
+
+    value = ((Math.random()) * 50);
+    myChart.data.labels.shift();
+    myChart.data.labels.push(horario)
+    myChart.data.datasets[2].data.shift();
+    myChart.data.datasets[2].data.push(value);
+    myChart.update();
+    setTimeout(add_liniar, 1000);
+  }
+
+    function montarGraficoPizza() {
+        var percentual_picos = 25
+        var total = 100 - percentual_picos
+        const data = {
+            labels: ['Máquinas', 'Total'],
+            datasets: [{
+                data: [percentual_picos, total],
+                backgroundColor: [
+                    '#6b3cff',
+                    '#b3e337',
+                ],
+                borderWidth: 1
+            }]
+        };
+        const config = {
+            type: 'pie',
+            data: data,
+            options: {
+                responsive: true
+            }
+        };
+        new Chart(
+            document.getElementById('grafico_de_pizza_componente'),
+            config
+        );
+    }
+
+    function montarGraficoMedidor() {
+        const data = {
+            labels: ['Chamados', 'Total'],
+            datasets: [{
+                data: [25, 75],
+                backgroundColor: ['#6b3cff', '#E0E0E0'],
+                borderWidth: 0,
+                circumference: 180,
+                rotation: -90,
+                cutout: '80%',
+            }]
+        };
+        const config = {
+            type: 'doughnut',
+            data: data,
+        }
+        const myChart = new Chart(
+            document.getElementById("grafico_de_medidor_componente"),
+            config
+        )
+    }
+    montarGraficoMedidor()
+    montarGraficoPizza()
+
+</script>
+
+</html>
