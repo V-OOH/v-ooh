@@ -1,0 +1,294 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+* {
+  font-family: "Inter";
+}
+
+body {
+  margin: 0;
+  height: max-content;
+  overflow: auto;
+}
+
+.nav-blur {
+  backdrop-filter: saturate(180%) blur(8px);
+  background: rgba(255, 255, 255, .9) !important;
+}
+
+.btn-back {
+  width: 50px;
+  height: 50px;
+  background-color: white;
+  border: none;
+  font-size: x-large;
+  font-weight: bolder;
+  border-radius: 20px;
+}
+
+.container-fluid {
+
+  height: max-content;
+}
+
+.left-side {
+  height: 100%;
+  background-color: #000;
+  width: 50%;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.register-box {
+  width: 100%;
+  height: 90%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.cont_inputs {
+  width: 90%;
+}
+
+.labels-ipt {
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 100;
+  width: 90%;
+}
+
+.input-class {
+  display: block;
+  width: 100%;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  background-color: #1c1c1c;
+  border: none;
+  color: white;
+  border-radius: 30px;
+  padding: 10px;
+}
+
+.input-class:focus {
+  background-color: #1c1c1c;
+  color: white;
+  outline: none;
+  box-shadow: 0 0 0 2px #C6FF33;
+}
+
+
+.btn-register {
+  border-radius: 30px;
+  padding: 12px;
+  width: 90%;
+  margin: 15px;
+  font-weight: 600;
+  border: none;
+}
+
+
+
+.login-text {
+  margin: 0;
+  font-size: 10p;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.login-text a {
+  color: white;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.login-text a:hover {
+  text-decoration: underline;
+}
+
+.right-side {
+  background-image: url("../img/img_background_register_user.jpg");
+  background-size: cover;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  padding: 60px;
+}
+
+.right-side h1 {
+  font-weight: 300;
+  font-size: 5em;
+  line-height: 1.1;
+  text-align: right;
+}
+
+.right-side .bold-text {
+  font-weight: 700;
+}
+
+.number-text {
+  background-color: #000;
+  color: #fff;
+  width: min-content;
+  height: fit-content;
+  padding: 10px;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+}
+.text_card{
+  height: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.second-card {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+.text-circle-secondary {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(5px);
+}
+
+
+.cont-passo-a-passo {
+  display: flex;
+  height: 70%;
+  width: 85%;
+  justify-content: space-evenly;
+  align-items: start;
+  flex-direction: column;
+}
+
+.cont-btn {
+  width: 85%;
+  display: flex;
+  justify-content: start;
+}
+
+.cont-card {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.cards {
+  width: 22.5%;
+  height: 100%;
+
+}
+.cards h5{
+  font-size: 100%;
+}
+
+.pop_up {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.336);
+  z-index: 999;
+  position: absolute;
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.pop_up_conteudo {
+  background-color: white;
+  width: 50%;
+  height: 60%;
+  border-radius: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+#mensagem_token {
+  color: #6b3cff;
+  font-weight: bolder;
+}
+
+#valor_token {
+  width: 85%;
+  word-wrap: break-word;
+  text-align: center;
+  font-size: larger;
+}
+
+.mensagem_guardar {
+  width: 85%;
+  text-align: center;
+}
+
+.cont_btns {
+  width: 85%;
+  height: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.cont_btns a {
+  width: 75%;
+}
+
+.botao_padrao {
+  width: 100%;
+  height: 48px;
+  margin-top: 6px;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.cont_rua_num {
+  display: none;
+  justify-content: space-between;
+}
+
+.input-num {
+  width: 25%;
+}
+
+.input_rua {
+  width: 70%;
+}
+
+#text_erro {
+  color: red;
+  width: 100%;
+  text-align: center;
+  display: none;
+}
+
+#ipt_rua {
+  width: 100%;
+  color: #505050;
+}
+
+#ipt_num {
+  width: 100%;
+}
+
+@media (max-width: 1024px) {
+  .cards h5{
+    font-size: 100%;
+  }
+
+}

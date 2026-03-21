@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+* {
+  font-family: "Inter";
+}
+body {
+  margin: 0;
+  height: 100vh;
+  overflow: hidden;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.btn-back{
+  width: 50px;
+  height: 50px;
+  background-color: white;
+  border: none;
+  font-size: x-large;
+  font-weight: bolder;
+  border-radius: 20px;
+}
+.left-side {
+  background-image: url("../img/img_background_login.jpg");
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: auto;
+  background-position: center;
+  padding: 60px;
+}
+
+.input-class {
+  display: block;
+  width: 100%;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  background-color: #1c1c1c;
+  border: none;
+  color: white;
+  border-radius: 30px;
+  padding: 12px 20px;
+}
+
+.input-class:focus {
+  background-color: #1c1c1c;
+  color: white;
+  outline: none;
+  box-shadow: 0 0 0 2px #6f42c1;
+}
+
+.left-side h1 {
+  font-weight: 300;
+  font-size: 4rem;
+  line-height: 1.1;
+}
+
+.left-side .bold-text {
+  font-weight: 700;
+}
+
+
+.right-side {
+  background-color: #000;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-box {
+  width: 100%;
+  max-width: 380px;
+}
+
+.form-control {
+  background-color: #1c1c1c;
+  border: none;
+  color: white;
+  border-radius: 30px;
+  padding: 12px 20px;
+}
+
+.form-control:focus {
+  background-color: #1c1c1c;
+  color: white;
+  box-shadow: 0 0 0 2px #6f42c1;
+}
+
+.btn-login {
+  border-radius: 30px;
+  padding: 12px; 
+  font-weight: 600;
+  font-size: 1rem;
+
+}
+
+.divider {
+  border-top: 1px solid #444;
+  margin: 20px 0;
+}
+
+.signup-text a {
+  color: white;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.signup-text a:hover {
+  text-decoration: underline;
+}

@@ -1,0 +1,364 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+    --primary: #6b3cff;
+    --primary-soft: rgba(107, 60, 255, 0.12);
+    --accent: #b3e337;
+    --text: #1e1e1e;
+    --muted: #666666;
+    --border: #e6e6e6;
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.10);
+    --radius-lg: 24px;
+    --radius-md: 16px;
+    --navbar-height: 92px;
+    --content-width: 1200px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Montserrat', 'Courier New', Courier, monospace;
+    text-decoration: none;
+    overflow-x: hidden !important;
+    overflow-y: auto;
+    margin: 0;
+    min-height: 100vh;
+    color: var(--text);
+    background: #f7f7fb;
+    padding-top: calc(var(--navbar-height) + 24px);
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+.navbar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: var(--navbar-height);
+    width: 100%;
+    background-color: #ffffff;
+    align-items: center;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    box-shadow: 0 0 15px #00000018;
+}
+
+.navbar .container {
+    width: min(100%, var(--content-width));
+    min-height: var(--navbar-height);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 0 24px;
+    border-bottom: 1px solid var(--border);
+}
+
+.navbar-logo {
+    border: none;
+    flex-shrink: 0;
+}
+
+.navbar-logo img {
+    width: auto;
+    max-width: 4rem;
+    height: 36px;
+    object-fit: contain;
+}
+
+.cont-links-mobile {
+    display: none;
+}
+
+.cont-links {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: clamp(16px, 3vw, 40px);
+    list-style: none;
+}
+
+.nav-link {
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color .2s ease;
+}
+
+.nav-link:hover {
+    color: var(--primary);
+}
+
+.navbar .container .btn-home {
+    background: var(--primary);
+    border-color: var(--primary);
+    filter: brightness(.97);
+    text-decoration: none;
+    color: white;
+    border-radius: 12px;
+    border: none;
+    min-height: 46px;
+    min-width: 120px;
+    padding: 0 16px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.btn-home img {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+}
+
+.btn-home p {
+    margin: 0;
+    white-space: nowrap;
+}
+
+.dashboard {
+    width: 100%;
+    min-height: calc(100vh - var(--navbar-height));
+    padding: 0 20px 32px;
+}
+
+.dashboard .container {
+    width: min(100%, var(--content-width));
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    align-items: stretch;
+}
+
+.dashboard h1 {
+    margin: 0;
+    font-size: clamp(1.8rem, 1.4rem + 1vw, 2.5rem);
+}
+
+.painel-principal {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
+    gap: 24px;
+    align-items: stretch;
+}
+
+.grafico-place,
+.grafico {
+    background: #ffffff;
+    box-shadow: var(--shadow);
+    border-radius: var(--radius-lg);
+}
+
+.grafico-linha-card {
+    padding: 20px;
+    min-height: 380px;
+}
+
+.grafico-place canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.cont-filtros {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    gap: 16px;
+    padding: 24px;
+    background: #ffffff;
+    box-shadow: var(--shadow);
+    border-radius: var(--radius-lg);
+}
+
+.cont-filtros select {
+    width: 100%;
+    min-height: 48px;
+    margin: 0;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    padding: 0 14px;
+    font: inherit;
+    background: #fff;
+}
+
+.cont-graficos {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.line-graficos {
+    display: grid;
+    gap: 24px;
+    width: 100%;
+}
+
+.cards-secundarios {
+    grid-template-columns: repeat(2, minmax(280px, 1fr));
+}
+
+.grafico {
+    min-height: 320px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    text-align: center;
+}
+
+.grafico p {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.grafico canvas {
+    width: 100% !important;
+    max-width: 320px;
+    height: 220px !important;
+}
+
+#txt_componente {
+    color: var(--primary);
+}
+
+@media (max-width: 1024px) {
+    :root {
+        --navbar-height: 84px;
+    }
+
+    .navbar .container {
+        padding: 0 18px;
+    }
+
+    .painel-principal,
+    .cards-secundarios {
+        grid-template-columns: 1fr;
+    }
+
+    .grafico-linha-card {
+        min-height: 340px;
+    }
+
+    .grafico {
+        min-height: 300px;
+    }
+
+    .cont-links-mobile {
+        margin: 10px 0 14px;
+        padding: 0 20px;
+        display: flex;
+        width: min(100%, var(--content-width));
+        justify-content: center;
+        gap: 18px;
+        list-style: none;
+        flex-wrap: wrap;
+    }
+
+    .navbar-links {
+        display: none;
+    }
+
+    .btn-home {
+        min-width: 46px !important;
+        width: 46px;
+        height: 46px;
+        padding: 0 !important;
+    }
+
+    .btn-home p {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        padding-top: 128px;
+    }
+
+    .navbar {
+        justify-content: flex-start;
+    }
+
+    .navbar .container {
+        gap: 12px;
+    }
+
+    .dashboard {
+        padding-inline: 14px;
+    }
+
+    .grafico-linha-card {
+        min-height: 300px;
+        padding: 16px;
+    }
+
+    .cont-filtros,
+    .grafico {
+        padding: 18px;
+        border-radius: 20px;
+    }
+
+    .grafico canvas {
+        height: 200px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding-top: 136px;
+    }
+
+    .navbar .container {
+        padding: 0 14px;
+    }
+
+    .navbar-logo img {
+        height: 32px;
+    }
+
+    .cont-links-mobile {
+        gap: 12px;
+        padding: 0 14px;
+        font-size: 0.92rem;
+    }
+
+    .dashboard h1 {
+        text-align: center;
+    }
+
+    .grafico-linha-card {
+        min-height: 260px;
+    }
+
+    .grafico {
+        min-height: 280px;
+    }
+
+    .grafico p {
+        font-size: 0.95rem;
+    }
+
+    .grafico canvas {
+        height: 180px !important;
+    }
+}

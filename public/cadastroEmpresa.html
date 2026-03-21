@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>V-OOH: Cadastro Empresa</title>
+  <link rel="icon" href="./assets/img/logo.png" />
+  <link rel="stylesheet" href="./assets/style/styleRegisterEnterprise.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+
+<body>
+  <div class="pop_up" id="id_pop_up">
+    <div class="pop_up_conteudo">
+      <img id="imagem_pop_up" src="" alt="">
+      <h3 id="mensagem_token">O seu token é: </h3>
+      <p id="valor_token"></p>
+      <span class="mensagem_guardar">Não se esqueça de guardá-lo. Este token será exibido SOMENTE UMA VEZ!</span>
+      <div class="cont_btns">
+        <a href="login.html"><button class="botao_padrao">Ir para a página de login</button></a>
+        <a href="cadastroUser.html"><button class="botao_padrao">Ir para a página de cadastro do usuário</button></a>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row vh-100">
+      <div class="col-md-7 right-side d-none d-md-flex">
+        <div class="cont-btn">
+          <a href="index.html">
+            <button class="btn-back">&lt;</button>
+          </a>
+        </div>
+        <div class="cont-passo-a-passo">
+          <h3 class="text-start mb-3">Comece <br> conosco!</h3>
+          <div class="cont-card">
+            <div
+              class="d-flex p-3 rounded-4 bg-white text-black justify-content-xl-evenly justify-content-center flex-column cards">
+              <h5 class="number-text bg-black text-white">1</h5>
+              <h5 class="text_card">Cadastrar empresa</h5>
+            </div>
+            <div
+              class="d-flex p-3 rounded-4 justify-content-xl-evenly justify-content-center flex-column second-card cards">
+              <h5 class="  text-circle-secondary number-text">2</h5>
+              <h5 class="text_card">Criar conta com o token</h5>
+            </div>
+            <div
+              class="d-flex p-3 rounded-4 justify-content-xl-evenly justify-content-center flex-column second-card cards">
+              <h5 class=" number-text text-circle-secondary">3</h5>
+              <h5 class="text_card">Configurar máquinas</h5>
+            </div>
+            <div
+              class="d-flex p-3 rounded-4 justify-content-xl-evenly justify-content-center flex-column second-card cards">
+              <h5 class=" number-text text-circle-secondary">4</h5>
+              <h5 class="text_card">Analisar dados na dashboard</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-5  left-side">
+        <div class="register-box">
+          <h4 class="fw-bold text-center">Cadastrar empresa</h4>
+          <p class="text-secondary m-0 text-center">Informe os dados de sua empresa</p>
+          <div class="cont_inputs">
+            <label for="ipt_cnpj" class="labels-ipt">CNPJ:</label>
+            <input type="text" value="11111111111111" id="ipt_cnpj" class="input-class" maxlength="14" minlength="14"
+              placeholder="Ex: 0000000000000" />
+            <label for="ipt_razao_social" class="labels-ipt">Razão social:</label>
+            <input type="text" value="V-OOH Ltda" id="ipt_razao_social" class="input-class"
+              placeholder="Ex: Empresa Ltda" />
+            <label for="ipt_razao_social" class="labels-ipt">Telefone contato:</label>
+            <input type="text" value="11111111111" id="ipt_telefone_contato" maxlength="11" minlength="11"
+              class="input-class" placeholder="Ex: 1112345678" />
+            <label for="ipt_email" class="labels-ipt">E-mail:</label>
+            <input type="text" value="@.com" id="ipt_email" class="input-class" placeholder="Ex: empresa@email.com" />
+            <label for="ipt_cep" class="labels-ipt">CEP:</label>
+            <input type="text" maxlength="8" value="" id="ipt_cep" oninput="buscarEndereco()" class="input-class"
+              placeholder="Ex: 00000000" />
+            <p id="text_erro"></p>
+            <div class="cont_rua_num" id="id_cont_rua_num">
+              <div class="input_rua">
+                <label for="ipt_rua" class="labels-ipt">Rua:</label>
+                <input type="text" value="" id="ipt_rua" disabled class="input-class" placeholder="" />
+              </div>
+              <div class="input-num">
+                <label for="ipt_numero" class="labels-ipt">Nº:</label>
+                <input type="number" value="" id="ipt_numero" required class="input-class" placeholder="Ex: 123" />
+              </div>
+            </div>
+          </div>
+          <button onclick="cadastrar()" class=" btn-register">
+            Cadastrar
+          </button>
+
+          <p class="text-center text-secondary login-text">
+            Já possui conta?
+            <a href="login.html">Entrar</a>
+          </p>
+          <p class="text-center text-secondary login-text">
+            Já cadastrou uma empresa?
+            <a href="cadastroUser.html">Cadastre-se</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    async function buscarEndereco() {
+      ipt_cep.value = ipt_cep.value.replaceAll(/\D/g, '')
+      var cep = ipt_cep.value
+
+      if (cep.length === 8) {
+        try {
+          var resposta = await fetch(`https://viacep.com.br/ws/${cep}/json/`)
+
+          console.log("Resposta via cep: ", resposta);
+          if (!resposta.ok) {
+            throw new Error("Não foi possível encontrar esse cep!");
+          } else {
+            var respostaEmJson = await resposta.json()
+            if (respostaEmJson.logradouro == undefined) {
+              throw new Error("Não foi possível encontrar esse cep!");
+            } else {
+              ipt_rua.value = respostaEmJson.logradouro
+              id_cont_rua_num.style.display = "flex"
+            }
+          }
+        } catch (error) {
+          console.log("Erro: ", error);
+          id_cont_rua_num.style.display = "none"
+          text_erro.innerHTML = "Erro: " + error.message
+          text_erro.style.display = "block"
+        }
+      } else {
+        text_erro.style.display = "none"
+        id_cont_rua_num.style.display = "none"
+      }
+    }
+    function gerarToken() {
+      return fetch("/empresa/token")
+        .then(resposta => resposta.json())
+        .then(function (resposta) {
+          if (!resposta) {
+            console.log("Erro ao gerar token!");
+            return false
+          }
+          var token = resposta.token
+          return token
+        })
+        .catch(function (error) {
+          console.log("Erro ao gerar token!");
+        })
+    }
+
+
+
+    async function cadastrar() {
+      var cnpjVar = ipt_cnpj.value
+      var razaoSocialVar = ipt_razao_social.value
+      var telefoneContatoVar = ipt_telefone_contato.value
+      var emailVar = ipt_email.value;
+      var cepVar = ipt_cep.value;
+      var numeroVar = ipt_numero.value;
+      var tokenVar = await gerarToken()
+
+      valor_token.innerHTML = tokenVar
+
+      if (
+        cnpjVar == "" ||
+        razaoSocialVar == "" ||
+        telefoneContatoVar == "" ||
+        emailVar == "" ||
+        cepVar == "" ||
+        numeroVar == ""
+      ) {
+        alert("Todos campos devem estar preenchidos");
+        return false;
+      } else if (!emailVar.includes("@") || !emailVar.endsWith(".com")) {
+        alert("O email deve incluir '@' e finalizar com '.com'");
+        return false;
+      } else if (cnpjVar.length < 14) {
+        alert("O tamanho do CNPJ deve ter 14 caracteres!");
+        return false;
+      }
+
+      fetch("/empresa/cadastrar", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          cnpjServer: cnpjVar,
+          razaoSocialServer: razaoSocialVar,
+          telefoneContatoServer: telefoneContatoVar,
+          emailServer: emailVar,
+          tokenServer: tokenVar,
+          cepServer: cepVar,
+          numeroServer: numeroVar
+        }),
+      })
+        .then(function (resposta) {
+          console.log(resposta);
+          if (resposta.ok) {
+            id_pop_up.style.display = "flex"
+          } else {
+            throw resposta;
+          }
+        })
+        .catch(function (erro) {
+          console.log(`#ERRO: ${erro.erro}`);
+        });
+
+      return false;
+    }
+  </script>
+</body>
+
+</html>
