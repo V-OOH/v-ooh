@@ -23,7 +23,7 @@ body {
     align-items: center;
     justify-content: space-between;
     background-color: var(--deep-purple);
-    padding: 0 30px;
+    padding: 10px 30px;
 
 
   }
@@ -50,14 +50,16 @@ body {
     justify-content: space-between;
     align-items: center;
     list-style: none;
-    gap: 50px;
+  }
 
+  .nav-item {
+    margin: 0 10px;
   }
 
   .nav-link {
     text-decoration: none;
     color: var(--white);
-    font-size: small;
+    font-size: 15px;
   }
 
   .nav-link:hover {
@@ -69,20 +71,20 @@ body {
     display: flex;
     align-items: center;
     gap: 40px;
-    padding: 0 30px;
+    padding: 10px 30px;
 
   }
 
   .telefone {
     text-decoration: none;
     color: var(--white);
-    font-size: small;
+    font-size: 15px;
   }
 
   .linguagem {
     text-decoration: none;
     color: var(--white);
-    font-size: small;
+    font-size: 15px;
   }
 
   .button-login {
