@@ -210,4 +210,41 @@ body {
     color: var(--purple);
   }
 
+  /*PARCERIAS*/
+  .parcerias{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .parcerias h1{
+    font-size: 50px;
+    padding: 30px 50px;
+  }
+
+  .parcerias-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--lemon);
+    width: 100%;
+  }
+
+  .empresas-parceiras{
+    display: flex;
+    justify-content: center;
+    padding: 10px 40px;
+    gap: 90px;
+  }
+
+  .empresas-parceiras img{
+    width: 15%;
+  }
+
+  .Peso{
+    color: var(--purple);
+  }
+
+
 }
