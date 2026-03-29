@@ -35,9 +35,8 @@ body {
   }
 
   .logo-nav img {
-    height: 5vh;
+    height: 8vh;
     width: auto;
-
   }
 
   .nav {
@@ -60,12 +59,29 @@ body {
     text-decoration: none;
     color: var(--white);
     font-size: 15px;
+    position: relative;
+    padding-bottom: 5px;
+  }
+
+  .nav-link::after {
+    content: "";
+    width: 0%;
+    height: 2px;
+    background-color: var(--purple);
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transition: width 0.3s ease, left 0.3s ease;
+    transform: translateX(-50%);
+  }
+
+  .nav-link:hover::after {
+    width: 100%;
   }
 
   .nav-link:hover {
-    border-bottom: 2px solid var(--purple);
+    color: var(--white);
   }
-
 
   .nav-right {
     display: flex;
@@ -94,10 +110,19 @@ body {
     text-decoration: none;
     color: var(--white);
     background-color: var(--purple);
-    padding: 12px 60px 12px 60px;
+    padding: 12px 60px;
     border-radius: 20px;
     font-weight: bold;
+    transition: all 0.3s ease;
+  }
 
+  .button-login:hover {
+    filter: brightness(1.2);
+    box-shadow: var(--lemon);
+    color: var(--black);
+    transform: translateY(-2px);
+    background-color: var(--lemon);
+    /* mexe o botão 2px para cima */
   }
 
   /*HEADER*/
@@ -106,24 +131,35 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    position: relative;
-    height: 100vh;
-    width: auto;
-    border-radius: 20px;
+    /* min-height: 100vh; */
+    padding: 8vh;
+  }
+
+  .container {
     background-image: url("../img/Fundo.svg");
     background-size: cover;
     background-position: center;
-    margin: 3% 20px
+    height: 80vh;
+    width: 170vh;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
   }
 
   .content {
-    position: relative;
-    text-align: center;
+    margin-top: 10vh;
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
   }
 
   .content h1 {
     color: var(--lemon);
-    font-size: 50px;
+    font-size: 7vh;
   }
 
   .content p {
@@ -143,6 +179,7 @@ body {
 
   .content img {
     margin-top: 10%;
+    margin-bottom: 10vh;
   }
 
   /*Main*/
@@ -151,8 +188,7 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    margin-top: 90px;
-
+    padding: 5vh;
   }
 
   .beneficios-container {
@@ -161,8 +197,9 @@ body {
     align-items: center;
     flex-direction: column;
     background-color: var(--deep-purple);
-    padding: 80px 20px 20px 20px;
-    width: 94%;
+    padding: 8vh;
+    height: 60vh;
+    width: 153vh;
     border-radius: 20px;
   }
 
@@ -175,13 +212,14 @@ body {
 
   .beneficios-header h1 {
     color: var(--lemon);
-    font-size: 40px;
+    font-size: 5vh;
     text-align: center;
   }
 
   .beneficios-header p {
     color: var(--white);
     font-weight: bold;
+    font-size: 3vh;
   }
 
   .beneficios-cards {
@@ -191,8 +229,6 @@ body {
     align-items: stretch;
     width: 100%;
     gap: 2%;
-    margin-top: 50px;
-
   }
 
   .beneficios-info {
@@ -212,65 +248,66 @@ body {
 
   /*PARCERIAS*/
   .parcerias {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  overflow: hidden;
-}
-
-.parcerias h1 {
-  font-size: 50px;
-  padding: 30px 50px;
-}
-
-.parcerias-container {
-  width: 100%;
-  overflow: hidden;
-  position: relative;
-  background-color: var(--lemon);
-}
-
-.empresas-parceiras {
-  display: flex;
-  width: max-content;
-  animation: slideParcerias 50s linear infinite;
-}
-
-.logos {
-  display: flex;
-  align-items: center;
-  gap: 40px;
-  padding: 60px 25px;
-  flex-shrink: 0;
-}
-
-.logo-item {
-  width: 250px;
-  height: 120px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-shrink: 0;
-}
-
-.logo-item img {
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: auto;
-  object-fit: contain;
-  display: block;
-}
-
-@keyframes slideParcerias {
-  from {
-    transform: translateX(0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    overflow: hidden;
   }
-  to {
-    transform: translateX(-50%);
+
+  .parcerias h1 {
+    font-size: 50px;
+    padding: 30px 50px;
   }
-}
+
+  .parcerias-container {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    background-color: var(--lemon);
+  }
+
+  .empresas-parceiras {
+    display: flex;
+    width: max-content;
+    animation: slideParcerias 50s linear infinite;
+  }
+
+  .logos {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    padding: 60px 25px;
+    flex-shrink: 0;
+  }
+
+  .logo-item {
+    width: 250px;
+    height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .logo-item img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    display: block;
+  }
+
+  @keyframes slideParcerias {
+    from {
+      transform: translateX(0);
+    }
+
+    to {
+      transform: translateX(-50%);
+    }
+  }
 
   .Peso {
     color: var(--purple);
@@ -308,6 +345,11 @@ body {
     font-size: 40px;
   }
 
+  .forrester-info span {
+    color: var(--lemon);
+    font-weight: bold;
+  }
+
   .logoForrester {
     display: flex;
     justify-content: center;
@@ -325,11 +367,270 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 50px 40px;
+    padding: 8vh;
+    flex-direction: column;
   }
 
   .diagrama h1 {
-    font-size: 7vh;
+    font-size: 6vh;
   }
 
+  .diagrama img {
+    height: 70vh;
+    width: 160vh;
+    border-radius: 20px;
+  }
+
+  /* CARROSSEL */
+  .container-carrossel {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5vw;
+    background-color: var(--deep-purple);
+  }
+
+  .container-info {
+    padding: 8vh;
+    font-weight: bold;
+    width: 40%;
+  }
+
+  .container-info img {
+    width: auto;
+    height: 4vh;
+  }
+
+  .container-info h1 {
+    color: var(--lemon);
+    font-size: 6vh;
+  }
+
+  .container-info p {
+    color: var(--white);
+    font-size: 3vh;
+  }
+
+  .carrossel-container {
+    max-width: 40vw;
+    position: relative;
+    margin: auto;
+    overflow: hidden;
+  }
+
+  .content-carrossel {
+    padding-top: 12vh;
+    max-width: 40%;
+    position: relative;
+    margin: auto;
+    overflow: hidden;
+  }
+
+  .slides {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    width: 100%;
+  }
+
+  .slide {
+    width: 100%;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .text-slide {
+    background-color: var(--white);
+    box-sizing: border-box;
+    padding: 4vh 2vw;
+    height: 35vh;
+    width: 90vh;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    border-radius: 20px;
+  }
+
+  .text-slide h1 {
+    color: var(--purple);
+    font-size: 4vh;
+    margin-bottom: 2vh;
+    margin-top: 0;
+    font-weight: bold;
+  }
+
+  .text-slide p {
+    font-size: 2.5vh;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .slide .text-slide {
+    width: 100%;
+    display: block;
+  }
+
+  .button {
+    padding-top: 4vh;
+  }
+
+  .button button {
+    top: 100%;
+    transform: translateY(-50%);
+    background-color: transparent;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+  }
+
+  .button img {
+    width: 5vw;
+    padding-top: 4vw;
+  }
+
+  /* VIDEO PITCH */
+
+  .container-pitch {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    margin-bottom: 2vw;
+  }
+
+  .content-pitch {
+    display: flex;
+    width: 90vw;
+    height: 45vw;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: center;
+    box-sizing: border-box;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 10vw;
+    padding-left: 5vw;
+    padding-right: 5vw;
+  }
+
+  .pitch-container {
+    color: var(--white);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .pitch-container h1 {
+    font-size: 6vh;
+    margin: 0;
+  }
+
+  .pitch-container p {
+    margin: 0;
+    font-size: 2.5vh;
+    margin-bottom: 10px;
+  }
+
+  .pitch-container button {
+    color: var(--white);
+    background-color: var(--purple);
+    border-radius: 20px;
+    border: none;
+    font-size: 2.2vh;
+    height: 6vh;
+    width: 30vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+  }
+
+  .pitch-container button img {
+    width: 4.5vh;
+  }
+
+  .pitch-container button:hover {
+    filter: brightness(1.2);
+    box-shadow: var(--lemon);
+    color: var(--black);
+    transform: translateY(-2px);
+    background-color: var(--lemon);
+    /* mexe o botão 2px para cima */
+  }
+
+  /* GIF INSIGTHS */
+
+  .gif-Insights {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 5vw;
+  }
+
+  .gif-container {
+    display: flex;
+    width: 90vw;
+    height: 38vw;
+    box-sizing: border-box;
+    align-items: flex-start;
+    justify-content: center;
+    background-color: var(--purple);
+    padding: 8vh;
+    border-radius: 20px;
+    margin-top: 3vh;
+    flex-direction: row;
+    align-items: center;   
+  }
+
+  .gif-text h3 {
+    margin: 0;
+    margin-bottom: 3vh;
+    font-size: 5vh;
+    line-height: 1.2;
+    color: var(--white);
+  }
+
+  .gif-text h4 {
+    margin: 0;
+    font-size: 5.5vh;
+    margin-bottom: 3vh;
+    line-height: 1.1;
+    color: var(--lemon);
+  }
+
+  .button-gif {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: var(--deep-purple);
+    background-color: var(--lemon);
+    height: 8vh;
+    width: 30vh;
+    border-radius: 40px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    border: var(--lemon);
+  }
+
+  .button-gif:hover {
+    filter: brightness(1.2);
+    box-shadow: var(--lemon);
+    color: var(--black);
+    transform: translateY(-2px);
+    background-color: var(--lemon);
+    /* mexe o botão 2px para cima */
+  }
+
+  .gif-Insights canvas {
+    width: 70vh;
+    height: 60vh;
+  }
 }
