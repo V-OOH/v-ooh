@@ -5,14 +5,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>V-OOH | HOME</title>
-  <link rel="icon" href="./assets/img/logo.png" />
+  <link rel="icon" href="./assets/img/logo-vertical.png" />
   <link rel="stylesheet" href="./assets/style/style.css" />
 </head>
 
 <body>
   <nav class="navbar">
     <div class="logo-nav">
-      <img src="assets/img/logo-vertical.png" alt="">
+      <img src="assets/img/Logo.svg" alt="">
     </div>
     <div class="nav">
       <ul class="list">
@@ -28,9 +28,6 @@
         <li class="nav-item">
           <a class="nav-link" href="index.html">Contato</a>
         </li>
-        <!--<li class="nav-item">
-            <a class="nav-link" href="index.html">Nossa solução</a>
-          </li>-->
       </ul>
     </div>
     <div class="nav-right">
@@ -105,7 +102,8 @@
     <div class="forrester-container">
       <div class="forrester-info">
         <h1>Atuação de forma <span>inteligente</span></h1>
-        <p>De acordo com a <span>Forrester Consulting</span>, até 12% dos fundos de publicidade globais são desperdiçados devido a
+        <p>De acordo com a <span>Forrester Consulting</span>, até 12% dos fundos de publicidade globais são
+          desperdiçados devido a
           ineficiências em tecnologia de marketing e posicionamentos ineficazes.</p>
       </div>
       <div class="logoForrester">
@@ -135,8 +133,8 @@
           <div class="text-slide">
             <h1>1. Monitoramento em Tempo Real</h1>
             <p>Acompanhe o status de cada painel forma instantânea. Nossa
-              interface exibe a saúde da rede de forma interativa, permitindo
-              identificar falhas de conectividade ou hardware antes mesmo que
+              interface exibe a saúde do display de forma interativa, permitindo
+              identificar falhas de conectividade ou hardware antes que
               o cliente perceba.</p>
           </div>
         </div>
@@ -195,6 +193,59 @@
 
     </div>
   </div>
+
+  <section class="container-contato" id="container-contato">
+
+    <form id="contact_form" class="contato">
+      <div class="texto-contato">
+
+        <h1>Não fique aí parado...</h1>
+
+        <p class="paragraph">
+          Entre em contato conosco e tenha uma demonstração sem compromisso da nossa plataforma.
+        </p>
+
+      </div>
+
+      <div class="container-contact">
+
+        <div class="input-box">
+          <label for="input_nome">Seu nome</label>
+          <input type="text" placeholder="Como podemos te chamar?" id="input_nome" required>
+        </div>
+
+        <div class="input-box">
+          <label for="input_email">Empresa</label>
+          <input type="email" placeholder="Nome da sua empresa" id="input_email" required>
+        </div>
+
+        <div class="input-box">
+          <label for="telefone_conato">Telefone de Contato</label>
+          <input type="text" placeholder="+55 (00) 00000-0000" id="input_telefone" required>
+        </div>
+
+        <div class="input-box">
+          <label for="payload">E-Mail</label>
+          <textarea rows="5" id="payload" placeholder="nomeempresa@gmail.com" required></textarea>
+        </div>
+
+        <d  iv class="checkbox-container">
+          <label class="checkbox-item">
+            <input type="checkbox" id="input_cpu">
+            <i>Concordo com os Termos e Condições.</i>
+          </label>
+
+          <div class="submit">
+          <button type="submit">ENVIAR</button>
+        </div>
+        </div>
+
+        
+      </div>
+    </form>
+
+  </section>
+
 </body>
 
 </html>
