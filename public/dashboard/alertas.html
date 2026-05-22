@@ -31,6 +31,9 @@
     <!-- Chart - js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+            <!--Apex Charts-->
+        <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
     <!--Title-->
     <title>Displays | VOOH</title>
 </head>
@@ -386,7 +389,7 @@
                         </div>
                         <div class="stat-value-disp">5%</div>
                         <div class="chart-container">
-                            <canvas id="line-kpi"></canvas>
+                            <div id="line-kpi"></div>
                         </div>
                     </div>
 
@@ -428,34 +431,28 @@
 
         <!-- graficos -->
         <div class="graficos">
-            <div class="graficos_bloco">
                 <div class="grafico_style">
                     <div class="grafico-line">
-                        <canvas id="graficoLine"></canvas>
+                        <div id="graficoLine"></div>
                     </div>
                     <div class="grafico-bar-duo">
-                        <canvas id="grafico-bar-duo"></canvas>
+                        <div id="grafico-bar-duo"></div>
                     </div>
-                </div>
 
-                <div class="grafico_style">
                     <div class="grafico-bar">
-                        <canvas id="grafico-bar"></canvas>
+                        <div id="grafico-bar"></div>
                     </div>
 
                     <div class="grafico-rosca">
-                        <canvas id="grafico-rosca"></canvas>
+                        <div id="grafico-rosca"></div>
                     </div>
                 </div>
-            </div>
-
-            <div class="space">
-                <div class="grafico_style">
+                
+                <div class="grafico_style2">
                     <div class="grafico-bar-vertical">
-                        <canvas id="grafico-bar-vertical"></canvas>
+                        <div id="grafico-bar-vertical"></div>
                     </div>
                 </div>
-            </div>
 
 
         </div>
@@ -464,7 +461,9 @@
     <!--Sidebar-->
     <script src="../assets/javascript/sidebar.js"></script>
 
-    <script src="../assets/javascript/alertas.js"></script>
+    <script src="../assets/javascript/dashboard/alerta_apex.js"></script>
+
+    <!-- <script src="../assets/javascript/alertas.js"></script> -->
 
 </body>
 

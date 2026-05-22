@@ -124,6 +124,7 @@ const graficobar = new Chart(bar, {
 // Gráfico de Roscas
 
 const rosca = document.getElementById('grafico-rosca').getContext('2d');
+
 const graficoRosca = new Chart(rosca, {
   type: 'doughnut', // Define que é um gráfico de rosca
   data: {
@@ -155,7 +156,7 @@ const graficoRosca = new Chart(rosca, {
         text: 'Modo de Intervenção'
       }
     }
-  }
+  },
 });
 
 // Gráfico de Barras Vertical
