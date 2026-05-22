@@ -59,7 +59,47 @@ function listarDisplays(req, res) {
   }
 }
 
+function buscarZona(req, res) {
+  let idEmpresa = req.body.idEmpresa;
+
+  if (idEmpresa == undefined) {
+    return res.status(400).send("ID da Empresa (fkEmpresa) está undefinida!");
+  }else{
+
+  maquinaModel
+    .buscarZona(idEmpresa)
+    .then(function (resultado) {
+      return res.status(200).json(resultado);
+    })
+    .catch(function (erro) {
+      console.log("Erro ao buscar zonas:", erro);
+      return res.status(500).json(erro.sqlMessage);
+    });
+}
+}
+
+function listarZona(req, res) {
+  let idEmpresa = req.body.idEmpresa;
+
+  if (idEmpresa == undefined) {
+    return res.status(400).send("ID da Empresa (fkEmpresa) está undefinida!");
+  }else{
+
+  maquinaModel
+    .listarZona(idEmpresa)
+    .then(function (resultado) {
+      return res.status(200).json(resultado);
+    })
+    .catch(function (erro) {
+      console.log("Erro ao buscar zonas:", erro);
+      return res.status(500).json(erro.sqlMessage);
+    });
+}
+}
+
 module.exports = {
   buscar,
   cadastrar,
+  buscarZona,
+  listarZona
 };

@@ -207,6 +207,30 @@ function cadastrarGestor(req, res) {
         });
   }
 
+      function buscarNumUsuarios(req, res) {
+        var fkEmpresa = req.body.fkEmpresa;
+        usuarioModel.buscarNumUsuarios(fkEmpresa)
+        .then(function (resultadoBuscar) {
+            if (resultadoBuscar.length > 0) {
+                console.log("TUDO CERTO")
+                return res.status(200).json(resultadoBuscar)
+
+            } else {
+                throw new Error("Erro Ao Buscar Informações");
+            }
+        })
+        .catch(function (erro) {
+            console.log(erro);
+            console.log(
+            "\nHouve um erro ao buscar informações! Erro: ",
+            erro.sqlMessage
+            );
+            res.status(500).json(erro.sqlMessage);
+        });
+  }
+
+  
+
 
 module.exports = {
   autenticar,
@@ -214,5 +238,6 @@ module.exports = {
   finalizarCadastro,
   cadastrarFuncionario,
   cadastrarGestor,
-  buscarUsuarios
+  buscarUsuarios,
+  buscarNumUsuarios
 };
