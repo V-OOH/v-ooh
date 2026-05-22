@@ -83,8 +83,18 @@ const graficobar = new Chart(bar, {
       title: 'Distribuição por Causa Raiz',
       label: 'Atenção',
       data: [10, 5, 15, 2],
-      backgroundColor: 'rgb(109, 51, 255)', 
-      borderColor: 'rgb(109, 51, 255);',
+      backgroundColor: [
+        'rgb(86, 69, 146)',
+        'rgb(114, 76, 249)',
+        'rgb(202, 125, 249)',
+        'rgb(237, 246, 125)'
+      ],
+      borderColor: [
+        'rgb(86, 69, 146)',
+        'rgb(114, 76, 249)',
+        'rgb(202, 125, 249)',
+        'rgb(237, 246, 125)'
+      ],
       borderWidth: 1
     }]
   },
@@ -114,38 +124,38 @@ const graficobar = new Chart(bar, {
 // Gráfico de Roscas
 
 const rosca = document.getElementById('grafico-rosca').getContext('2d');
-const meuGrafico = new Chart(rosca, {
-    type: 'doughnut', // Define que é um gráfico de rosca
-    data: {
-        labels: ['Presencial', 'Remoto'],  
-        datasets: [{
-            label: '%',
-            data: [40 , 60],
-            backgroundColor: [
-                'rgb(84, 145, 199)',
-                'rgb(143, 155, 176)'
-            ],
-            borderColor: [
-                'rgb(84, 145, 199)',
-                'rgb(143, 155, 176)'
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        cutout: '70%', // AQUI: Define o tamanho do buraco (percentual do raio)
-        plugins: {
-            legend: {
-                position: 'top',
-            },
-            title: {
-                display: true,
-                text: 'Modo de Intervenção'
-            }
-        }
+const graficoRosca = new Chart(rosca, {
+  type: 'doughnut', // Define que é um gráfico de rosca
+  data: {
+    labels: ['Presencial', 'Remoto'],
+    datasets: [{
+      label: '%',
+      data: [40, 60],
+      backgroundColor: [
+        'rgb(84, 145, 199)',
+        'rgb(143, 155, 176)'
+      ],
+      borderColor: [
+        'rgb(84, 145, 199)',
+        'rgb(143, 155, 176)'
+      ],
+      borderWidth: 1
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    cutout: '70%', // AQUI: Define o tamanho do buraco (percentual do raio)
+    plugins: {
+      legend: {
+        position: 'top',
+      },
+      title: {
+        display: true,
+        text: 'Modo de Intervenção'
+      }
     }
+  }
 });
 
 // Gráfico de Barras Vertical
@@ -156,15 +166,14 @@ const graficobarvertical = new Chart(bar_vertical, {
   data: {
     labels: ['S012', 'L010', 'N010', 'OE023', 'S112', 'S011', 'N013', 'L012', 'S002', 'S001'],
     datasets: [{
-      title: 'Volume de Alertas',
       label: 'Atenção',
       data: [10, 13, 2, 3, 12, 0, 3, 4, 1, 0],
-      backgroundColor: 'rgba(235, 169, 54, 0.99)', 
+      backgroundColor: 'rgba(235, 169, 54, 0.99)',
       borderColor: 'rgba(235, 169, 54, 0.99)',
       borderWidth: 1
     },
     {
-      label: 'crítico',
+      label: 'Crítico',
       data: [20, 10, 15, 10, 0, 12, 4, 1, 1, 2],
       backgroundColor: 'rgba(255, 99, 99, 0.7)', // Cor da segunda barra
       borderColor: 'rgba(255, 99, 99, 0.7)',
@@ -177,22 +186,23 @@ const graficobarvertical = new Chart(bar_vertical, {
     indexAxis: 'y',
     plugins: {
       legend: {
-        display: false
+        display: true,
+        color: 'rgba(235, 169, 54, 0.99)'
       },
       title: {
         display: true,
-        text: 'Principais Pontos de Atenção'
+        text: 'Displays com Mais Alertas'
       },
-      },
+    },
 
-      scales: {
-            x: {
-                stacked: true // Habilita o empilhamento no eixo X
-            },
-            y: {
-                stacked: true // Habilita o empilhamento no eixo Y
-            }
-        }
+    scales: {
+      x: {
+        stacked: true // Habilita o empilhamento no eixo X
+      },
+      y: {
+        stacked: true // Habilita o empilhamento no eixo Y
+      }
+    }
 
   }
 });
