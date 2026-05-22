@@ -2,7 +2,7 @@ var database = require("../database/config")
 
 function buscarinfo(idUsuario) {
     var instrucaoSql = `
-            SELECT *, DATE_FORMAT(dataAtualizacao, '%Y-%m-%dT%H:%i:%s') as dataAtualizacao FROM usuario WHERE idUsuario = ${idUsuario};
+            SELECT *, DATE_FORMAT(data_hora_atualizacao, '%Y-%m-%dT%H:%i:%s') as dataAtualizacao FROM usuario WHERE id = ${idUsuario};
         `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
@@ -11,7 +11,7 @@ function buscarinfo(idUsuario) {
 
 function buscarempresa(fkEmpresa) {
     var instrucaoSql = `
-            SELECT nomeEmpresa,cnpj FROM cadastroEmpresa WHERE idcadastroEmpresa = ${fkEmpresa};
+            SELECT nome_empresa,cnpj FROM cadastroEmpresa WHERE id = ${fkEmpresa};
         `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
@@ -20,7 +20,18 @@ function buscarempresa(fkEmpresa) {
 
 function buscarendereco(fkEmpresa) {
     var instrucaoSql = `
-            SELECT * FROM endereco WHERE fkEmpresa = ${fkEmpresa} and fkDisplay is NULL;
+            SELECT 
+            e.id,
+            e.cep,
+            e.logradouro,
+            e.numero,
+            e.bairro,
+            e.cidade,
+            e.uf,
+            e.complemento
+        FROM endereco e
+        INNER JOIN empresa emp ON emp.fk_endereco = e.id
+        WHERE emp.id = ${fkEmpresa};
         `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);

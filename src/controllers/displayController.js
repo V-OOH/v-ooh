@@ -118,7 +118,7 @@ function cadastrarEnd(req, res) {
     }
 }
 
-function buscarDisplays(){
+function buscarDisplays(req, res){
     var fkEmpresa = req.body.fkEmpresa;
         displayModel.buscarDisplays(fkEmpresa)
             .then(function (resultadoBuscar) {

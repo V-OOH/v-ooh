@@ -39,14 +39,29 @@ function cadastrarEnd(fkEmpresa, fkServidor, cep, logradouro, numero, complement
     return database.executar(instrucaoSql);
 }
 
-function buscarDisplays(fkEmpresa){
-     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function buscarUsuario():", fkEmpresa);
+function buscarDisplays(fkEmpresa) {
+    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function buscarUsuario():", fkEmpresa);
 
     var instrucaoSql = `
-    SELECT * FROM display WHERE fkEmpresa = ${fkEmpresa}; 
+SELECT 
+            d.idDisplay AS id, 
+            d.enderecoIP AS ip,
+            d.numeroIdentificacao AS mac, -- Mapeado como mac para o seu front anterior
+            d.nome,
+            d.sistemaOperacional AS so,
+            e.logradouro, 
+            e.numero, 
+            e.bairro, 
+            e.cidade, 
+            e.uf, 
+            e.cep, 
+            e.complemento
+        FROM display d
+        LEFT JOIN endereco e ON e.fkDisplay = d.idDisplay
+        WHERE d.fkEmpresa = ${fkEmpresa};
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
-    return database.executar(instrucaoSql);   
+    return database.executar(instrucaoSql);
 }
 
 module.exports = {

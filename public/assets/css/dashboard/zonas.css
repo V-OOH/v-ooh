@@ -126,9 +126,10 @@
 
   .body .container .items {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     grid-template-rows: 1fr;
     align-items: center;
+    align-content: center;
     gap: 10px;
     margin-top: 2%;
   }
