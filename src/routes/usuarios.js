@@ -26,6 +26,9 @@ router.post("/buscarUsuarios", function (req, res) {
     usuarioController.buscarUsuarios(req, res);
 });
 
+router.post("/buscarNumUsuarios", function (req, res) {
+    usuarioController.buscarNumUsuarios(req, res);
+});
 
 
 module.exports = router;
