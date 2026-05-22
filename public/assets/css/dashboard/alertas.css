@@ -501,7 +501,7 @@
   }
 
   .graficos_bloco {
-    flex-direction: row ;
+    flex-direction: row;
     gap: 10px;
     margin-top: 10px;
   }
@@ -539,8 +539,8 @@
 
   .grafico-rosca {
     display: flex;
-    justify-content: center; 
-    align-items: center; 
+    justify-content: center;
+    align-items: center;
     height: 300px;
     width: 100%;
     width: 300px;
@@ -792,7 +792,6 @@
   .chart-container {
     width: 180px;
     height: 90px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     border-radius: 12px;
     margin-top: 10px;
   }
@@ -944,11 +943,11 @@
     flex-wrap: nowrap;
   }
 
-  .container-table th {
+  /* .container-table th {
     color: var(--color-deep-purple);
     background-color: var(--color-light-gray);
     padding: 5px;
-  }
+  } */
 
   .container-table th:nth-child(1) {
     border-radius: 25px 0 0 0;
@@ -1074,7 +1073,7 @@
   }
 
   .graficos_bloco {
-    flex-direction: row ;
+    flex-direction: row;
     gap: 10px;
     margin-top: 10px;
   }
@@ -1089,22 +1088,24 @@
   }
 
   .grafico-line {
-    width: 400px;
+    width: 380px;
+    height: 240px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     border-radius: 12px;
     margin-top: 10px;
   }
 
   .grafico-bar-duo {
-    width: 370px;
+    width: 380px;
+    height: 240px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     border-radius: 12px;
     margin-top: 10px;
   }
 
   .grafico-bar {
-    width: 400px;
-    height: 260px;
+    width: 380px;
+    height: 240px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     border-radius: 12px;
     margin-top: 10px;
@@ -1112,12 +1113,12 @@
 
   .grafico-rosca {
     display: flex;
-    justify-content: center; 
-    align-items: center; 
+    justify-content: center;
+    align-items: center;
     height: 300px;
-    width: 100%;
-    width: 370px;
-    height: 260px;
+    /* width: 100%; */
+    width: 380px;
+    height: 240px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     border-radius: 12px;
     margin-top: 10px;
@@ -1126,7 +1127,7 @@
   .grafico-bar-vertical {
     display: flex;
     width: 380px;
-    height: 470px;
+    height: 490px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     border-radius: 12px;
     margin-top: 20px;
