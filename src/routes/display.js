@@ -15,4 +15,8 @@ router.post("/cadastrarEnd", function (req, res) {
     displayController.cadastrarEnd(req, res);
 });
 
+router.post("/buscarDisplays", function (req, res) {
+    displayController.buscarDisplays(req, res);
+});
+
 module.exports = router;
