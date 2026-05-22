@@ -14,6 +14,8 @@ const graficoLineKpi = new Chart(graficoKPI, {
     }]
   },
   options: {
+    responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         display: false,
@@ -51,6 +53,8 @@ const graficoLine = new Chart(ctx, {
     }]
   },
   options: {
+    responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         display: false,
@@ -67,53 +71,6 @@ const graficoLine = new Chart(ctx, {
     }
   }
 });
-
-// Gráfico de Barra Dupla
-// const bar_duo = document.getElementById('grafico-bar-duo').getContext('2d');
-// const graficobarduo = new Chart(bar_duo, {
-//   type: 'bar', // Define o tipo como barras
-//   data: {
-//     labels: ['Abr 10', 'Abr 11', 'Abr 12', 'Abr 13', 'Abr 14', 'Abr 15'],
-//     datasets: [{
-//       title: 'Volume de Alertas',
-//       label: 'Atenção',
-//       data: [1, 3, 2, 7, 2, 0],
-//       backgroundColor: 'rgba(235, 169, 54, 0.99)', 
-//       borderColor: 'rgba(235, 169, 54, 0.99)',
-//       borderWidth: 1
-//     },
-//     {
-//       label: 'crítico',
-//       data: [0, 2, 3, 5, 6, 1],
-//       backgroundColor: 'rgba(255, 99, 99, 0.7)', // Cor da segunda barra
-//       borderColor: 'rgba(255, 99, 99, 0.7)',
-//       borderWidth: 1
-//     }]
-//   },
-//   options: {
-//     responsive: true,
-//     plugins: {
-//       legend: {
-//         display: false
-//       },
-//       title: {
-//         display: true,
-//         text: 'Distribuição por Nível'
-//       },
-//     },
-
-//      scales: {
-//             x: {
-//                 stacked: true // Habilita o empilhamento no eixo X
-//             },
-//             y: {
-//                 stacked: true // Habilita o empilhamento no eixo Y
-//             }
-//         }
-
-//   }
-// });
-
 
 // Gráfico de Barras
 
@@ -133,6 +90,7 @@ const graficobar = new Chart(bar, {
   },
   options: {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         display: false
@@ -176,6 +134,7 @@ const meuGrafico = new Chart(rosca, {
     },
     options: {
         responsive: true,
+        maintainAspectRatio: false,
         cutout: '70%', // AQUI: Define o tamanho do buraco (percentual do raio)
         plugins: {
             legend: {
@@ -238,40 +197,3 @@ const graficobarvertical = new Chart(bar_vertical, {
   }
 });
 
-
-// Gráfico de Barras
-
-// const bar = document.getElementById('grafico-bar').getContext('2d');
-// const graficobar = new Chart(bar, {
-//   type: 'bar', // Define o tipo como barras
-//   data: {
-//     labels: ['CPU', 'Disco', 'Memória  RAM', 'Rede'],
-//     datasets: [{
-//       title: 'Distribuição por Causa Raiz',
-//       label: 'Atenção',
-//       data: [10, 5, 15, 2],
-//       backgroundColor: 'rgb(109, 51, 255)', 
-//       borderColor: 'rgb(109, 51, 255);',
-//       borderWidth: 1
-//     }]
-//   },
-//   options: {
-//     responsive: true,
-//     plugins: {
-//       legend: {
-//         display: false
-//       },
-//       title: {
-//         display: true,
-//         text: 'Distribuição por Nível'
-//       },
-//     },
-
-//     scales: {
-//       y: {
-//         beginAtZero: true
-//       }
-//     }
-
-//   }
-// });
