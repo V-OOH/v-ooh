@@ -36,7 +36,7 @@ var options = {
 var chart_kpi = new ApexCharts(document.querySelector("#line-kpi"), options);
 chart_kpi.render();
 
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Gráfico de Linhas
 let dados = [
@@ -113,3 +113,111 @@ var options2 = {
 
 var chart = new ApexCharts(document.querySelector("#graficoLine"), options2);
 chart.render();
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Gráfico de Rosca
+var dados_rosca = [44, 56];
+
+var options3 = {
+    series: dados_rosca,
+    labels: ["Remoto", "Presencial"],
+    chart: {
+        type: 'donut',
+    },
+    responsive: [{
+        breakpoint: 480,
+        options: {
+            chart: {
+                width: 200
+            },
+            legend: {
+                position: 'bottom'
+            }
+        }
+    }],
+    title: {
+        text: 'Modo de Intervenção',
+        align: 'center'
+    },
+};
+
+var chart_rosca = new ApexCharts(document.querySelector("#grafico-rosca"), options3);
+chart_rosca.render()
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+var options4 = {
+    series: [{
+        name: 'Alertas',
+        data: [10, 5, 15, 2]
+    }],
+    chart: {
+        height: "100%",
+        type: 'bar',
+        toolbar: {
+            show: false
+        },
+    },
+    plotOptions: {
+        bar: {
+            borderRadius: 10,
+            dataLabels: {
+                position: 'top', // top, center, bottom
+            },
+        }
+    },
+    dataLabels: {
+        show: true,
+        enabled: false,
+        position: 'bottom',
+        style: {
+            fontSize: '12px',
+            colors: ["#000"]
+        }
+    },
+
+    xaxis: {
+        categories: ["CPU", "DISCO", "RAM", "REDE"],
+        position: 'bottom',
+        axisBorder: {
+            show: false
+        },
+        axisTicks: {
+            show: false
+        },
+    },
+    yaxis: {
+        axisBorder: {
+            show: false
+        },
+        axisTicks: {
+            show: false,
+        },
+
+    },
+    title: {
+        text: 'Distribuição por Causa Raiz',
+        align: 'center'
+    },
+    grid: {
+        show: false,
+    },
+
+    plotOptions: {
+        bar: {
+            distributed: true,
+            borderRadius: 10,
+        }
+    },
+
+    colors: [
+        '#564592',
+        '#CA7DF9',
+        '#F896D8',
+        '#EDF67D'
+    ]
+};
+
+var chart_bar = new ApexCharts(document.querySelector("#grafico-bar"), options4);
+chart_bar.render();
