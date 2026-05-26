@@ -11,38 +11,6 @@ CREATE DATABASE vooh;
 -- Usar o banco de dados
 USE vooh;
 
--- Endereço
-/*
- * Campos:
- *
- * - ID do endereço
- * - Logradouro do endereço
- * - Número do endereço
- * - Bairro do endereço
- * - Cidade do endereço
- * - UF do endereço
- * - Complemento
- * */
-CREATE TABLE endereco (
-	id INT PRIMARY KEY AUTO_INCREMENT, -- ID do endereço
-    cep VARCHAR(20) NOT NULL, -- CEP do endereço
-	logradouro VARCHAR(50) NOT NULL, -- Logradouro do endereço
-	numero VARCHAR(10) NOT NULL, -- Número do endereço
-	bairro VARCHAR(50) NOT NULL, -- Bairro do endereço
-	cidade VARCHAR(50) NOT NULL, -- Cidade do endereço
-	uf CHAR(2) NOT NULL, -- UF do endereço
-	complemento VARCHAR(20), -- Complemento do endereço
-	CONSTRAINT chkUf
-		CHECK (uf IN (
-			'AC', 'AL', 'AM', 'AP', 'BA',
-			'CE', 'DF', 'ES', 'GO', 'MA',
-			'MG', 'MS', 'MT', 'PA', 'PB',
-			'PE', 'PI', 'PR', 'RJ', 'RN',
-			'RO', 'RR', 'RS', 'SC', 'SE',
-			'SP', 'TO'
-		)
-	)
-);
 
 -- Empresa
 /*
@@ -52,61 +20,23 @@ CREATE TABLE endereco (
  * - Nome do responsável
  * - Nome da empresa
  * - CNPJ da empresa
- * - Código de acesso
- * - Status da empresa
  * - Data e hora de cadastro
  * - Data e hora de atualização
- * - FK do endereço
+  * - Status da empresa
  * */
  
-CREATE TABLE empresa (
-	id INT PRIMARY KEY AUTO_INCREMENT, -- ID da Empresa
-    fk_endereco INT, -- FK endereço
-	nome_responsavel VARCHAR(50) NOT NULL, -- Nome do responsável
-	nome_empresa VARCHAR(50) DEFAULT NULL, -- Nome da empresa
-	cnpj VARCHAR(14) NOT NULL UNIQUE, -- CNPJ da empresa
-	codigo_acesso VARCHAR(45) NOT NULL, -- Código de acesso
-	status_empresa VARCHAR(10) NOT NULL DEFAULT 'Ativa', -- Status da empresa
-	data_hora_cadastro DATETIME DEFAULT CURRENT_TIMESTAMP, -- Data e hora de cadastro
-	data_hora_atualizacao DATETIME DEFAULT CURRENT_TIMESTAMP
-		ON UPDATE CURRENT_TIMESTAMP, -- Data e hora de atualização
-    urlWEBHOOK VARCHAR(255),
+CREATE TABLE cadastroEmpresa (
+	idcadastroEmpresa INT PRIMARY KEY AUTO_INCREMENT,
+	nomeResponsavel VARCHAR(50) NOT NULL,
+    nomeEmpresa VARCHAR(50) DEFAULT NULL,
+	cnpj VARCHAR(14) NOT NULL UNIQUE,
+    dataCadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
+    dataAtualizacao DATETIME DEFAULT CURRENT_TIMESTAMP,
+    statusCliente VARCHAR(10),
+	urlWEBHOOK VARCHAR(255),
     jiraUrl VARCHAR(255),
     jiraEmail VARCHAR(100),
-    jiraToken VARCHAR(255),
-	CONSTRAINT fkEnderecoEmpresa
-		FOREIGN KEY (fk_endereco) REFERENCES endereco (id)
-		ON DELETE CASCADE
-        ON UPDATE CASCADE,
-	CONSTRAINT chkStatusEmpresa
-		CHECK(status_empresa IN ('Ativa', 'Inativa', 'Suspensa')) -- Check de status
-);
-
--- Contato
-/*
- * Campos:
- *
- * - ID do contato
- * - Código de país (DDI)
- * - Código de região (DDD)
- * - Telefone fixo
- * - Telefone celular
- * - E-mail
- * - FK da empresa
- * */
- 
-CREATE TABLE contato (
-	id INT PRIMARY KEY AUTO_INCREMENT, -- ID do contato
-	ddi CHAR(3), -- DDI
-	ddd CHAR(3), -- DDD
-	telefone_fixo VARCHAR(15), -- Telefone fixo
-	telefone_celular VARCHAR(15), -- Telefone celular
-	email VARCHAR(100) NOT NULL UNIQUE, -- E-mail
-	fk_empresa INT, -- FK da empresa
-	CONSTRAINT fkEmpresaContato
-		FOREIGN KEY (fk_empresa) REFERENCES empresa (id)
-		ON DELETE CASCADE
-        ON UPDATE CASCADE
+    jiraToken VARCHAR(255)
 );
 
 -- Contrato
@@ -121,7 +51,7 @@ CREATE TABLE contato (
  * - SLA
  * - Ultima Atualização
  * */
- 
+
  CREATE TABLE contrato (
 	idContrato INT PRIMARY KEY AUTO_INCREMENT,
     fkEmpresa INT,
@@ -132,9 +62,8 @@ CREATE TABLE contato (
     ultima_referencia DATETIME DEFAULT CURRENT_TIMESTAMP,
 		CONSTRAINT fkcontrato_empresa
 			FOREIGN KEY (fkEmpresa)
-				REFERENCES empresa (id)
+				REFERENCES CadastroEmpresa (idcadastroEmpresa)
  );
- 
 
 -- Usuário
 /*
@@ -143,7 +72,6 @@ CREATE TABLE contato (
  * - ID do usuário
  * - Código de acesso
  * - Nome do usuário
- * - Sobrenome do usuário
  * - E-mail do usuário
  * - Data de nascimento do usuário
  * - CPF do usuário
@@ -157,32 +85,56 @@ CREATE TABLE contato (
  * - FK da empresa
  * - FK do superior do usuário
  * */
-CREATE TABLE usuario (
-	id INT PRIMARY KEY AUTO_INCREMENT, -- ID do Usuário
-    fk_empresa INT, -- FK da empresa
-	nome VARCHAR(50) NOT NULL, -- Nome do usuário
-	sobrenome VARCHAR(50) NOT NULL, -- Sobrenome do usuário
-	email VARCHAR(100) NOT NULL UNIQUE, -- E-mail do usuário
-	data_nascimento DATE NOT NULL, -- Data de nascimento
-	cpf CHAR(11) NOT NULL UNIQUE, -- CPF do usuário
-	tipo VARCHAR(10) NOT NULL, -- Tipo de usuário
-	senha VARCHAR(16) NOT NULL, -- Senha
-	-- hashSenha VARCHAR(255) NOT NULL, -- Hash da senha
-	status_usuario VARCHAR(10) NOT NULL DEFAULT 'Ativo',
-	data_hora_cadastro DATETIME DEFAULT CURRENT_TIMESTAMP, -- Data e hora de cadastro
-	data_hora_atualizacao DATETIME DEFAULT CURRENT_TIMESTAMP
-		ON UPDATE CURRENT_TIMESTAMP, -- Data e hora de atualização
-	CONSTRAINT fkEmpresaUsuario
-		FOREIGN KEY (fk_empresa) REFERENCES empresa (id)
-		ON DELETE CASCADE
-        ON UPDATE CASCADE,
-	fk_superior INT, -- FK do superior do usuário
-	CONSTRAINT fkSuperior
-		FOREIGN KEY (fk_superior) REFERENCES usuario (id)
-		ON DELETE CASCADE
-        ON UPDATE CASCADE,
-	CONSTRAINT chkStatusUsuario
-		CHECK(status_usuario IN ('Ativo', 'Inativo', 'Suspenso')) -- Check de status
+
+CREATE TABLE usuario(
+	idUsuario INT PRIMARY KEY AUTO_INCREMENT,
+    codigoAcesso VARCHAR(45),
+    fkEmpresa INT NOT NULL,
+    fkSuperior INT,
+    nome VARCHAR(50),
+    email VARCHAR(100) NOT NULL UNIQUE,
+    dataNascimento DATE NOT NULL,
+    cpf VARCHAR(11) NOT NULL UNIQUE,
+    senha VARCHAR(20),
+    statusUsuario VARCHAR(25),
+	dataCadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
+    dataAtualizacao DATETIME DEFAULT CURRENT_TIMESTAMP,
+    tipoUsuario CHAR(25),
+    documentoIdetificacao VARCHAR(20),
+		CONSTRAINT chkCliente 
+			CHECK (statusUsuario IN ('Ativo', 'Inativo')),
+		CONSTRAINT chk_usuario 
+			CHECK (tipoUsuario IN ('Gestor', 'Funcionario', 'Suporte')),
+		CONSTRAINT fkCadastroEmpresa 
+			FOREIGN KEY (fkEmpresa) 
+				REFERENCES cadastroEmpresa(idcadastroEmpresa),
+		CONSTRAINT fkusuarioSuperior
+			FOREIGN KEY (fkSuperior) 
+				REFERENCES usuario(idUsuario)
+);
+
+-- Contato
+/*
+ * Campos:
+ *
+ * - ID do contato
+ * - Código de país (DDI)
+ * - Código de região (DDD)
+ * - Telefone fixo
+ * - Telefone celular
+ * - E-mail
+ * - FK da empresa
+ * */
+
+CREATE TABLE contato (
+    idContato INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
+    fkEmpresa INT NOT NULL,
+    telefoneFixo CHAR(12) NOT NULL UNIQUE,
+    telefoneCelular CHAR(12) NOT NULL UNIQUE,
+    email VARCHAR(100) NOT NULL UNIQUE,
+		CONSTRAINT fkEmpresa_contato
+			FOREIGN KEY (fkEmpresa) 
+				REFERENCES cadastroEmpresa(idcadastroEmpresa)
 );
 
 -- Zona
@@ -193,26 +145,11 @@ CREATE TABLE usuario (
  * - Nome da zona
  * - Descrição
  * */
-CREATE TABLE zona (
-	id INT PRIMARY KEY AUTO_INCREMENT, -- ID da zona
-	nome VARCHAR(45), -- Nome da zona
-	descricao VARCHAR(50) -- Descrição da zona
-);
 
--- Componente
-/*
- * Campos:
- *
- * - ID do componente
- * - Nome do componente
- * - Tipo do componente
- * - Unidade de medida do componente
- * */
-CREATE TABLE componente (
-	id INT PRIMARY KEY AUTO_INCREMENT, -- ID do componente
-	nome VARCHAR(45) NOT NULL, -- Nome do componente
-	tipo VARCHAR(50) NOT NULL, -- Tipo de componente
-	unidade VARCHAR(5) -- Unidade de medida
+CREATE TABLE zona (
+	idZona INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(45),
+    descricao VARCHAR(45)
 );
 
 -- Display
@@ -229,30 +166,61 @@ CREATE TABLE componente (
  * - FK da zona
  * - FK do endereço
  * */
+
 CREATE TABLE display (
-	id INT PRIMARY KEY AUTO_INCREMENT, -- ID do display
-	fk_empresa INT, -- FK da empresa
-	fk_zona INT, -- FK da zona
-	fk_endereco INT, -- FK do endereço
-	nome VARCHAR(45) NOT NULL, -- Nome do display
-	identificacao VARCHAR(45) NOT NULL, -- Identificação
-	so VARCHAR(10) NOT NULL, -- Sistema Operacional
-	ip VARCHAR(15) NOT NULL , -- Endereço IPV4
-	mac VARCHAR(20) NOT NULL, -- Endereço MAC
-	CONSTRAINT fkEmpresaDisplay
-		FOREIGN KEY (fk_empresa) REFERENCES empresa (id)
-		ON DELETE CASCADE
-        ON UPDATE CASCADE,
-	CONSTRAINT fkZonaDisplay
-		FOREIGN KEY (fk_zona) REFERENCES zona (id)
-		ON DELETE CASCADE
-        ON UPDATE CASCADE,
-	CONSTRAINT fkEnderecoDisplay
-		FOREIGN KEY (fk_endereco) REFERENCES endereco (id)
-		ON DELETE CASCADE
-        ON UPDATE CASCADE,
-	CONSTRAINT chkSistema
-		CHECK (so IN ('Windows', 'Linux'))
+	idDisplay INT NOT NULL AUTO_INCREMENT,
+    fkEmpresa INT NOT NULL,
+		CONSTRAINT chave_compostaServidor
+			PRIMARY KEY(idDisplay, fkEmpresa),
+	fkZona INT,
+	nome VARCHAR(45),
+    numeroIdentificacao VARCHAR(45),
+    sistemaOperacional VARCHAR(45),
+    enderecoIP VARCHAR(100),
+		CONSTRAINT fkEmpresa_display
+			FOREIGN KEY (fkEmpresa)
+				REFERENCES cadastroEmpresa(idcadastroEmpresa),
+		CONSTRAINT fkzona_display
+			FOREIGN KEY (fkZona)
+				REFERENCES zona(idZona)
+);
+
+CREATE TABLE endereco (
+	idEndereco INT PRIMARY KEY AUTO_INCREMENT,
+    fkEmpresa INT NOT NULL,
+    fkDisplay INT UNIQUE,
+	cep VARCHAR(14) NOT NULL,
+	logradouro VARCHAR(40) NOT NULL,
+	numero INT NOT NULL,
+	complemento VARCHAR(40),
+	bairro VARCHAR(40) NOT NULL,
+    cidade VARCHAR(40) NOT NULL,
+    uf CHAR(2) NOT NULL,
+		CONSTRAINT fkEmpresa_endereco
+			FOREIGN KEY (fkEmpresa) 
+				REFERENCES cadastroEmpresa(idcadastroEmpresa),
+	CONSTRAINT fkServidor_endereco
+			FOREIGN KEY (fkDisplay) 
+				REFERENCES display (idDisplay)             
+);
+
+-- Componente
+/*
+ * Campos:
+ *
+ * - ID do componente
+ * - Nome do componente
+ * - Tipo do componente
+ * - Unidade de medida do componente
+ * */
+ 
+CREATE TABLE componentes (
+	idComponente INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(45),
+    tipo VARCHAR(45),
+    medida VARCHAR(45) NOT NULL,
+    biblioteca VARCHAR(45) NOT NULL,
+    parametro VARCHAR(45)
 );
 
 -- Associativa - Display-Componente
@@ -265,63 +233,23 @@ CREATE TABLE display (
  * - Mínimo
  * - Máximo
  * */
-CREATE TABLE componente_display (
-	fk_display INT NOT NULL, -- FK do display
-	fk_componente INT NOT NULL, -- FK do componente
-	fk_empresa INT NOT NULL, -- FK da empresa
-	minimo DECIMAL(6,2), -- Limite mínimo
-	maximo DECIMAL(6,2), -- Limite máximo
-	CONSTRAINT fkDisplayComponente
-		FOREIGN KEY (fk_display) REFERENCES display (id)
-		ON DELETE CASCADE
-        ON UPDATE CASCADE,
-	CONSTRAINT fkComponente
-		FOREIGN KEY (fk_componente) REFERENCES componente (id)
-		ON DELETE CASCADE
-        ON UPDATE CASCADE,
-	CONSTRAINT fkEmpresaComponente
-		FOREIGN KEY (fk_empresa) REFERENCES empresa (id)
-		ON DELETE CASCADE
-        ON UPDATE CASCADE,
-	PRIMARY KEY (fk_display, fk_componente, fk_empresa)
+
+CREATE TABLE display_componentes (
+    fkDisplay INT NOT NULL,
+    fkEmpresa INT NOT NULL,
+    fkComponente INT NOT NULL,
+        CONSTRAINT chaveComposta_servidorComponente
+            PRIMARY KEY (fkDisplay, fkEmpresa, fkComponente),
+    limite_min INT , 
+    limite_max INT ,
+        CONSTRAINT fkServidor_servidorComponente
+            FOREIGN KEY (fkDisplay)
+                REFERENCES display(idDisplay),
+        CONSTRAINT fkEmpresa_servidorComponente
+            FOREIGN KEY (fkEmpresa)
+                REFERENCES cadastroEmpresa(idcadastroEmpresa),
+        CONSTRAINT fkComponente_servidorComponente
+            FOREIGN KEY (fkComponente)
+                REFERENCES componentes(idComponente)
 );
 
-
--- Alertas
-/*
- * Campos:
- *
- * - PK do alerta
- * - FK do display
- * - FK do componente
- * - FK da empresa
- * - tipo
- * - status
- * - data_hora_emissao
- * - data_hora_solucao
- * */
- 
- CREATE TABLE alertas (
-	id INT PRIMARY KEY auto_increment,
-    fk_display INT,
-    fk_empresa INT,
-    fk_componente INT,
-    tipo CHAR(11),
-    status_alerta VARCHAR(20),
-    data_hora_emissao DATETIME DEFAULT CURRENT_TIMESTAMP,
-    data_hora_solucao DATETIME DEFAULT CURRENT_TIMESTAMP,
-		CONSTRAINT chkAlerta 
-			CHECK (tipo IN ('Crítico', 'Ateção')),
-	CONSTRAINT fkDisplay_Componente
-		FOREIGN KEY (fk_display) REFERENCES display (id)
-		ON DELETE CASCADE
-        ON UPDATE CASCADE,
-	CONSTRAINT fk_Componente
-		FOREIGN KEY (fk_componente) REFERENCES componente (id)
-		ON DELETE CASCADE
-        ON UPDATE CASCADE,
-	CONSTRAINT fk_EmpresaComponente
-		FOREIGN KEY (fk_empresa) REFERENCES empresa (id)
-		ON DELETE CASCADE
-        ON UPDATE CASCADE
-);
