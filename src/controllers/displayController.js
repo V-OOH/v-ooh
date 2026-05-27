@@ -6,6 +6,8 @@ function cadastrarDisplay(req, res) {
     var so = req.body.so;
     var id = req.body.id;
     var ip = req.body.ip;
+    var zona = req.body.zona;
+    var mac = req.body.mac;
 
 
     if (nome == undefined) {
@@ -16,8 +18,14 @@ function cadastrarDisplay(req, res) {
         res.status(400).send("Seu Identificador está undefined!");
     } else if (ip == undefined) {
         res.status(400).send("Seu Endereço de ip está undefined!");
-    } else {
-        displayModel.cadastrarDisplay(fkEmpresa, nome, id, so, ip)
+    } else if (zona == undefined || zona == -1) {
+        res.status(400).send("Sua zona está undefined!");
+    }
+    else if (mac == undefined) {
+        res.status(400).send("Seu mac está undefined!");
+    }
+    else {
+        displayModel.cadastrarDisplay(fkEmpresa, nome, id, so, ip, zona,mac)
             .then(
                 function (resultado) {
                     res.json(resultado);
@@ -98,8 +106,8 @@ function cadastrarEnd(req, res) {
     } else if (uf == undefined) {
         res.status(400).send("Seu UF está undefined!");
     } else {
-        displayModel.cadastrarEnd(fkEmpresa, fkServidor, 
-            cep, logradouro, numero, 
+        displayModel.cadastrarEnd(fkEmpresa, fkServidor,
+            cep, logradouro, numero,
             complemento, bairro, cidade, uf)
             .then(
                 function (resultado) {
@@ -118,26 +126,26 @@ function cadastrarEnd(req, res) {
     }
 }
 
-function buscarDisplays(req, res){
+function buscarDisplays(req, res) {
     var fkEmpresa = req.body.fkEmpresa;
-        displayModel.buscarDisplays(fkEmpresa)
-            .then(function (resultadoBuscar) {
-                if (resultadoBuscar.length > 0) {
-                    console.log("TUDO CERTO")
-                    return res.status(200).json(resultadoBuscar)
-    
-                } else {
-                    throw new Error("Erro Ao Buscar Informações");
-                }
-            })
-            .catch(function (erro) {
-                console.log(erro);
-                console.log(
+    displayModel.buscarDisplays(fkEmpresa)
+        .then(function (resultadoBuscar) {
+            if (resultadoBuscar.length > 0) {
+                console.log("TUDO CERTO")
+                return res.status(200).json(resultadoBuscar)
+
+            } else {
+                throw new Error("Erro Ao Buscar Informações");
+            }
+        })
+        .catch(function (erro) {
+            console.log(erro);
+            console.log(
                 "\nHouve um erro ao buscar informações! Erro: ",
                 erro.sqlMessage
-                );
-                res.status(500).json(erro.sqlMessage);
-            });
+            );
+            res.status(500).json(erro.sqlMessage);
+        });
 }
 
 module.exports = {

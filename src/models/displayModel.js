@@ -1,11 +1,11 @@
 var database = require("../database/config")
 
 
-function cadastrarDisplay(fkEmpresa, nome, id, so, ip) {
+function cadastrarDisplay(fkEmpresa, nome, id, so, ip,zona,mac) {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():", fkEmpresa, nome, id, so, ip);
 
     var instrucaoSql = `
-    INSERT INTO display(fkEmpresa, nome, numeroIdentificacao, sistemaOperacional, enderecoIp) VALUES ('${fkEmpresa}','${nome}','${id}','${so}','${ip}');
+    INSERT INTO display(fkEmpresa,fkZona, nome, numeroIdentificacao, sistemaOperacional, enderecoIp, mac) VALUES ('${fkEmpresa}', '${zona}','${nome}','${id}','${so}','${ip}', '${mac}');
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);

@@ -33,7 +33,7 @@
   <title>Displays | VOOH</title>
 </head>
 
-<body>
+<body onload="buscarZona()">
   <!--Sidebar-->
   <aside class="sidebar">
     <div class="container-top">
@@ -479,6 +479,20 @@
         <div class="conjunto">
           <p>Endereço IP *</p>
           <input placeholder="203.0.113.255" type="text" maxlength="10" name="" id="input_ip" />
+        </div>
+      </div>
+
+      <div class="input-dialog">
+        <div class="conjunto">
+          <p>Zona *</p>
+          <select name="" id="select_zona">
+            <option value="">Selecione Uma opção</option>
+          </select>
+        </div>
+
+        <div class="conjunto">
+          <p>MAC *</p>
+          <input placeholder="AA-E2-91-86-A5-03" type="text" maxlength="17" name="" id="input_mac" />
         </div>
       </div>
 
@@ -1084,7 +1098,7 @@
   <script src="../assets/javascript/mapa.js"></script>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation"></script>
 
   <script src="../assets/javascript/graficos.js"></script>
 </body>
@@ -1117,6 +1131,8 @@
     soVar = input_so.value;
     idVar = input_id.value;
     ipVar = input_ip.value;
+    zonaVar = select_zona.value;
+    macVar = input_mac.value;
 
     if (nomeVar == "" || soVar == "" || idVar == "" || ipVar == "") {
       alert("Preencha todos os campos para prosseguir");
@@ -1132,6 +1148,8 @@
           so: soVar,
           id: idVar,
           ip: ipVar,
+          zona: zonaVar,
+          mac: macVar
         }),
       })
         .then((resposta) => {
@@ -1167,7 +1185,7 @@
   }
 
   function cadastrarComp() {
-    var componentes = [1,2,3];
+    var componentes = [1, 2, 3];
 
     fetch("/display/cadastrarComp", {
       method: "POST",
@@ -1179,7 +1197,7 @@
         fkEmpresa: sessionStorage.FKEMPRESA,
         fkServidor: sessionStorage.ID_SERVIDOR,
       }),
-    })  
+    })
       .then((resposta) => {
         console.log("ESTOU NO THEN DO entrar()!");
         console.log(resposta);
@@ -1297,7 +1315,6 @@
             document.getElementById("input_cidade").value = data.localidade;
             document.getElementById("input_uf").value = data.uf;
 
-            // Aplica o readOnly para impedir a edição manual
             document.getElementById("input_logradouro").readOnly = true;
             document.getElementById("input_bairro").readOnly = true;
             document.getElementById("input_cidade").readOnly = true;
@@ -1324,5 +1341,46 @@
     document.getElementById("input_bairro").readOnly = false;
     document.getElementById("input_cidade").readOnly = false;
     document.getElementById("input_uf").disabled = false;
+  }
+
+  function buscarZona() {
+
+    fetch("/maquina/buscarZona", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        idEmpresa: sessionStorage.FKEMPRESA,
+      }),
+    })
+      .then((resposta) => {
+        console.log("ESTOU NO THEN DO entrar()!");
+
+        if (resposta.ok) {
+          resposta.json().then((json) => {
+            const selectZona = document.getElementById("select_zona");
+
+            selectZona.innerHTML = '<option value="-1">Selecione Uma opção</option>';
+
+            json.forEach((zona) => {
+              const novaOpcao = document.createElement("option");
+
+              novaOpcao.value = zona.idZona;
+              novaOpcao.textContent = zona.nome_zona;
+
+              selectZona.appendChild(novaOpcao);
+            });
+          });
+        } else {
+          console.log("Houve um erro ao tentar realizar o cadastro dos componentes!");
+          resposta.text().then((texto) => {
+            console.error(texto);
+          });
+        }
+      })
+      .catch(function (erro) {
+        console.log(erro);
+      });
   }
 </script>

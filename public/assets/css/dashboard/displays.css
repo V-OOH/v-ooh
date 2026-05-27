@@ -619,7 +619,7 @@
     .buttons {
         display: flex;
         flex-direction: row-reverse;
-        padding: 2vh 2vw 2vh 0;
+        padding: 2vh 2vw 2vh 2vh;
         gap: 1vw;
         width: 100%;
         border-top: solid 1px #d3d3d3;

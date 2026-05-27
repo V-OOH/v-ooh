@@ -10,13 +10,14 @@ function listarDisplays(idEmpresa) {
 
 function buscarZona(idEmpresa) {
   let instrucaoSql = `SELECT 
+    z.idZona,
     z.nome AS nome_zona,
     z.descricao AS descricao_zona,
     COUNT(d.idDisplay) AS quantidade_displays
 FROM zona AS z
-INNER JOIN display AS d 
-    ON z.idZona = d.fkZona
-WHERE d.fkEmpresa = ${idEmpresa}
+LEFT JOIN display AS d 
+    ON z.idZona = d.fkZona AND d.fkEmpresa = z.fkEmpresa
+WHERE z.fkEmpresa = ${idEmpresa}
 GROUP BY z.idZona, z.nome, z.descricao;`;
 
   console.log("Executando a instrução SQL: ", instrucaoSql);
@@ -26,11 +27,14 @@ GROUP BY z.idZona, z.nome, z.descricao;`;
 
 function listarZona(idEmpresa) {
   let instrucaoSql = `SELECT 
+    z.idZona,
     z.nome AS nome,
     GROUP_CONCAT(DISTINCT CONCAT(e.logradouro, ', ', e.numero, ', ', e.cidade) SEPARATOR '; ') AS enderecos_brutos
 FROM zona z
-JOIN display d ON d.fkZona = z.idZona
-JOIN endereco e ON e.fkDisplay = d.idDisplay
+INNER JOIN display d 
+    ON d.fkZona = z.idZona
+INNER JOIN endereco e 
+    ON e.fkDisplay = d.idDisplay AND e.fkEmpresa = d.fkEmpresa
 WHERE d.fkEmpresa = ${idEmpresa}
 GROUP BY z.idZona, z.nome;`;
 
