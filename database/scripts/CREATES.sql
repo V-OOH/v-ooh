@@ -62,7 +62,7 @@ CREATE TABLE cadastroEmpresa (
     ultima_referencia DATETIME DEFAULT CURRENT_TIMESTAMP,
 		CONSTRAINT fkcontrato_empresa
 			FOREIGN KEY (fkEmpresa)
-				REFERENCES CadastroEmpresa (idcadastroEmpresa)
+				REFERENCES cadastroEmpresa (idcadastroEmpresa)
  );
 
 -- Usuário
