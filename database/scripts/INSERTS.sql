@@ -20,9 +20,9 @@ VALUES
 
 -- 4. Insert display (Depende de empresa e zona)
 INSERT INTO display 
-(fkEmpresa, fkZona, nome, numeroIdentificacao, sistemaOperacional, enderecoIP)
+(fkEmpresa, fkZona, nome, numeroIdentificacao, sistemaOperacional, enderecoIP, mac)
 VALUES 
-(2, 1, 'Servidor Principal Laranja', 'SRV-002', 'Ubuntu 23.04', '192.168.1.10');
+(2, 1, 'Servidor Principal Laranja', 'SRV-002', 'Ubuntu 23.04','192.168.1.1', 'a4:63:a1:6e:67:09');
 
 -- 5. Insert endereço (Depende de empresa e display)
 INSERT INTO endereco 

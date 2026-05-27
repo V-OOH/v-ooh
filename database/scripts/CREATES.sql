@@ -24,7 +24,7 @@ USE vooh;
  * - Data e hora de atualização
   * - Status da empresa
  * */
- 
+
 CREATE TABLE cadastroEmpresa (
 	idcadastroEmpresa INT PRIMARY KEY AUTO_INCREMENT,
 	nomeResponsavel VARCHAR(50) NOT NULL,
@@ -101,15 +101,15 @@ CREATE TABLE usuario(
     dataAtualizacao DATETIME DEFAULT CURRENT_TIMESTAMP,
     tipoUsuario CHAR(25),
     documentoIdetificacao VARCHAR(20),
-		CONSTRAINT chkCliente 
+		CONSTRAINT chkCliente
 			CHECK (statusUsuario IN ('Ativo', 'Inativo')),
-		CONSTRAINT chk_usuario 
+		CONSTRAINT chk_usuario
 			CHECK (tipoUsuario IN ('Gestor', 'Funcionario', 'Suporte')),
-		CONSTRAINT fkCadastroEmpresa 
-			FOREIGN KEY (fkEmpresa) 
+		CONSTRAINT fkCadastroEmpresa
+			FOREIGN KEY (fkEmpresa)
 				REFERENCES cadastroEmpresa(idcadastroEmpresa),
 		CONSTRAINT fkusuarioSuperior
-			FOREIGN KEY (fkSuperior) 
+			FOREIGN KEY (fkSuperior)
 				REFERENCES usuario(idUsuario)
 );
 
@@ -127,13 +127,13 @@ CREATE TABLE usuario(
  * */
 
 CREATE TABLE contato (
-    idContato INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
+    idContato INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     fkEmpresa INT NOT NULL,
     telefoneFixo CHAR(12) NOT NULL UNIQUE,
     telefoneCelular CHAR(12) NOT NULL UNIQUE,
     email VARCHAR(100) NOT NULL UNIQUE,
 		CONSTRAINT fkEmpresa_contato
-			FOREIGN KEY (fkEmpresa) 
+			FOREIGN KEY (fkEmpresa)
 				REFERENCES cadastroEmpresa(idcadastroEmpresa)
 );
 
@@ -177,6 +177,7 @@ CREATE TABLE display (
     numeroIdentificacao VARCHAR(45),
     sistemaOperacional VARCHAR(45),
     enderecoIP VARCHAR(100),
+    mac VARCHAR(20) NOT NULL,
 		CONSTRAINT fkEmpresa_display
 			FOREIGN KEY (fkEmpresa)
 				REFERENCES cadastroEmpresa(idcadastroEmpresa),
@@ -197,11 +198,11 @@ CREATE TABLE endereco (
     cidade VARCHAR(40) NOT NULL,
     uf CHAR(2) NOT NULL,
 		CONSTRAINT fkEmpresa_endereco
-			FOREIGN KEY (fkEmpresa) 
+			FOREIGN KEY (fkEmpresa)
 				REFERENCES cadastroEmpresa(idcadastroEmpresa),
 	CONSTRAINT fkServidor_endereco
-			FOREIGN KEY (fkDisplay) 
-				REFERENCES display (idDisplay)             
+			FOREIGN KEY (fkDisplay)
+				REFERENCES display (idDisplay)
 );
 
 -- Componente
@@ -213,7 +214,7 @@ CREATE TABLE endereco (
  * - Tipo do componente
  * - Unidade de medida do componente
  * */
- 
+
 CREATE TABLE componentes (
 	idComponente INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(45),
@@ -240,7 +241,7 @@ CREATE TABLE display_componentes (
     fkComponente INT NOT NULL,
         CONSTRAINT chaveComposta_servidorComponente
             PRIMARY KEY (fkDisplay, fkEmpresa, fkComponente),
-    limite_min INT , 
+    limite_min INT ,
     limite_max INT ,
         CONSTRAINT fkServidor_servidorComponente
             FOREIGN KEY (fkDisplay)
@@ -252,4 +253,3 @@ CREATE TABLE display_componentes (
             FOREIGN KEY (fkComponente)
                 REFERENCES componentes(idComponente)
 );
-
