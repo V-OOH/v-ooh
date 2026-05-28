@@ -355,10 +355,9 @@
             </div>
         </div>
     </div>
-
-    <div class="graficos">
+ <div class="graficos">
         <div class="grafico-card">
-            <h3>Throughput por Interface (Últimos 30s)</h3>
+            <h3>Fluxo de Dados — <span id="grafico-interface-label">eth0</span> (Últimos 5min)</h3>
             <canvas id="graficoTp"></canvas>
         </div>
 
@@ -371,127 +370,13 @@
             <h3>Conexões por Estado</h3>
             <canvas id="graficoCon"></canvas>
         </div>
-    </div>
 
-    <div class="detalhes-rede">
-
-        <div class="card-detalhe">
-            <h3><span class="dot orange"></span> MTU por Interface</h3>
-            <div class="mtu-grid">
-                <div class="mtu-item">
-                    <span class="nome-interface">eth0</span>
-                    <span class="valor-mtu">1500</span>
-                    <span class="label-mtu">padrão</span>
-                </div>
-                <div class="mtu-item">
-                    <span class="nome-interface">wlan0</span>
-                    <span class="valor-mtu">1500</span>
-                    <span class="label-mtu">padrão</span>
-                </div>
-                <div class="mtu-item">
-                    <span class="nome-interface">lo</span>
-                    <span class="valor-mtu blue-text">65536</span>
-                    <span class="label-mtu">loopback</span>
-                </div>
-                <div class="mtu-item">
-                    <span class="nome-interface">docker0</span>
-                    <span class="valor-mtu">1500</span>
-                    <span class="label-mtu">padrão</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="card-detalhe">
-            <h3><span class="dot red"></span> Erros & Drops Detalhados</h3>
-            <table class="tabela-detalhes">
-                <thead>
-                    <tr>
-                        <th>Interface</th>
-                        <th class="orange-text">Drop↓</th>
-                        <th class="orange-text">Drop↑</th>
-                        <th class="red-text">Err↓</th>
-                        <th class="red-text">Err↑</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>eth0</td>
-                        <td class="bold orange-text">1</td>
-                        <td class="bold orange-text">2</td>
-                        <td class="bold red-text">1</td>
-                        <td>0</td>
-                    </tr>
-                    <tr>
-                        <td>wlan0</td>
-                        <td class="bold orange-text">8</td>
-                        <td class="bold orange-text">1</td>
-                        <td class="bold red-text">2</td>
-                        <td>0</td>
-                    </tr>
-                    <tr>
-                        <td>lo</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                    </tr>
-                    <tr>
-                        <td>docker0</td>
-                        <td class="bold orange-text">2</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div class="card-detalhe">
-            <h3><span class="dot blue"></span> Status das Interfaces</h3>
-            <div class="status-list">
-                <div class="status-item">
-                    <div class="interface-info">
-                        <span class="interface-title">eth0</span>
-                        <span class="interface-subtitle">1 Gbps</span>
-                    </div>
-                    <div class="interface-meta">
-                        <span class="icone icone-online">ONLINE</span>
-                        <span class="interface-data">↓87.2 GB ↑12.4 GB</span>
-                    </div>
-                </div>
-                <div class="status-item">
-                    <div class="interface-info">
-                        <span class="interface-title">wlan0</span>
-                        <span class="interface-subtitle">300 Mbps</span>
-                    </div>
-                    <div class="interface-meta">
-                        <span class="icone icone-online">ONLINE</span>
-                        <span class="interface-data">↓18.6 GB ↑2.1 GB</span>
-                    </div>
-                </div>
-                <div class="status-item">
-                    <div class="interface-info">
-                        <span class="interface-title">lo</span>
-                        <span class="interface-subtitle">—</span>
-                    </div>
-                    <div class="interface-meta">
-                        <span class="icone icone-online">ONLINE</span>
-                        <span class="interface-data">↓1.2 MB ↑1.2 MB</span>
-                    </div>
-                </div>
-                <div class="status-item">
-                    <div class="interface-info">
-                        <span class="interface-title">docker0</span>
-                        <span class="interface-subtitle">10 Gbps</span>
-                    </div>
-                    <div class="interface-meta">
-                        <span class="icone icone-idle">IDLE</span>
-                        <span class="interface-data">↓612 MB ↑340 MB</span>
-                    </div>
-                </div>
-            </div>
+        <div class="grafico-card full-width">
+            <h3>Estabilidade da Rede (Ultimas 24h)</h3>
+            <canvas id="graficoEstab"></canvas>
         </div>
     </div>
+
     <div class="card card-full">
         <div class="card-title">
             <span class="dot purple"></span> Diagnóstico Rápido
