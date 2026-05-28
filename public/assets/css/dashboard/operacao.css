@@ -1779,6 +1779,15 @@
     .body .kpis #kpi1 .content .info .tendencia-container {
         height: 40px;
         margin-top: 5px;
+        width: 10vw;
+    }
+
+    #tendencia-pontuacao-chart {
+        width: 10vw;
+    }
+
+    .pontuacao-container {
+        width: 10vw;
     }
 
     /*KPIS2*/
@@ -1959,6 +1968,8 @@
         box-shadow: 0 10px 20px rgba(0, 0, 0, 0.201);
         display: flex;
         justify-content: flex-start;
+        height: 100%;
+        align-items: center;
     }
 
     .body .disponibilidade .disponibilidade-container #disponibilidade {
