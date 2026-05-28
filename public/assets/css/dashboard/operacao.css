@@ -1853,6 +1853,7 @@
         height: 100%;
         display: flex;
         flex-direction: column;
+        justify-content: space-between;
     }
 
     .body .kpis #kpi3 .valor {
@@ -1905,6 +1906,9 @@
         font-size: 12px;
         border-radius: 16px;
         height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
     }
 
     .body .kpis #kpi4 .valor {
