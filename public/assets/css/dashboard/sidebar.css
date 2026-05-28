@@ -728,6 +728,8 @@
         overflow-y: auto;
         scrollbar-width: none;
         height: 80%;
+        border-top: 1px solid var(--color-light-purple);
+        border-bottom: 1px solid var(--color-light-purple);
     }
 
     aside .container-top {
