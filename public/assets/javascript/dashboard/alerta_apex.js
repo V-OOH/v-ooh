@@ -154,7 +154,7 @@ chart_rosca.render()
 var options4 = {
   series: [{
     name: 'Alertas',
-    data: [10, 5, 15, 2]
+    data: [10, 5, 15]
   }],
   chart: {
     height: "100%",
@@ -182,7 +182,7 @@ var options4 = {
   },
 
   xaxis: {
-    categories: ["CPU", "DISCO", "RAM", "REDE"],
+    categories: ["CPU", "DISCO", "RAM"],
     position: 'bottom',
     axisBorder: {
       show: false
@@ -219,7 +219,6 @@ var options4 = {
   colors: [
     '#564592',
     '#CA7DF9',
-    '#F896D8',
     '#EDF67D'
   ]
 };
