@@ -263,11 +263,11 @@
     }
 
     .processos-content .container {
-        display: flex;
-        width: 100%;
-        align-items: flex-start;
-        gap: 20px;
-    }
+    display: grid;
+    width: 100%;
+    align-items: flex-start;
+    gap: 20px;
+}
 
     .processos-content .container .processos-table {
         width: 100%;

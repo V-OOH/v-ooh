@@ -18,7 +18,7 @@
     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
   <!--Stylesheet-->
-  <link rel="stylesheet" href="../assets/css/dashboard/displays.css" />
+  <link rel="stylesheet" href="../assets/css/dashboard/display_teste.css" />
 
   <!--Google Fonts-->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -928,6 +928,34 @@
 
           <div class="processos-content">
             <div class="container">
+
+<div class="graficos">
+            <div class="grafico-card">
+              <h3>Uso de CPU</h3>
+              <canvas id="graficoCpu"></canvas>
+            </div>
+
+            <div class="grafico-card">
+              <h3>Uso de RAM</h3>
+              <canvas id="graficoRam"></canvas>
+            </div>
+
+            <!--
+            <div class="grafico-card">
+              <h3>Uso de Disco</h3>
+              <canvas id="graficoDisco"></canvas>
+            </div>
+            -->
+
+            <!--
+            <div class="grafico-card">
+              <h3>Rede</h3>
+              <canvas id="graficoRede"></canvas>
+            </div>
+            -->
+          </div>
+
+
               <div class="processos-table">
                 <h2 class="titulo">Processos do sistema</h2>
                 <div class="card">
@@ -937,7 +965,7 @@
                         <th>PID</th>
                         <th>Nome</th>
                         <th>Status</th>
-                        <th>Memória (mb)</th>
+                        <th>RAM (mb)</th>
                         <th>CPU (%)</th>
                       </tr>
                     </thead>
@@ -1077,32 +1105,6 @@
             </div>
           </div> 
              --> 
-
-          <div class="graficos">
-            <div class="grafico-card">
-              <h3>Uso de CPU</h3>
-              <canvas id="graficoCpu"></canvas>
-            </div>
-
-            <div class="grafico-card">
-              <h3>Uso de RAM</h3>
-              <canvas id="graficoRam"></canvas>
-            </div>
-
-            <!--
-            <div class="grafico-card">
-              <h3>Uso de Disco</h3>
-              <canvas id="graficoDisco"></canvas>
-            </div>
-            -->
-
-            <!--
-            <div class="grafico-card">
-              <h3>Rede</h3>
-              <canvas id="graficoRede"></canvas>
-            </div>
-            -->
-          </div>
 
     <!-- </dialog> -->
   </div>
