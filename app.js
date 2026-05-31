@@ -19,6 +19,7 @@ const componenteRouter = require("./src/routes/componente");
 const displayRouter = require("./src/routes/display");
 const configRouter = require("./src/routes/config");
 const liaRouter = require("./src/routes/lia");
+const incidenteRouter = require("./src/routes/incidentes");
 
 app.use(cors());
 app.use(express.json());
@@ -33,6 +34,7 @@ app.use("/componente", componenteRouter);
 app.use("/display", displayRouter);
 app.use("/config", configRouter);
 app.use("/lia", liaRouter);
+app.use("/incidentes", incidenteRouter);
 
 app.listen(PORTA_APP, function () {
   console.log(
