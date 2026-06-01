@@ -30,6 +30,8 @@
 
     .body .container {
         padding: 2% 3.5%;
+        display: flex;
+        justify-content: space-between;
     }
 
     .body .container .title {
@@ -126,7 +128,7 @@
     .body .content .kpis .card {
         width: 17vw;
         height: 22vh;
-        margin: 2% 2% 0 0;
+        margin: 1% 2% 0 0;
         border-radius: 25px;
         background-color: var(--color-white);
         padding: 25px;
@@ -141,7 +143,7 @@
         display: flex;
         text-align: start;
         margin-bottom: 2%;
-        margin-right: 53%;
+        margin-right: 70%;
     }
 
     .body .content .kpis .card:nth-child(1) .ii {
@@ -255,18 +257,19 @@
         height: 100%;
     }
 
-    /*Processos e alertas*/
+    /* Processos e alertas
     .processos-content {
         display: flex;
         width: 100%;
         margin-top: 6%;
-    }
+    } */
 
     .processos-content .container {
     display: grid;
     width: 100%;
     align-items: flex-start;
     gap: 20px;
+    grid-auto-columns: 1fr 1fr;
 }
 
     .processos-content .container .processos-table {
@@ -859,7 +862,23 @@
         color: var(--color-deep-purple);
     }
 
-    .nav-buttons {
+    .header-content-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    }
+
+    .header-content-actions .title {
+    background-color: transparent;
+    margin: 0;
+    }
+
+  #display_identificador {
+    color: var(--color-purple);
+    font-weight: bold;
+    }
+
+  .nav-buttons {
     display: flex;
     gap: 10px;
     }
@@ -870,6 +889,27 @@
     border-radius: 10px;
     font-weight: bold;
     transition: all 0.3s ease;
+    }
+
+  .button-white {
+    border: 1px solid var(--color-purple);
+    color: var(--color-purple);
+    background-color: white;
+    }
+
+  .button-white:hover {
+    background-color: var(--color-light-gray);
+    }
+
+  .button-purple {
+    border: none;
+    color: white;
+    background-color: var(--color-purple);
+    }
+
+  .button-purple:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
     }
 
     #dashboard #close_dash {
