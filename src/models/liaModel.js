@@ -33,4 +33,6 @@ async function request(mensagem) {
   }
 }
 
+
+
 module.exports = request;

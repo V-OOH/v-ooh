@@ -1,338 +1,378 @@
-const ctx = document.getElementById('graficoLinha');
+async function buscarDadosS3() {
+    const idEmpresa = sessionStorage.getItem("FKEMPRESA");
 
-new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: ['00h', '01h', '02h', '03h', '04h', '05h', '14h', '15h', '16h', '17h'],
-        datasets: [{
-            label: 'Incidentes',
-            data: [1, 4, 4, 9, 7, 1, 11, 11, 11, 1],
+    const resposta = await fetch(`/incidentes/dados-s3/${idEmpresa}`);
 
-            borderColor: '#7B3FF2',
-            backgroundColor: '#7B3FF2',
+    if (!resposta.ok) {
+        console.error("Erro ao buscar dados:", resposta.status);
+        return;
+    }
 
-            tension: 0.3,
-            fill: false,
+    const dados = await resposta.json();
 
-            pointBackgroundColor: '#D9FF00',
-            pointBorderColor: '#D9FF00',
-            pointRadius: 4,
+    console.log("JSON recebido do S3:", dados);
 
-            borderWidth: 2
-        }]
-    },
+    return dados;
+}
 
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
+let graficoLinha;
+let graficoRanking;
 
-        plugins: {
-            legend: {
-                display: false
-            },
-            title: {
-                display: true,
-                text: 'Incidentes nas últimas 24h'
-            }
-        },
 
-        scales: {
-            y: {
-                beginAtZero: true,
-                ticks: {
-                    stepSize: 2
-                }
-            }
+function pegarUltimaLeitura(dados) {
+    const dias = Object.keys(dados);
+    const ultimoDia = dias[dias.length - 1];
+
+    const horas = Object.keys(dados[ultimoDia]);
+    const ultimaHora = horas[horas.length - 1];
+
+    return dados[ultimoDia][ultimaHora];
+}
+
+function atualizarKPIs(dados) {
+    const ultimaLeitura = pegarUltimaLeitura(dados);
+    const kpis = ultimaLeitura.kpis;
+
+    document.getElementById("kpiDisplaysOff").innerHTML = kpis.quantidadeOffline;
+    document.getElementById("totalDisplay").innerHTML = kpis.quantidadeDisplays;
+    document.getElementById("kpiHorasOff").innerHTML = kpis.horasOffline;
+    document.getElementById("kpiMTBF").innerHTML = kpis.mtbf.toFixed(2);
+    document.getElementById("kpiDisponibilidade").innerHTML = `${kpis.disponibilidade.toFixed(1)}%`;
+}
+
+function atualizarGraficoLinha(dados) {
+    const leituras = [];
+
+    for (var dia in dados) {
+        for (var hora in dados[dia]) {
+            leituras.push({
+                label: `${hora}`,
+                valor: dados[dia][hora].novosOffline || 0
+            });
         }
     }
-});
 
-const ranking = document.getElementById('graficoRanking');
+    // Mantém somente as últimas 24 leituras
+    const ultimas24 = leituras.slice(-24);
 
-new Chart(ranking, {
-    type: 'bar',
+    const labels = ultimas24.map(item => item.label);
+    const valores = ultimas24.map(item => item.valor);
 
-    data: {
-        labels: ['CPU', 'RAM', 'REDE', 'DISCO', 'Outros'],
+    console.log("Labels linha:", labels);
+    console.log("Valores linha:", valores);
 
-        datasets: [{
-            data: [26, 22, 17, 13, 11],
+    if (graficoLinha) {
+        graficoLinha.destroy();
+    }
 
-            backgroundColor: '#6F2CF3',
-            borderRadius: 1,
-            barThickness: 18
-        }]
-    },
-
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        indexAxis: 'y',
-
-        plugins: {
-            legend: {
-                display: false
-            },
-            title: {
-                display: true,
-                text: "Ranking de motivos por incidente"
+    const optionsLinha = {
+        series: [{
+            name: 'Incidentes',
+            data: valores
+        }],
+        chart: {
+            type: 'line',
+            height: 200,
+            toolbar: { show: true }
+        },
+        colors: ['#7B3FF2'],
+        stroke: {
+            curve: 'smooth',
+            width: 3
+        },
+        markers: {
+            size: 5,
+            colors: ['#D9FF00']
+        },
+        xaxis: {
+            categories: labels,
+            labels: {
+                show: true,
+                rotate: -45
             }
         },
+        title: {
+            text: 'Incidentes nas últimas 24h'
+        },
+        legend: {
+            show: false
+        }
+    };
 
-        scales: {
-            x: {
-                beginAtZero: true,
-                grid: {
-                    display: false
-                }
-            },
+    graficoLinha = new ApexCharts(
+        document.querySelector("#graficoLinha"),
+        optionsLinha
+    );
 
-            y: {
-                grid: {
-                    display: false
+    graficoLinha.render();
+}
+
+
+function atualizarGraficoRanking(dados) {
+    const contagemMotivos = {};
+
+    for (const dia in dados) {
+        for (const hora in dados[dia]) {
+            const displaysOffline = dados[dia][hora].displaysOffline || [];
+
+            displaysOffline.forEach(display => {
+                const motivo = display.motivoOffline || "Outros";
+
+                if (!contagemMotivos[motivo]) {
+                    contagemMotivos[motivo] = 0;
                 }
-            }
+
+                contagemMotivos[motivo]++;
+            });
         }
     }
-});
 
-var options = {
-    
-    series: [
+    const motivos = Object.keys(contagemMotivos);
+    const valores = Object.values(contagemMotivos);
 
-        
-        {
-            name: 'Domingo',
-            data: [
-                { x: '00h', y: 10 },
-                { x: '01h', y: 10 },
-                { x: '02h', y: 10 },
-                { x: '03h', y: 10 },
-                { x: '04h', y: 20 },
-                { x: '05h', y: 10 },
-                { x: '06h', y: 10 },
-                { x: '07h', y: 10 },
-                { x: '08h', y: 35 },
-                { x: '09h', y: 10 },
-                { x: '10h', y: 10 },
-                { x: '11h', y: 10 },
-                { x: '12h', y: 50 },
-                { x: '13h', y: 10 },
-                { x: '14h', y: 10 },
-                { x: '15h', y: 10 },
-                { x: '16h', y: 40 },
-                { x: '17h', y: 10 },
-                { x: '18h', y: 10 },
-                { x: '19h', y: 10 },
-                { x: '20h', y: 15 },
-                { x: '21h', y: 50 },
-                { x: '22h', y: 100},
-                { x: '23h', y: 12 }
-            ]
-        },
-        {
-            name: 'Sábado',
-            data: [
-                { x: '00h', y: 10 },
-                { x: '01h', y: 10 },
-                { x: '02h', y: 10 },
-                { x: '03h', y: 10 },
-                { x: '04h', y: 20 },
-                { x: '05h', y: 10 },
-                { x: '06h', y: 10 },
-                { x: '07h', y: 10 },
-                { x: '08h', y: 35 },
-                { x: '09h', y: 10 },
-                { x: '10h', y: 10 },
-                { x: '11h', y: 10 },
-                { x: '12h', y: 50 },
-                { x: '13h', y: 10 },
-                { x: '14h', y: 10 },
-                { x: '15h', y: 10 },
-                { x: '16h', y: 40 },
-                { x: '17h', y: 10 },
-                { x: '18h', y: 10 },
-                { x: '19h', y: 10 },
-                { x: '20h', y: 15 },
-                { x: '21h', y: 50 },
-                { x: '22h', y: 100},
-                { x: '23h', y: 12 }
-            ]
-        },
-        {
-            name: 'Sexta',
-            data: [
-                { x: '00h', y: 10 },
-                { x: '01h', y: 10 },
-                { x: '02h', y: 10 },
-                { x: '03h', y: 10 },
-                { x: '04h', y: 20 },
-                { x: '05h', y: 10 },
-                { x: '06h', y: 10 },
-                { x: '07h', y: 10 },
-                { x: '08h', y: 35 },
-                { x: '09h', y: 10 },
-                { x: '10h', y: 10 },
-                { x: '11h', y: 10 },
-                { x: '12h', y: 50 },
-                { x: '13h', y: 10 },
-                { x: '14h', y: 10 },
-                { x: '15h', y: 10 },
-                { x: '16h', y: 40 },
-                { x: '17h', y: 10 },
-                { x: '18h', y: 10 },
-                { x: '19h', y: 10 },
-                { x: '20h', y: 15 },
-                { x: '21h', y: 50 },
-                { x: '22h', y: 100},
-                { x: '23h', y: 12 }
-            ]
-        },
-        {
-            name: 'Quinta',
-            data: [
-                { x: '00h', y: 0},
-                { x: '01h', y: 10 },
-                { x: '02h', y: 10 },
-                { x: '03h', y: 10 },
-                { x: '04h', y: 20 },
-                { x: '05h', y: 10 },
-                { x: '06h', y: 10 },
-                { x: '07h', y: 10 },
-                { x: '08h', y: 35 },
-                { x: '09h', y: 10 },
-                { x: '10h', y: 10 },
-                { x: '11h', y: 10 },
-                { x: '12h', y: 50 },
-                { x: '13h', y: 10 },
-                { x: '14h', y: 10 },
-                { x: '15h', y: 10 },
-                { x: '16h', y: 40 },
-                { x: '17h', y: 10 },
-                { x: '18h', y: 10 },
-                { x: '19h', y: 10 },
-                { x: '20h', y: 15 },
-                { x: '21h', y: 50 },
-                { x: '22h', y: 100},
-                { x: '23h', y: 12 }
-            ]
-        },
-        {
-            name: 'Quarta',
-            data: [
-                { x: '00h', y: 10 },
-                { x: '01h', y: 10 },
-                { x: '02h', y: 10 },
-                { x: '03h', y: 10 },
-                { x: '04h', y: 20 },
-                { x: '05h', y: 10 },
-                { x: '06h', y: 10 },
-                { x: '07h', y: 10 },
-                { x: '08h', y: 35 },
-                { x: '09h', y: 10 },
-                { x: '10h', y: 10 },
-                { x: '11h', y: 10 },
-                { x: '12h', y: 50 },
-                { x: '13h', y: 10 },
-                { x: '14h', y: 10 },
-                { x: '15h', y: 10 },
-                { x: '16h', y: 40 },
-                { x: '17h', y: 10 },
-                { x: '18h', y: 10 },
-                { x: '19h', y: 10 },
-                { x: '20h', y: 15 },
-                { x: '21h', y: 50 },
-                { x: '22h', y: 100},
-                { x: '23h', y: 12 }
-            ]
-        },
-        {
-            name: 'Terça',
-            data: [
-                { x: '00h', y: 10 },
-                { x: '01h', y: 10 },
-                { x: '02h', y: 10 },
-                { x: '03h', y: 10 },
-                { x: '04h', y: 20 },
-                { x: '05h', y: 10 },
-                { x: '06h', y: 10 },
-                { x: '07h', y: 10 },
-                { x: '08h', y: 35 },
-                { x: '09h', y: 10 },
-                { x: '10h', y: 10 },
-                { x: '11h', y: 10 },
-                { x: '12h', y: 50 },
-                { x: '13h', y: 10 },
-                { x: '14h', y: 10 },
-                { x: '15h', y: 10 },
-                { x: '16h', y: 40 },
-                { x: '17h', y: 10 },
-                { x: '18h', y: 10 },
-                { x: '19h', y: 10 },
-                { x: '20h', y: 15 },
-                { x: '21h', y: 50 },
-                { x: '22h', y: 100},
-                { x: '23h', y: 12 }
-            ]
-        },
-        {
-            name: 'Segunda',
-            data: [
-                { x: '00h', y: 10 },
-                { x: '01h', y: 10 },
-                { x: '02h', y: 10 },
-                { x: '03h', y: 10 },
-                { x: '04h', y: 20 },
-                { x: '05h', y: 10 },
-                { x: '06h', y: 10 },
-                { x: '07h', y: 10 },
-                { x: '08h', y: 35 },
-                { x: '09h', y: 10 },
-                { x: '10h', y: 10 },
-                { x: '11h', y: 10 },
-                { x: '12h', y: 50 },
-                { x: '13h', y: 10 },
-                { x: '14h', y: 10 },
-                { x: '15h', y: 10 },
-                { x: '16h', y: 40 },
-                { x: '17h', y: 10 },
-                { x: '18h', y: 10 },
-                { x: '19h', y: 10 },
-                { x: '20h', y: 15 },
-                { x: '21h', y: 50 },
-                { x: '22h', y: 100},
-                { x: '23h', y: 12 }
-            ]
-        },
-    ],
+    console.log("Motivos ranking:", motivos);
+    console.log("Valores ranking:", valores);
 
-    chart: {
-        type: 'heatmap',
-        height: 220,
-        radius: 100
-    
-    },
-
-    plotOptions: { 
-        heatmap: { 
-            radius: 5 
-        } 
-    }, 
-
-    dataLabels: {
-        enabled: false
-    },
-
-    colors: ['#6d33ff'],
-
-    title: {
-        text: 'Mapa de Calor de Incidentes'
+    if (graficoRanking) {
+        graficoRanking.destroy();
     }
+
+    const optionsRanking = {
+        series: [{
+            name: 'Incidentes',
+            data: valores
+        }],
+        chart: {
+            type: 'bar',
+            height: 200,
+            toolbar: {
+                show: true
+            }
+        },
+        colors: ['#6F2CF3'],
+        plotOptions: {
+            bar: {
+                horizontal: true,
+                borderRadius: 2,
+                barHeight: '60%'
+            }
+        },
+        dataLabels: {
+            enabled: false
+        },
+        xaxis: {
+            categories: motivos
+        },
+        title: {
+            text: 'Ranking de motivos por incidente'
+        },
+        legend: {
+            show: false
+        }
+    };
+
+    graficoRanking = new ApexCharts(
+        document.querySelector("#graficoRanking"),
+        optionsRanking
+    );
+
+    graficoRanking.render();
+}
+
+
+
+
+function criarGraficoLinha() {
+    const optionsLinha = {
+        series: [{
+            name: 'Incidentes',
+            data: []
+        }],
+        chart: {
+            type: 'line',
+            height: 200,
+            redrawOnWindowResize: true,
+            redrawOnParentResize: true,
+            toolbar: {
+                show: true
+            }
+        },
+        colors: ['#7B3FF2'],
+        stroke: {
+            curve: 'smooth',
+            width: 3
+        },
+        markers: {
+            size: 5,
+            colors: ['#D9FF00']
+        },
+        xaxis: {
+            categories: []
+        },
+        title: {
+            text: 'Incidentes nas últimas 24h'
+        },
+        legend: {
+            show: false
+        }
+    };
+
+    graficoLinha = new ApexCharts(
+        document.querySelector("#graficoLinha"),
+        optionsLinha
+    );
+
+    return graficoLinha.render();
+}
+
+
+
+function criarGraficoRanking() {
+    const optionsRanking = {
+        series: [{
+            name: 'Incidentes',
+            data: []
+        }],
+        chart: {
+            type: 'bar',
+            height: 200,
+            redrawOnWindowResize: true,
+            redrawOnParentResize: true,
+            toolbar: {
+                show: true
+            }
+        },
+        colors: ['#6F2CF3'],
+        plotOptions: {
+            bar: {
+                horizontal: true,
+                borderRadius: 2,
+                barHeight: '60%'
+            }
+        },
+        dataLabels: {
+            enabled: false
+        },
+        xaxis: {
+            categories: []
+        },
+        title: {
+            text: 'Ranking de motivos por incidente'
+        },
+        legend: {
+            show: false
+        }
+    };
+
+    graficoRanking = new ApexCharts(
+        document.querySelector("#graficoRanking"),
+        optionsRanking
+    );
+
+    return graficoRanking.render();
+}
+
+let graficoHeatmap;
+
+function atualizarHeatmap(dados) {
+    const diasSemana = [
+        "Segunda",
+        "Terça",
+        "Quarta",
+        "Quinta",
+        "Sexta",
+        "Sábado",
+        "Domingo"
+    ];
+
+    const horas = Array.from({ length: 24 }, (_, i) => {
+        return `${String(i).padStart(2, "0")}h`;
+    });
+
+    const series = diasSemana.map(dia => ({
+        name: dia,
+        data: horas.map(hora => ({
+            x: hora,
+            y: 0
+        }))
+    }));
+
+    const mapaDias = {
+        0: 6, 
+        1: 0, 
+        2: 1, 
+        3: 2, 
+        4: 3, 
+        5: 4, 
+        6: 5  
+    };
+
+    for (const data in dados) {
+        const partes = data.split("_"); 
+
+        const dataObj = new Date(
+            Number(partes[2]),
+            Number(partes[1]) - 1,
+            Number(partes[0])
+        );
+
+        const linha = mapaDias[dataObj.getDay()];
+
+        for (const horaCompleta in dados[data]) {
+            const coluna = Number(horaCompleta.split(":")[0]);
+
+            series[linha].data[coluna].y +=
+                dados[data][horaCompleta].novosOffline || 0;
+        }
+    }
+
+    if (graficoHeatmap) {
+        graficoHeatmap.destroy();
+    }
+
+    const optionsHeatmap = {
+        series: series,
+        chart: {
+            type: "heatmap",
+            height: 220,
+            toolbar: {
+                show: true
+            }
+        },
+        plotOptions: {
+            heatmap: {
+                radius: 5
+            }
+        },
+        dataLabels: {
+            enabled: false
+        },
+        colors: ["#6d33ff"],
+        title: {
+            text: "Mapa de Calor de Incidentes"
+        }
+    };
+
+    graficoHeatmap = new ApexCharts(
+        document.querySelector("#heatmap"),
+        optionsHeatmap
+    );
+
+    graficoHeatmap.render();
+}
+
+
+window.onload = async function () {
+    await criarGraficoLinha();
+    await criarGraficoRanking();
+    
+
+    const dados = await buscarDadosS3();
+
+    
+    atualizarGraficoLinha(dados);
+    atualizarGraficoRanking(dados);
+    atualizarKPIs(dados);
+    atualizarHeatmap(dados);
+
 };
-
-var chart = new ApexCharts(
-    document.querySelector("#heatmap"),
-    options
-);
-
-chart.render();
