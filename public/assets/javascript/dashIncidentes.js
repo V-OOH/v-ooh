@@ -38,6 +38,48 @@ function atualizarKPIs(dados) {
     document.getElementById("kpiHorasOff").innerHTML = kpis.horasOffline;
     document.getElementById("kpiMTBF").innerHTML = kpis.mtbf.toFixed(2);
     document.getElementById("kpiDisponibilidade").innerHTML = `${kpis.disponibilidade.toFixed(1)}%`;
+    document.getElementById("comparacaoOffline").innerHTML = kpis.comparacaoOffline;
+    document.getElementById("comparacaoHorasOff").innerHTML = kpis.comparacaoHorasOff;
+
+    const comparacaoHoras = document.getElementById("comparacaoHorasOff");
+
+if (kpis.comparacaoHorasOff > 0) {
+    comparacaoHoras.innerHTML =
+        `↑ ${kpis.comparacaoHorasOff}h em relação a ontem`;
+
+    comparacaoHoras.style.color = "#ef4444";
+}
+else if (kpis.comparacaoHorasOff < 0) {
+    comparacaoHoras.innerHTML =
+        `↓ ${Math.abs(kpis.comparacaoHorasOff)}h em relação a ontem`;
+
+    comparacaoHoras.style.color = "#22c55e";
+}
+else {
+    comparacaoHoras.innerHTML =
+        "→ Mesmo tempo offline de ontem";
+
+    comparacaoHoras.style.color = "#a3a3a3";
+}
+
+if(kpis.comparacaoOffline > 0){
+    comparacaoOffline.innerHTML = 
+    `↑ ${kpis.comparacaoOffline} dispositivos em relação a ontem`;
+
+    comparacaoOffline.style.color = "#ef4444"
+}else if(kpis.comparacaoOffline < 0){
+    comparacaoOffline.innerHTML = 
+    `↓ ${Math.abs(kpis.comparacaoOffline)} dispositivos em relação a ontem`
+
+    comparacaoOffline.style.color = "#22c55e";
+}else {
+    comparacaoOffline.innerHTML = 
+    `→ Mesma quantidade offline de ontem`
+
+    comparacaoOffline.style.color = "#a3a3a3"
+}
+
+
 }
 
 function atualizarGraficoLinha(dados) {
@@ -374,7 +416,7 @@ window.onload = async function () {
     atualizarGraficoRanking(dados);
     atualizarKPIs(dados);
     atualizarHeatmap(dados);
-    await buscarRecomendacaoIA();
+    buscarRecomendacaoIA();
 
 };
 
@@ -398,5 +440,7 @@ async function buscarRecomendacaoIA() {
     <div class="textoIA">
         ${dados.alerta}
     </div>
+
+    
 `;
 }

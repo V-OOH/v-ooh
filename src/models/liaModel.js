@@ -75,9 +75,9 @@ Regras:
 
 const resumo = { 
         displaysOffline: displaysOffline.map(displays => ({
-        endereco: d.logradouro,
-        bairro: d.bairro,
-        motivo: d.motivoOffline
+        endereco: displays.logradouro,
+        bairro: displays.bairro,
+        motivo: displays.motivoOffline
     }))
 };
 

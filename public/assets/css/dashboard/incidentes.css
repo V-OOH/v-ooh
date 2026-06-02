@@ -253,6 +253,7 @@
 .sugestoes{
   width: 28vw;
   height: 250px;
+  
   background: #fff;
   border-radius: 20px;
   padding: 20px;
@@ -265,37 +266,28 @@
 } 
 }
 
-
-
 #alertaIA {
+  
     width: 100%;
     padding: 10px;
-
     background: linear-gradient(
         135deg,
         rgba(123, 63, 242, 0.15),
         rgba(123, 63, 242, 0.05)
     );
-
     border: 1px solid rgba(123, 63, 242, 0.3);
     border-left: 5px solid #7b3ff2;
-
     border-radius: 12px;
-
     color: #ffffff;
-
     font-size: 15px;
     font-weight: 500;
     line-height: 1.6;
-
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-
     transition: 0.3s;
 }
 
 #alertaIA:hover {
     transform: translateY(-2px);
-
     box-shadow: 0 8px 20px rgba(123, 63, 242, 0.2);
 }
 
