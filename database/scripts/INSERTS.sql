@@ -1,5 +1,5 @@
 USE vooh;
-
+select * from display;
 -- 1. Insert de empresas
 INSERT INTO cadastroEmpresa 
 (nomeResponsavel, nomeEmpresa, cnpj, statusCliente)
@@ -22,13 +22,20 @@ VALUES
 INSERT INTO display 
 (fkEmpresa, fkZona, nome, numeroIdentificacao, sistemaOperacional, enderecoIP, mac)
 VALUES 
-(2, 1, 'Servidor Principal Laranja', 'SRV-002', 'Ubuntu 23.04','192.168.1.1', 'a4:63:a1:6e:67:09');
+(2, 1, 'Servidor Principal Laranja', 'SRV-002', 'Ubuntu 23.04','192.168.1.1', 'a4:63:a1:6e:67:09'),
+(2, 1, 'Servidor Principal Laranja', 'SRV-002', 'Ubuntu 23.04','192.168.1.1', 'E0-2B-E9-6D-2E-C3');
+
 
 -- 5. Insert endereço (Depende de empresa e display)
 INSERT INTO endereco 
 (fkEmpresa, fkDisplay, cep, logradouro, numero, complemento, bairro, cidade, uf)
 VALUES 
 (2, 1, '01310100', 'Avenida Paulista', 1000, 'Sala 42', 'Bela Vista', 'São Paulo', 'SP');
+
+INSERT INTO endereco 
+(fkEmpresa, fkDisplay, cep, logradouro, numero, complemento, bairro, cidade, uf)
+VALUES 
+(2, 2, '01310100', 'Avenida Paulista', 1000, 'Sala 42', 'Bela Vista', 'São Paulo', 'SP');
 
 -- 6. Insert de usuario (Ajustado o segundo registro que estava desalinhado e faltando campos)
 INSERT INTO usuario
@@ -38,6 +45,11 @@ VALUES
 (1, '337', 1, 'Valete', 'valete@techsolutions.com', '2002-06-15', '12345678902', 'senha456', 'Ativo', 'Funcionario', 'RG1234568'),
 (2, NULL, NULL, 'Guilherme Ornaghi', 'guilherme@vooh.com', '2006-07-16', '12345672222', 'senha123', 'Ativo', 'Suporte', 'RG1254678'),
 (2, 'SUP001', NULL, 'Pedro Lima', 'pedro@digitalcorp.com', '1995-08-10', '11122233344', 'senha456', 'Ativo', 'Suporte', 'RG1122334');
+
+INSERT INTO usuario
+(fkEmpresa, codigoAcesso, fkSuperior, nome, email, dataNascimento, cpf, senha, statusUsuario, tipoUsuario, documentoIdetificacao)
+VALUES
+(2, 232, NULL, 'Guilherme Souto', 'souto@vooh.com', '2006-06-07', '123123213', 'senha123', 'Ativo', 'Gestor', 'RG1254678');
 
 -- 7. Insert de componentes
 INSERT INTO componentes (idComponente, nome, tipo, medida, biblioteca, parametro)

@@ -1483,6 +1483,10 @@
         justify-content: space-around;
     }
 
+    .container .data {
+        margin: 20px 0;
+    }
+
     .body .disponibilidade .mttr .metas-casos .meta-container .text {
         display: flex;
         flex-direction: column;
