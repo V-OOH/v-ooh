@@ -70,6 +70,40 @@
     background-color: var(--color-purple);
   }
 
+.filtro-zonas {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.btn-zona {
+    padding: 6px 16px;
+    height: auto;
+    border-radius: 20px;
+    border: 1px solid #c6ff33;
+    background: transparent;
+    color: #c6ff33;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: bold;
+    width: auto;
+    transition: 180ms ease-in-out;
+}
+
+.btn-zona.active {
+    background: #c6ff33;
+    color: #1e0b36;
+}
+
+  .button-purple span {
+    margin-left: 10px;
+  }
+
+  .input-pesquisa .button-purple:hover {
+    background-color: var(--color-deep-purple);
+  }
+
   .card-dispositivos {
     width: 400px;
     background: #fff;
@@ -620,6 +654,32 @@
     align-items: center;
     border-radius: 2.5px;
     background-color: var(--color-purple);
+  }
+
+    .filtro-zonas {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+
+  .btn-zona {
+    padding: 6px 16px;
+    height: auto;
+    border-radius: 20px;
+    border: 1px solid #c6ff33;
+    background: transparent;
+    color: #c6ff33;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: bold;
+    width: auto;
+    transition: 180ms ease-in-out;
+  }
+
+  .btn-zona.active {
+    background: #c6ff33;
+    color: #1e0b36;
   }
 
   .card-dispositivos {

@@ -1,386 +1,351 @@
-// Gráfico de Linhas
-let dados_kpi = [
-  1, 5, 5,
-  1, 5, 1, 3
-];
 
-var options = {
-  series: [{
-    data: dados_kpi
-  }],
-  chart: {
-    type: 'area',
-    width: "100%",
-    height: "100%",
-    zoom: {
-      enabled: false
-    },
-    toolbar: {
-      show: false
-    },
+const AlertaApex = {
 
-    sparkline: {
-      enabled: true
-    },
-  },
-  dataLabels: {
-    // show: true
-    enabled: false
+  // Criação das variáveis
+  _charts: {
+    kpi: null,
+    line: null,
+    bar: null,
+    barV: null,
+    scatter: null,
   },
 
-  fill: {
-    colors: ["#c6ff33"]
-  },
-};
-
-var chart_kpi = new ApexCharts(document.querySelector("#line-kpi"), options);
-chart_kpi.render();
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// Gráfico de Linhas
-let dados = [
-  1, 5, 5,
-  12, 8, 1, 3
-];
-
-var options2 = {
-  series: [{
-    name: "Quantidade de Alertas",
-    data: dados
-  }],
-  chart: {
-    type: 'area',
-    background: 'transparent',
-    width: "100%",
-    height: "100%",
-    // height: 200,
-    zoom: {
-      enabled: false
-    },
-    toolbar: {
-      show: false
-    }
-  },
-  // colors: "#c6ff33",
-  dataLabels: {
-    show: true
-    // enabled: false
-  },
-  stroke: {
-    curve: 'straight'
+  // Chamada o controller
+  renderizarTodos(dados) {
+    this.sparklineKPI(dados.grafico_evolucao_diaria);
+    this.linhaEvolucao(dados.grafico_evolucao_diaria);
+    this.barrasCausaRaiz(dados.grafico_causa_raiz);
+    this.barrasRankingDisplays(dados.grafico_ranking_displays);
+    this.dispersao24h(dados.grafico_dispersao_alertas);
   },
 
-  title: {
-    text: 'Histórico de Alertas (Últimos 7 dias)',
-    align: 'center',
-    style: { fontSize: '14px', fontWeight: 'bold' }
-  },
-  labels: ['Abr 10', 'Abr 11', 'Abr 12', 'Abr 13', 'Abr 14', 'Abr 15', 'Abr 16'],
-  xaxis: {
-    type: 'date',
-  },
-
-  annotations: {
-    yaxis: [
-      {
-        y: 9, // O valor onde a linha horizontal vai se posicionar
-        borderColor: "var(--color-danger)", // Cor da linha (Vermelho para alerta/meta)
-        strokeDashArray: 4, // Deixa a linha tracejada
-        label: {
-          borderColor: "var(--color-danger)",
-          style: {
-            color: "var(--color-white)",
-            background: "var(--color-danger)",
-          },
-          text: "Máximo: 10", // Texto que aparece no balão
-        },
-      },
-    ],
-  },
-
-  grid: {
-    show: false,
-  },
-
-  fill: {
-    colors: ["#c6ff33"],
-  },
-
-  legend: {
-    horizontalAlign: 'left'
-  }
-};
-
-var chart = new ApexCharts(document.querySelector("#graficoLine"), options2);
-chart.render();
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// Gráfico de Rosca
-var dados_rosca = [44, 56];
-
-var options3 = {
-  series: dados_rosca,
-  labels: ["Remoto", "Presencial"],
-  chart: {
-    type: 'donut',
-  },
-  responsive: [{
-    breakpoint: 480,
-    options: {
-      chart: {
-        width: 200
-      },
-      legend: {
-        position: 'bottom'
-      }
-    }
-  }],
-  title: {
-    text: 'Modo de Intervenção',
-    align: 'center',
-    style: { fontSize: '14px', fontWeight: 'bold' }
-  },
-};
-
-var chart_rosca = new ApexCharts(document.querySelector("#grafico-rosca"), options3);
-chart_rosca.render()
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// Gráfico de Barras (Horizontal)
-
-var options4 = {
-  series: [{
-    name: 'Alertas',
-    data: [10, 5, 15]
-  }],
-  chart: {
-    height: "100%",
-    type: 'bar',
-    toolbar: {
-      show: false
-    },
-  },
-  plotOptions: {
-    bar: {
-      borderRadius: 10,
-      dataLabels: {
-        position: 'top', // top, center, bottom
-      },
-    }
-  },
-  dataLabels: {
-    show: true,
-    enabled: false,
-    position: 'bottom',
-    style: {
-      fontSize: '12px',
-      colors: ["#000"]
+  // Evita que o apexchart empilhe gráficos
+  // Apaga os dados anterior, antes de redenrizar os novos
+  _destruir(chave) {
+    if (this._charts[chave]) {
+      this._charts[chave].destroy();
+      this._charts[chave] = null;
     }
   },
 
-  xaxis: {
-    categories: ["CPU", "DISCO", "RAM"],
-    position: 'bottom',
-    axisBorder: {
-      show: false
-    },
-    axisTicks: {
-      show: false
-    },
-  },
-  yaxis: {
-    axisBorder: {
-      show: false
-    },
-    axisTicks: {
-      show: false,
-    },
 
-  },
-  title: {
-    text: 'Alertas por Tipo de Componente',
-    align: 'center',
-    style: { fontSize: '14px', fontWeight: 'bold' }
-  },
-  grid: {
-    show: false,
-  },
+  // KPI - Funcionamento Global (#line-kpi)
+sparklineKPI(evolucao) {
+    const linhaGlobal = document.querySelector("#line-kpi");
+    if (!linhaGlobal) return;
 
-  plotOptions: {
-    bar: {
-      distributed: true,
-      borderRadius: 10,
-    }
-  },
+    this._destruir("kpi");
 
-  colors: [
-    '#564592',
-    '#CA7DF9',
-    '#EDF67D'
-  ]
-};
-
-var chart_bar = new ApexCharts(document.querySelector("#grafico-bar"), options4);
-chart_bar.render();
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-var options24h = {
-  chart: {
-    type: 'scatter',
-    height: 240,
-    zoom: { enabled: true, type: 'xy' },
-    toolbar: { show: false }
-  },
-  title: {
-    text: 'Histórico de Alertas nas Últimas 24h',
-    align: 'center',
-    style: { fontSize: '14px', fontWeight: 'bold' }
-  },
-
-  // Mapeamento de cores: Amarelo para a primeira série (Atenção) e Vermelho para a segunda (Crítico)
-  colors: ['#FFC107', '#DC3545'],
-
-  series: [
-    {
-      name: "Atenção (59% - 80%)",
-      // Pontos cujos valores de Y estão estritamente entre 59 e 80
-      data: [
-        [16.4, 72.8], [21.7, 64.1], [25.4, 66.7], [19.0, 64.1], [10.9, 61.6], [13.6, 67.2],
-        [10.9, 77.9], [16.4, 63.6], [13.6, 59.8], [27.1, 64.9], [13.6, 68.5], [10.9, 72.3],
-        [16.4, 75.6], [24.5, 77.2], [8.1, 71.0], [21.7, 63.6], [29.9, 62.8], [27.1, 61.1],
-        [22.1, 64.1], [13.6, 59.0], [10.9, 59.0], [16.4, 59.0], [29.9, 59.0], [16.4, 59.0],
-        [10.9, 59.0], [10.9, 59.0], [19.0, 59.0], [27.1, 59.0], [24.5, 59.0], [27.1, 59.0]
-      ]
-    },
-    {
-      name: "Crítico (80% - 100%)",
-      // Pontos cujos valores de Y foram escalados para a zona crítica (ex: acima de 80)
-      data: [
-        [10.9, 80.0], [14.2, 84.5], [18.5, 92.1], [22.4, 88.7], [2.1, 95.0], [6.1, 81.3]
-      ]
-    }
-  ],
-  xaxis: {
-    type: 'numeric',
-    min: 0,
-    max: 24,
-    tickAmount: 12, // Linhas guias horizontais a cada 2 horas
-    // title: { text: 'Horário do Disparo (0h às 24h)' },
-    labels: {
-      formatter: function (val) { return Math.floor(val) + 'h'; }
-    }
-  },
-  yaxis: {
-    min: 59,
-    max: 100, // Expandido até 100% para cobrir a área total de estresse
-    tickAmount: 8, // Divide o eixo vertical de forma simétrica
-    title: { text: 'Uso do Componente (%)' },
-    labels: {
-      formatter: function (val) { return parseFloat(val).toFixed(0) + '%'; }
-    }
-  },
-  // Adiciona linhas de preenchimento no fundo para o Rubens ver visualmente onde mudam as zonas
-  annotations: {
-    yaxis: [
-      {
-        y: 80,
-        borderColor: '#DC3545',
-        label: {
-          borderColor: '#DC3545',
-          style: { color: '#fff', background: '#DC3545' },
-          text: 'Início da Zona Crítica (80%)'
+    const valores = [];
+    if (evolucao) {
+        for (let i = 0; i < evolucao.length; i++) {
+            valores.push(evolucao[i].total);
         }
-      }
-    ]
-  },
-  tooltip: {
-    x: {
-      formatter: function (val) { return "Horário: " + val.toFixed(1) + "h"; }
-    },
-    y: {
-      formatter: function (val) { return val.toFixed(1) + "% de uso"; }
     }
-  },
-  legend: { position: 'top' }
-};
 
-var chart24h = new ApexCharts(document.querySelector("#grafico-scarte-plot"), options24h);
-chart24h.render();
+    this._charts.kpi = new ApexCharts(linhaGlobal, {
+        series: [{ name: "Funcionamento:", data: valores }],
+        chart: {
+            type: "area", width: "100%", height: "100%",
+            zoom: { enabled: false }, toolbar: { show: false },
+            sparkline: { enabled: true }
+        },
+        dataLabels: { enabled: false },
+        fill: { colors: ["#c6ff33"] }
+    });
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    this._charts.kpi.render();
+},
 
-var optionsVertical = {
-  series: [{
-    name: 'Atenção',
-    data: [24, 15, 31, 7, 16, 13, 11, 10, 5, 9]
-  }, {
-    name: 'Crítico',
-    data: [23, 22, 0, 22, 13, 4, 12, 9, 5, 0]
-  }],
-  colors: ['#FFC107', '#DC3545'],
-  chart: {
-    type: 'bar',
-    height: 480,
-    stacked: true,
-    toolbar: false
-  },
-  plotOptions: {
-    bar: {
-      horizontal: true,
-      dataLabels: {
-        total: {
-          enabled: true,
-          offsetX: 0,
-          style: {
-            fontSize: '13px',
-            fontWeight: 900
+  // Gráfico de Área — Histórico 7 dias (#graficoLine)
+linhaEvolucao(evolucao) {
+    const areaLinha = document.querySelector("#graficoLine");
+    if (!areaLinha) return;
+
+    const labels = [];
+    const valores = [];
+
+    if (evolucao) {
+        for (let i = 0; i < evolucao.length; i++) {
+            labels.push(evolucao[i].data);
+            valores.push(evolucao[i].total);
+        }
+    }
+
+    const limite = valores.length
+        ? Math.round(valores.reduce((a, b) => a + b, 0) / valores.length)
+        : 10;
+
+    this._destruir("line");
+
+    this._charts.line = new ApexCharts(areaLinha, {
+        series: [{ name: "Quantidade de Alertas", data: valores }],
+        chart: {
+            type: "area", background: "transparent",
+            width: "100%", height: "100%",
+            zoom: { enabled: false }, toolbar: { show: false }
+        },
+        dataLabels: { enabled: true },
+        stroke: { curve: "straight" },
+        title: {
+            text: "Histórico de Alertas (Últimos 7 dias)",
+            align: "center",
+            style: { fontSize: "14px", fontWeight: "bold" }
+        },
+        labels,
+        xaxis: { type: "category" },
+        annotations: {
+            yaxis: [{
+                y: limite,
+                borderColor: "var(--color-danger)",
+                strokeDashArray: 4,
+                label: {
+                    borderColor: "var(--color-danger)",
+                    style: { color: "var(--color-white)", background: "var(--color-danger)" },
+                    text: `Referência: ${limite}`
+                }
+            }]
+        },
+        grid: { show: false },
+        fill: { colors: ["#c6ff33"] },
+        legend: { horizontalAlign: "left" }
+    });
+
+    this._charts.line.render();
+},
+
+  // Barras verticais — Causa Raiz (#grafico-bar)
+  barrasCausaRaiz(causaRaiz) {
+    const graficoBar = document.querySelector("#grafico-bar");
+    if (!graficoBar) return;
+
+    const categorias = causaRaiz ? Object.keys(causaRaiz) : ["CPU", "DISCO", "RAM"];
+    const valores = causaRaiz ? Object.values(causaRaiz) : [0, 0, 0];
+
+    this._destruir("bar");
+
+    this._charts.bar = new ApexCharts(graficoBar, {
+      series: [
+        {
+           name: "Alertas", 
+           data: valores 
+          }
+        ],
+      chart: {
+        height: "100%",
+        type: "bar",
+        toolbar: { 
+          show: false 
+        }
+      },
+      plotOptions: {
+        bar: {
+          distributed: true,
+          borderRadius: 10,
+          dataLabels: { 
+            position: "top" 
           }
         }
-      }
-    },
-  },
-  stroke: {
-    width: 1,
-    colors: ['#fff']
-  },
-  title: {
-    text: 'Top 10 Displays com Mais Alertas',
-    align: 'center',
-    style: { fontSize: '14px', fontWeight: 'bold' }
-  },
-  xaxis: {
-    categories: ['S012', 'L010', 'N010', 'OE023', 'S112', 'S011', 'N013', 'L012', 'S002', 'S001'],
-    labels: {
-      formatter: function (val) {
-        return val
-      }
-    }
-  },
-  yaxis: {
-    title: {
-      text: undefined
-    },
-  },
-  tooltip: {
-    y: {
-      formatter: function (val) {
-        return val
-      }
-    }
-  },
-  fill: {
-    opacity: 1
-  },
-  legend: {
-    position: 'top',
-    horizontalAlign: 'center',
-    offsetX: 40
-  },
-};
+      },
+      dataLabels: { 
+        enabled: false 
+      },
+      xaxis: {
+        categories: categorias,
+        position: "bottom",
+        axisBorder: { 
+          show: false 
+        },
+        axisTicks: { 
+          show: false 
+        }
+      },
+      yaxis: {
+        axisBorder: { 
+          show: false 
+        },
+        axisTicks: { 
+          show: false 
+        }
+      },
+      title: {
+        text: "Alertas por Tipo de Componente",
+        align: "center",
+        style: { 
+          fontSize: "14px", 
+          fontWeight: "bold" 
+        }
+      },
+      grid: { 
+        show: false 
+      },
+      colors: [
+        "#564592", 
+        "#CA7DF9", 
+        "#EDF67D"
+      ]
+    });
 
-var chartV = new ApexCharts(document.querySelector("#grafico-bar-vertical"), optionsVertical);
-chartV.render();
+    this._charts.bar.render();
+  },
+
+  //  Barras horizontais empilhadas — Top 10 Displays (#grafico-bar-vertical)
+  barrasRankingDisplays(ranking) {
+    const bartop10 = document.querySelector("#grafico-bar-vertical");
+    if (!bartop10) return;
+
+    const top10 = ranking ? ranking.slice(0, 10) : [];
+    const categorias = top10.map(d => `Display ${d.idDisplay}`);
+    const serieAtencao = top10.map(d => d["Atenção"] ?? 0);
+    const serieCritico = top10.map(d => d["Crítico"] ?? 0);
+
+    this._destruir("barV");
+
+    this._charts.barV = new ApexCharts(bartop10, {
+      series: [
+        { 
+          name: "Atenção", 
+          data: serieAtencao 
+        },
+        { 
+          name: "Crítico", 
+          data: serieCritico 
+        }
+      ],
+      colors: [
+        "#FFC107", 
+        "#DC3545"
+      ],
+      chart: {
+        type: "bar",
+        height: 480,
+        stacked: true,
+        toolbar: false
+      },
+      plotOptions: {
+        bar: {
+          horizontal: true,
+          dataLabels: {
+            total: {
+              enabled: true,
+              offsetX: 0,
+              style: { 
+                fontSize: "13px", 
+                fontWeight: 900 
+              }
+            }
+          }
+        }
+      },
+      stroke: { 
+        width: 1, 
+        colors: ["#fff"] 
+      },
+      title: {
+        text: "Top 10 Displays com Mais Alertas",
+        align: "center",
+        style: { 
+          fontSize: "14px", 
+          fontWeight: "bold" }
+      },
+      xaxis: {
+        categories: categorias,
+        labels: { 
+          formatter: val => val 
+        }
+      },
+      yaxis: { 
+        title: { 
+          text: undefined 
+        } 
+      },
+      tooltip: { 
+        y: { 
+          formatter: val => val 
+        } 
+      },
+      fill: { 
+        opacity: 1 
+      },
+      legend: { 
+        position: "top", 
+        horizontalAlign: "center", 
+        offsetX: 40 
+      }
+    });
+
+    this._charts.barV.render();
+  },
+
+  //  Scatter plot — Dispersão 24h (#grafico-scarte-plot)
+  dispersao24h(dispersao) {
+    const scartePlot = document.querySelector("#grafico-scarte-plot");
+    if (!scartePlot) return;
+
+    const horaParaNum = h => {
+      const [hora, minuto] = h.replace("h", ":").split(":");
+      return parseInt(hora, 10) + (parseInt(minuto || 0, 10) / 60);
+    };
+    const atencao = [];
+    const critico = [];
+
+    (dispersao || []).forEach(ponto => {
+      const par = [horaParaNum(ponto.hora), ponto.uso_percentual];
+      ponto.tipo_alerta === "Crítico" ? critico.push(par) : atencao.push(par);
+    });
+
+    this._destruir("scatter");
+
+    this._charts.scatter = new ApexCharts(scartePlot, {
+      chart: {
+        type: "scatter",
+        height: 240,
+        zoom: { enabled: true, type: "xy" },
+        toolbar: { show: false }
+      },
+      title: {
+        text: "Histórico de Alertas nas Últimas 24h",
+        align: "center",
+        style: { fontSize: "14px", fontWeight: "bold" }
+      },
+      colors: ["#FFC107", "#DC3545"],
+      series: [
+        { name: "Atenção (59% – 80%)", data: atencao },
+        { name: "Crítico (80% – 100%)", data: critico }
+      ],
+      xaxis: {
+        type: "numeric",
+        min: 0,
+        max: 24,
+        tickAmount: 12,
+        labels: { formatter: val => Math.floor(val) + "h" }
+      },
+      yaxis: {
+        min: 59,
+        max: 100,
+        tickAmount: 8,
+        title: { text: "Uso do Componente (%)" },
+        labels: { formatter: val => parseFloat(val).toFixed(0) + "%" }
+      },
+      annotations: {
+        yaxis: [{
+          y: 80,
+          borderColor: "#DC3545",
+          label: {
+            borderColor: "#DC3545",
+            style: { color: "#fff", background: "#DC3545" },
+            text: "Início da Zona Crítica (80%)"
+          }
+        }]
+      },
+      tooltip: {
+        x: { formatter: val => "Horário: " + val.toFixed(1) + "h" },
+        y: { formatter: val => val.toFixed(1) + "% de uso" }
+      },
+      legend: { position: "top" }
+    });
+
+    this._charts.scatter.render();
+  }
+
+};
