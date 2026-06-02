@@ -1,7 +1,7 @@
 function buscarDados(req, res) {
-  const URL = "URL";
+  const AWS_URL = "URL";
 
-  fetch(URL)
+  fetch(AWS_URL)
     .then((resposta) => {
       if (!resposta.ok) {
         console.error("Ocorreu um erro na requisição");
