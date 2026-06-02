@@ -53,7 +53,7 @@
     margin: 2% 2% 0 0;
     border-radius: 25px;
     background-color: var(--color-white);
-    padding: 25px;
+    padding: 10px 20px 20px 20px;
     height: fit-content;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.201);
     display: flex;
@@ -102,6 +102,13 @@
     align-items: center;
   }
 
+  /* Bloco texto do KPI: valor + badge de tendência em coluna */
+  .body .container .kpis .icon .i .kpi-texto {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
   .body .container .kpis .icon .ii {
     width: fit-content;
     height: fit-content;
@@ -142,6 +149,11 @@
     padding: 5px 0;
   }
 
+  .icon {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5vh;
+  }
 
 
 .body .container .sec2 {
@@ -166,6 +178,7 @@
 
     display: flex;
     justify-content: center;
+    flex-direction: column;
     align-items: center;
 
     position: relative;
@@ -415,11 +428,6 @@
         vertical-align: middle;
     }
 
-    .container-table tr:nth-child(1) {
-        position: sticky;
-        top: 90px;
-    }
-
     .container-table .id-display {
         font-weight: bold;
         color: var(--color-purple);
@@ -458,11 +466,91 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        padding: 5px 10px;
+        padding: 5px 1px;
         background-color: #7cf2a9;
         border-radius: 20px;
         color: #016630;
         font-weight: bold;
         font-size: 0.8rem;
     }
+
+    .logout-area .logout button {
+        padding-top: 2vh;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        justify-content: center;
+        border-radius: 16px;
+        border: none;
+        height: auto;
+        background-color: var(--color-light-purple);
+        color: var(--color-white);
+        font-size: 1rem;
+    }
+
+    .logout-area {
+        width: 100%;
+        margin: 5px 0;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   KPI CARDS — cores dinâmicas via JS
+   As classes .kpi-verde / .kpi-amarelo / .kpi-vermelho são
+   adicionadas pelo JS em preencherKPIs() e substituem os
+   seletores nth-child estáticos para os cards 1 e 2.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Tokens de cor de status */
+:root {
+  --status-verde:    #22c55e;
+  --status-verde-bg: #dcfce7;
+  --status-amarelo:    #f59e0b;
+  --status-amarelo-bg: #fef3c7;
+  --status-vermelho:    #ef4444;
+  --status-vermelho-bg: #fee2e2;
+}
+
+/* Verde */
+.body .container .kpis .card.kpi-verde .ii     { background-color: var(--status-verde) !important; }
+.body .container .kpis .card.kpi-verde .number { color: var(--status-verde) !important; }
+.body .container .kpis .card.kpi-verde .text   { color: var(--status-verde) !important; }
+
+/* Amarelo */
+.body .container .kpis .card.kpi-amarelo .ii     { background-color: var(--status-amarelo) !important; }
+.body .container .kpis .card.kpi-amarelo .number { color: var(--status-amarelo) !important; }
+.body .container .kpis .card.kpi-amarelo .text   { color: var(--status-amarelo) !important; }
+
+/* Vermelho */
+.body .container .kpis .card.kpi-vermelho .ii     { background-color: var(--status-vermelho) !important; }
+.body .container .kpis .card.kpi-vermelho .number { color: var(--status-vermelho) !important; }
+.body .container .kpis .card.kpi-vermelho .text   { color: var(--status-vermelho) !important; }
+
+/* ── Subtexto de tendência e alertas embaixo do valor principal ── */
+.kpi-sub {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  margin-top: 6px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  width: fit-content;
+}
+
+.kpi-sub.positivo {
+  background-color: #dcfce7;
+  color: #16a34a;
+}
+
+.kpi-sub.neutro {
+  background-color: #f1f5f9;
+  color: #64748b;
+}
+
+.kpi-sub.negativo {
+  background-color: #fee2e2;
+  color: #dc2626;
 }
