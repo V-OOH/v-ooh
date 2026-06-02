@@ -384,6 +384,19 @@ async function buscarRecomendacaoIA() {
     const resposta = await fetch(`/recomendacao/recomendacaoIA/${idEmpresa}`);
     const dados = await resposta.json();
 
-    document.getElementById("alertaIA").innerHTML = dados.alerta
-    
+   document.getElementById("alertaIA").innerHTML = `
+    <div class="tituloIA">
+        <img
+            src="../assets/images/49142cd8-afd8-4ea9-9cc4-a6c19a403461.avif"
+            alt="LIA"
+            class="lia-avatar"
+        />
+
+        <span>Recomendação da LIA</span>
+    </div>
+
+    <div class="textoIA">
+        ${dados.alerta}
+    </div>
+`;
 }
