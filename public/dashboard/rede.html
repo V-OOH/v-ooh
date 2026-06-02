@@ -285,6 +285,7 @@
         <!-- Dowload -->
         <div class="kpis">
             <div class="card">
+            <span class="desc">Download</span>
                 <div class="icon">
                     <div class="i">
                         <div class="ii">
@@ -297,16 +298,16 @@
                             </svg>
                         </div>
 
-                        <span class="number">51<small style="font-size: 1rem;">MB/s</small></span>
+                        <span class="number" id="kpi-download">51<small style="font-size: 1rem;">MB/s</small></span>
                     </div>
-
-                    <span class="desc">Download</span>
+                    
                 </div>
                 <div class="info"></div>
             </div>
 
             <!-- Upload -->
             <div class="card">
+            <span class="desc">Upload</span>
                 <div class="icon">
                     <div class="i">
                         <div class="ii" style="background-color: var(--color-success);">
@@ -319,16 +320,16 @@
                             </svg>
                         </div>
 
-                        <span class="number">30<small style="font-size: 1rem;">MB/s</small></span>
+                        <span class="number" id="kpi-upload" >30<small style="font-size: 1rem;">MB/s</small></span>
                     </div>
 
-                    <span class="desc">Upload</span>
                 </div>
                 <div class="info"></div>
             </div>
 
             <!-- Pacotes Descartados -->
             <div class="card">
+            <span class="desc">Pacotes Descartados</span>
                 <div class="icon">
                     <div class="i">
                         <div class="ii">
@@ -344,16 +345,15 @@
                             </svg>
                         </div>
 
-                        <span class="number">0</span>
+                        <span class="number" id="kpi-pacotes">0</span>
                     </div>
-
-                    <span class="desc">Pacotes Descartados</span>
                 </div>
                 <div class="info"></div>
             </div>
 
             <!-- Erros I/O -->
             <div class="card">
+            <span class="desc">Erros de I/O</span>
                 <div class="icon">
                     <div class="i">
                         <div class="ii" style="background-color: var(--color-danger);">
@@ -367,16 +367,16 @@
                             </svg>
                         </div>
 
-                        <span class="number" style="-color: var(--color-danger);">0</span>
+                        <span class="number" id="kpi-erros" style="-color: var(--color-danger);">0</span>
                     </div>
-
-                    <span class="desc">Erros de I/O</span>
                 </div>
                 <div class="info"></div>
             </div>
 
+            
             <!-- Latência -->
             <div class="card">
+            <span class="desc">Latência (Ping)</span>
                 <div class="icon">
                     <div class="i">
                         <div class="ii"
@@ -387,18 +387,17 @@
                                 <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
                             </svg>
                         </div>
-                        <span class="number" style="color: var(--color-purple); margin-left: 15px;">
+                        <span class="number" id="kpi-latencia" style="color: var(--color-purple);">
                             15<small style="font-size: 1rem; margin-left: 4px;">ms</small>
                         </span>
                     </div>
-                    <span class="desc">Latência (Ping)</span>
                 </div>
             </div>
         </div>
     </div>
  <div class="graficos">
         <div class="grafico-card">
-            <h3>Fluxo de Dados — <span id="grafico-interface-label">eth0</span> (Últimos 5min)</h3>
+            <h3>Fluxo de Dados — <span id="grafico-interface-label">wlan0</span> (Últimos 30min)</h3>
             <canvas id="graficoTp"></canvas>
         </div>
 
@@ -455,7 +454,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation"></script>
 
-    <script src="../assets/javascript/graficosRede.js"></script>
+    <script src="../assets/javascript/graficosRede.js" type="module"></script>
 
 </body>
 
