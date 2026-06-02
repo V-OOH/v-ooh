@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             <td class="id-display">D${display.id}</td>
                             <td>${display.ip}</td>
                             <td class="mac">${display.mac}</td>
-                            <td> ${display.logradouro} - ${display.uf}, ${display.numero}</td>
+                            <td> ${display.logradouro}, ${display.numero} - ${display.uf}</td>
                             <td class="status-container">
                                 <div class="g-status">
                                     <div class="status"></div>
