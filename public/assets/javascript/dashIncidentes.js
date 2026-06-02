@@ -374,5 +374,16 @@ window.onload = async function () {
     atualizarGraficoRanking(dados);
     atualizarKPIs(dados);
     atualizarHeatmap(dados);
+    await buscarRecomendacaoIA();
 
 };
+
+async function buscarRecomendacaoIA() {
+    const idEmpresa = sessionStorage.getItem("FKEMPRESA")
+
+    const resposta = await fetch(`/recomendacao/recomendacaoIA/${idEmpresa}`);
+    const dados = await resposta.json();
+
+    document.getElementById("alertaIA").innerHTML = dados.alerta
+    
+}

@@ -1,8 +1,10 @@
 var express = require("express");
 var router = express.Router();
 
-var recomendacaoIA = require('../controllers/recomendacaoController');
+var recomendacaoController = require('../controllers/incidenteController');
 
-router.get("", function (req,res){
-    recomendacaoIA.Controller()
+router.get("/recomendacaoIA/:idEmpresa", function (req,res){
+    recomendacaoController.recomendacaoIA(req,res);
 });
+
+module.exports = router;

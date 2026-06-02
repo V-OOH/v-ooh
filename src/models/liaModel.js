@@ -34,5 +34,84 @@ async function request(mensagem) {
 }
 
 
+async function recomendacaoIncidente(ultimaLeitura) {
+    const chatAI = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+    const model = process.env.MODEL;
+    
+    const kpis = ultimaLeitura.kpis;
+    const displaysOffline = ultimaLeitura.displaysOffline || [];
 
-module.exports = request;
+    if (displaysOffline.length === 0) {
+        return "Tudo certo! Nenhum display offline no momento.";
+    }
+
+    const comportamento = `
+Você é a LIA, assistente inteligente da dashboard de monitoramento da VOOH.
+
+A VOOH monitora displays DOOH espalhados em diversas localidades e sua função é analisar os dados de incidentes obtidos a partir do JSON de monitoramento gerado pelo sistema.
+
+Seu objetivo é auxiliar gestores operacionais a decidir onde enviar equipes técnicas para resolver problemas de disponibilidade.
+
+Ao analisar os dados:
+
+- Considere os displays offline encontrados no JSON.
+- Considere a quantidade de displays afetados.
+- Considere os endereços, bairros e zonas dos displays.
+- Considere o motivo da indisponibilidade quando disponível.
+- Identifique os locais mais críticos.
+- Gere uma recomendação operacional para o gestor.
+
+Regras:
+
+- Responda em português do Brasil.
+- Seja objetiva e profissional.
+- Produza no máximo 3 frases.
+- Não use markdown.
+- Não invente informações que não estejam nos dados.
+- Quando houver incidentes, recomende o envio de uma equipe técnica.
+- Quando houver muitos displays offline, destaque a criticidade da situação.
+- Quando não houver incidentes, informe que o ambiente está operando normalmente.
+`;
+
+const resumo = { 
+        displaysOffline: displaysOffline.map(displays => ({
+        endereco: d.logradouro,
+        bairro: d.bairro,
+        motivo: d.motivoOffline
+    }))
+};
+
+    const prompt = `
+Dados atuais do monitoramento:
+
+Data: ${ultimaLeitura.Data}
+Hora: ${ultimaLeitura.Hora}
+Total de displays: ${kpis.quantidadeDisplays}
+Displays offline: ${kpis.quantidadeOffline}
+Disponibilidade: ${kpis.disponibilidade}%
+
+Displays offline:
+${JSON.stringify(resumo, null, 2)}
+
+Gere uma recomendação para o gestor.
+`;
+
+    try {
+        const ai = await chatAI.models.generateContent({
+            model: model,
+            contents: comportamento + "\n\n" + prompt
+        });
+
+        console.log("Tokens usados na recomendação:", ai.usageMetadata);
+
+        return ai.text;
+
+    } catch (error) {
+        console.error("Erro ao gerar recomendação:", error);
+        throw error;
+    }
+}
+
+
+
+module.exports = {request,recomendacaoIncidente};
