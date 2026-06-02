@@ -253,6 +253,7 @@
 .sugestoes{
   width: 28vw;
   height: 250px;
+  
   background: #fff;
   border-radius: 20px;
   padding: 20px;
@@ -263,4 +264,54 @@
     width: 100% !important;
     height: 10px ;
 } 
+}
+
+#alertaIA {
+  
+    width: 100%;
+    padding: 10px;
+    background: linear-gradient(
+        135deg,
+        rgba(123, 63, 242, 0.15),
+        rgba(123, 63, 242, 0.05)
+    );
+    border: 1px solid rgba(123, 63, 242, 0.3);
+    border-left: 5px solid #7b3ff2;
+    border-radius: 12px;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.6;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: 0.3s;
+}
+
+#alertaIA:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(123, 63, 242, 0.2);
+}
+
+.tituloIA {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #b994ff;
+    margin-bottom: 16px;
+}
+
+.lia-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #7b3ff2;
+    box-shadow: 0 0 10px rgba(123, 63, 242, 0.4);
+}
+
+.textoIA {
+    color: #000000;
+    font-size: 15px;
+    line-height: 1.6;
 }

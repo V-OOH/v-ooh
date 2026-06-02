@@ -46,7 +46,7 @@ function buscarDisplays(fkEmpresa) {
 SELECT 
             d.idDisplay AS id, 
             d.enderecoIP AS ip,
-            d.numeroIdentificacao AS mac, -- Mapeado como mac para o seu front anterior
+            d.mac AS mac,
             d.nome,
             d.sistemaOperacional AS so,
             e.logradouro, 

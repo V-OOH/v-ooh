@@ -2,14 +2,12 @@
 <html lang="pt-br" dir="ltr">
 
 <head>
-  <!--HTML Meta Tags-->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="" />
   <meta name="keywords" content="" />
   <meta name="author" content="VOOH" />
 
-  <!--Stylesheet-->
   <link rel="stylesheet" href="../assets/css/dashboard/zonas.css" />
 
   <!--LeafletJS CSS-->
@@ -29,19 +27,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
     rel="stylesheet" />
 
-  <!--Favicon-->
   <link rel="shortcut icon" href="../assets/icons/favicon.ico" type="image/x-icon" />
-
-  <!--Title-->
   <title>Zonas | VOOH</title>
 </head>
 
-<body>
+<body onload="inicializar()">
   <!--Sidebar-->
   <aside class="sidebar">
     <div class="container-top">
       <div class="box-logo">
-        <!--Logo-->
         <div class="logo" id="logo">
           <svg width="100%" height="43" viewBox="0 0 207.483 43" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g>
@@ -60,10 +54,7 @@
             </g>
           </svg>
         </div>
-
-        <!--Icon-->
         <div class="safe-area" title="Abrir/fechar menu">
-          <!--Icon-->
           <div class="icon">
             <svg viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
               <g transform="matrix(-1 0 0 1 50 0)">
@@ -86,60 +77,28 @@
         </div>
       </div>
 
-      <!--Tabs-->
       <ul class="tabs">
-        <!--Saúde Operacional-->
-        <li>
-          <a
-                  class=""
-                  href="operacao.html"
-                  title="Saúde Operacional"
-          >
-            <svg
-                    width="30"
-                    height="30"
-                    viewBox="0 0 30 30"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-            >
+        <li><a class="" href="operacao.html" title="Saúde Operacional"><svg width="30" height="30" viewBox="0 0 30 30"
+              fill="none" xmlns="http://www.w3.org/2000/svg">
               <g>
                 <path
-                        d="M16.25 25C22.5 25 25 22.5 25 16.25C25 16.25 25 8.75 25 8.75C25 2.5 22.5 0 16.25 0C16.25 0 8.75 0 8.75 0C2.5 0 0 2.5 0 8.75C0 8.75 0 16.25 0 16.25C0 22.5 2.5 25 8.75 25C8.75 25 16.25 25 16.25 25Z"
-                        fill="none"
-                        stroke-width="2"
-                        stroke="#FFFFFF"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        transform="translate(2.462 2.5)"
-                />
+                  d="M16.25 25C22.5 25 25 22.5 25 16.25C25 16.25 25 8.75 25 8.75C25 2.5 22.5 0 16.25 0C16.25 0 8.75 0 8.75 0C2.5 0 0 2.5 0 8.75C0 8.75 0 16.25 0 16.25C0 22.5 2.5 25 8.75 25C8.75 25 16.25 25 16.25 25Z"
+                  fill="none" stroke-width="2" stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round"
+                  transform="translate(2.462 2.5)" />
                 <path
-                        d="M0 2.64271C0 2.64271 7.5 2.61771 7.5 2.61771C8.4375 2.61771 9.4875 3.33021 9.8375 4.20521C9.8375 4.20521 11.2625 7.80521 11.2625 7.80521C11.5875 8.61771 12.1 8.61771 12.425 7.80521C12.425 7.80521 15.2875 0.542713 15.2875 0.542713C15.5625 -0.157286 16.075 -0.182286 16.425 0.480214C16.425 0.480214 17.725 2.94271 17.725 2.94271C18.1125 3.68021 19.1125 4.28021 19.9375 4.28021C19.9375 4.28021 25.0125 4.28021 25.0125 4.28021"
-                        fill="none"
-                        stroke-width="2"
-                        stroke="#FFFFFF"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        transform="translate(2.462 13.232)"
-                />
-              </g></svg
-            ><span>Saúde Operacional</span>
-          </a>
-        </li>
-
-        <!--Zonas-->
-        <li>
-          <a href="zonas.html" class="active" title="Zonas">
-            <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 6H12.01M9 20L3 17V4L5 5M9 20L15 17M9 20V14M15 17L21 20V7L19 6M15 17V14M15 6.2C15 7.96731 13.5 9.4 12 11C10.5 9.4 9 7.96731 9 6.2C9 4.43269 10.3431 3 12 3C13.6569 3 15 4.43269 15 6.2Z" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <span>Zonas</span>
-          </a>
-        </li>
-
-        <!--Displays-->
-        <li>
-          <a href="displays.html" title="Displays">
-            <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  d="M0 2.64271C0 2.64271 7.5 2.61771 7.5 2.61771C8.4375 2.61771 9.4875 3.33021 9.8375 4.20521C9.8375 4.20521 11.2625 7.80521 11.2625 7.80521C11.5875 8.61771 12.1 8.61771 12.425 7.80521C12.425 7.80521 15.2875 0.542713 15.2875 0.542713C15.5625 -0.157286 16.075 -0.182286 16.425 0.480214C16.425 0.480214 17.725 2.94271 17.725 2.94271C18.1125 3.68021 19.1125 4.28021 19.9375 4.28021C19.9375 4.28021 25.0125 4.28021 25.0125 4.28021"
+                  fill="none" stroke-width="2" stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round"
+                  transform="translate(2.462 13.232)" />
+              </g>
+            </svg><span>Saúde Operacional</span></a></li>
+        <li><a href="zonas.html" class="active" title="Zonas"><svg width="800px" height="800px" viewBox="0 0 24 24"
+              fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M12 6H12.01M9 20L3 17V4L5 5M9 20L15 17M9 20V14M15 17L21 20V7L19 6M15 17V14M15 6.2C15 7.96731 13.5 9.4 12 11C10.5 9.4 9 7.96731 9 6.2C9 4.43269 10.3431 3 12 3C13.6569 3 15 4.43269 15 6.2Z"
+                stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg><span>Zonas</span></a></li>
+        <li><a href="displays.html" title="Displays"><svg width="30" height="30" viewBox="0 0 30 30" fill="none"
+              xmlns="http://www.w3.org/2000/svg">
               <g>
                 <g transform="translate(4.286 5)">
                   <path
@@ -151,15 +110,9 @@
                     stroke-linejoin="round" transform="matrix(1 0 0 1 6.429 19.994)" />
                 </g>
               </g>
-            </svg>
-            <span>Displays</span>
-          </a>
-        </li>
-
-        <!--Alertas-->
-        <li>
-          <a href="alertas.html" title="Alertas">
-            <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+            </svg><span>Displays</span></a></li>
+        <li><a href="alertas.html" title="Alertas"><svg width="30" height="30" viewBox="0 0 30 30" fill="none"
+              xmlns="http://www.w3.org/2000/svg">
               <g>
                 <path
                   d="M19.4338 21.6058C19.4338 21.6058 4.50572 21.6058 4.50572 21.6058C3.74014 21.6388 2.97954 21.4674 2.30201 21.1095C1.62447 20.7515 1.05436 20.2198 0.650103 19.5689C0.245847 18.9179 0.0219986 18.171 0.00153875 17.4051C-0.0189095 16.639 0.164775 15.8814 0.533715 15.2098C0.533715 15.2098 7.99769 2.23777 7.99769 2.23777C8.41148 1.55472 8.99446 0.98994 9.69026 0.597948C10.386 0.205956 11.1711 0 11.9697 0C12.7683 0 13.5534 0.205956 14.2492 0.597948C14.9449 0.98994 15.528 1.55472 15.9418 2.23777C15.9418 2.23777 23.4058 15.2098 23.4058 15.2098C23.7747 15.8814 23.9584 16.639 23.9379 17.4051C23.9175 18.171 23.6937 18.9179 23.2894 19.5689C22.8851 20.2198 22.3149 20.7515 21.6373 21.1095C20.9598 21.4674 20.1993 21.6388 19.4338 21.6058C19.4338 21.6058 19.4338 21.6058 19.4338 21.6058Z"
@@ -169,82 +122,36 @@
                   d="M0 10.7337C0 10.5562 0.0351601 10.3804 0.103439 10.2166C0.17172 10.0527 0.271799 9.904 0.397919 9.77909C0.523919 9.65417 0.673559 9.5554 0.837959 9.48857C1.00248 9.42172 1.1784 9.38812 1.356 9.38969C1.61784 9.39449 1.87248 9.47621 2.08812 9.62489C2.30364 9.77356 2.47068 9.9826 2.56824 10.2256C2.66568 10.4687 2.68932 10.7351 2.63628 10.9916C2.58312 11.248 2.45556 11.4831 2.26956 11.6675C2.08356 11.8518 1.84728 11.9772 1.59036 12.0281C1.33344 12.079 1.06728 12.053 0.825119 11.9532C0.582839 11.8536 0.37548 11.6848 0.22872 11.4678C0.0819588 11.251 0.00239944 10.9956 0 10.7337ZM0.264016 1.1937C0.248056 1.04312 0.263896 0.890881 0.310697 0.746855C0.357377 0.602819 0.433817 0.470208 0.535097 0.357647C0.636376 0.245075 0.760216 0.155075 0.898456 0.0934563C1.03682 0.031848 1.18658 0 1.33802 0C1.48946 0 1.63922 0.031848 1.77746 0.0934563C1.91582 0.155075 2.03954 0.245075 2.14082 0.357647C2.2421 0.470208 2.31866 0.602819 2.36534 0.746855C2.41202 0.890881 2.42797 1.04312 2.41202 1.1937C2.41202 1.1937 2.25602 7.45769 2.25602 7.45769C2.25602 7.69949 2.1599 7.93157 1.9889 8.10257C1.81778 8.27357 1.58582 8.36969 1.34402 8.36969C1.1021 8.36969 0.870136 8.27357 0.699137 8.10257C0.528137 7.93157 0.432016 7.69949 0.432016 7.45769C0.432016 7.45769 0.264016 1.1937 0.264016 1.1937Z"
                   fill="#FFFFFF" transform="translate(13.657 9.846)" />
               </g>
-            </svg>
-            <span>Alertas</span>
-          </a>
-        </li>
-
-        <!--Incidentes-->
-        <li>
-          <a class="" href="incidentes.html" title="Incidentes">
-            <?xml version="1.0" encoding="utf-8"?>
-            <svg
-                    width="30"
-                    height="30"
-                    viewBox="0 0 27 27"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-            >
+            </svg><span>Alertas</span></a></li>
+        <li><a class="" href="incidentes.html" title="Incidentes"><svg width="30" height="30" viewBox="0 0 27 27"
+              fill="none" xmlns="http://www.w3.org/2000/svg">
               <g>
                 <g transform="translate(4 4)">
                   <path
-                          d="M2.85714 0C2.85714 0 18.5714 0 18.5714 0C20.1494 0 21.4286 1.27919 21.4286 2.85714C21.4286 2.85714 21.4286 11.4983 21.4286 11.4983C21.4286 13.0046 20.263 14.2386 18.7847 14.3476C18.7847 14.3476 18.5607 14.3554 18.5607 14.3554C18.5607 14.3554 2.84641 14.2964 2.84641 14.2964C1.27265 14.2905 0 13.0131 0 11.4393C0 11.4393 0 2.85714 0 2.85714C0 1.27919 1.27919 7.15256e-07 2.85714 7.15256e-07C2.85714 7.15256e-07 2.85714 0 2.85714 0Z"
-                          fill="none"
-                          stroke-width="2"
-                          stroke="#FFFFFF"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          transform="translate(0 1)"
-                  />
+                    d="M2.85714 0C2.85714 0 18.5714 0 18.5714 0C20.1494 0 21.4286 1.27919 21.4286 2.85714C21.4286 2.85714 21.4286 11.4983 21.4286 11.4983C21.4286 13.0046 20.263 14.2386 18.7847 14.3476C18.7847 14.3476 18.5607 14.3554 18.5607 14.3554C18.5607 14.3554 2.84641 14.2964 2.84641 14.2964C1.27265 14.2905 0 13.0131 0 11.4393C0 11.4393 0 2.85714 0 2.85714C0 1.27919 1.27919 7.15256e-07 2.85714 7.15256e-07C2.85714 7.15256e-07 2.85714 0 2.85714 0Z"
+                    fill="none" stroke-width="2" stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round"
+                    transform="translate(0 1)" />
+                  <path d="M0 0L14.3371 0" fill="none" stroke-width="2" stroke="#FFFFFF" stroke-linecap="round"
+                    stroke-linejoin="round" transform="matrix(1 0 0 1 3.52 18.151)" />
+                  <path d="M0 0L8.57143 0" fill="none" stroke-width="2" stroke="#FFFFFF" stroke-linecap="round"
+                    stroke-linejoin="round" transform="matrix(1 0 0 1 6.428 20.994)" />
                   <path
-                          d="M0 0L14.3371 0"
-                          fill="none"
-                          stroke-width="2"
-                          stroke="#FFFFFF"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          transform="matrix(1 0 0 1 3.52 18.151)"
-                  />
-                  <path
-                          d="M0 0L8.57143 0"
-                          fill="none"
-                          stroke-width="2"
-                          stroke="#FFFFFF"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          transform="matrix(1 0 0 1 6.428 20.994)"
-                  />
-                  <path
-                          d="M2.4375 9.98438L1.00781 9.98438L0.708984 4.25977L2.73633 4.25977L2.4375 9.98438ZM0.685547 11.9883Q0.685547 11.4375 0.987305 11.2148Q1.28906 10.9922 1.7168 10.9922Q2.13281 10.9922 2.43457 11.2148Q2.73633 11.4375 2.73633 11.9883Q2.73633 12.5156 2.43457 12.75Q2.13281 12.9844 1.7168 12.9844Q1.28906 12.9844 0.987305 12.75Q0.685547 12.5156 0.685547 11.9883Z"
-                          fill="#FFFFFF"
-                          transform="translate(9 0)"
-                  />
+                    d="M2.4375 9.98438L1.00781 9.98438L0.708984 4.25977L2.73633 4.25977L2.4375 9.98438ZM0.685547 11.9883Q0.685547 11.4375 0.987305 11.2148Q1.28906 10.9922 1.7168 10.9922Q2.13281 10.9922 2.43457 11.2148Q2.73633 11.4375 2.73633 11.9883Q2.73633 12.5156 2.43457 12.75Q2.13281 12.9844 1.7168 12.9844Q1.28906 12.9844 0.987305 12.75Q0.685547 12.5156 0.685547 11.9883Z"
+                    fill="#FFFFFF" transform="translate(9 0)" />
                 </g>
               </g>
-            </svg>
-            <span>Incidentes</span>
-          </a>
-        </li>
-
-        <!--Usuários-->
-        <li>
-          <a href="usuarios.html" title="Usuários">
-            <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+            </svg><span>Incidentes</span></a></li>
+        <li><a href="usuarios.html" title="Usuários"><svg width="30" height="30" viewBox="0 0 30 30" fill="none"
+              xmlns="http://www.w3.org/2000/svg">
               <g>
                 <path
                   d="M2.5 17.5L0 17.5C0 17.5 0 16.25 0 16.25C0 13.9202 1.59346 11.9625 3.75 11.4075M6.25 7.28662C4.79351 6.77187 3.75 5.38278 3.75 3.75001C3.75 2.11723 4.79351 0.728182 6.25 0.213394M25 17.5L27.5 17.5C27.5 17.5 27.5 16.25 27.5 16.25C27.5 13.9202 25.9065 11.9625 23.75 11.4075M21.25 0.213394C22.7065 0.728182 23.75 2.11723 23.75 3.75001C23.75 5.38278 22.7065 6.77187 21.25 7.28662M16.25 11.25C19.0114 11.25 21.25 13.4886 21.25 16.25C21.25 16.25 21.25 17.5 21.25 17.5L6.25 17.5C6.25 17.5 6.25 16.25 6.25 16.25C6.25 13.4886 8.48857 11.25 11.25 11.25C11.25 11.25 16.25 11.25 16.25 11.25ZM17.5 3.75C17.5 5.82106 15.8211 7.5 13.75 7.5C11.6789 7.5 10 5.82106 10 3.75C10 1.67894 11.6789 0 13.75 0C15.8211 0 17.5 1.67894 17.5 3.75Z"
                   fill="none" stroke-width="2" stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round"
                   transform="translate(1.25 6.25)" />
               </g>
-            </svg>
-            <span>Usuários</span>
-          </a>
-        </li>
-
-        <!--Configurações-->
-        <li>
-          <a href="configuracoes.html" title="Configurações">
-            <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+            </svg><span>Usuários</span></a></li>
+        <li><a href="configuracoes.html" title="Configurações"><svg width="30" height="30" viewBox="0 0 30 30"
+              fill="none" xmlns="http://www.w3.org/2000/svg">
               <g>
                 <path
                   d="M0 3.75C0 1.67893 1.67893 0 3.75 0C5.82107 0 7.5 1.67893 7.5 3.75C7.5 5.82107 5.82107 7.5 3.75 7.5C1.67893 7.5 0 5.82107 0 3.75Z"
@@ -254,23 +161,32 @@
                   fill="none" stroke-width="2" stroke="#FFFFFF" stroke-linecap="round"
                   transform="translate(3.215 2.5)" />
               </g>
-            </svg>
-            <span>Configurações</span>
-          </a>
-        </li>
+            </svg><span>Configurações</span></a></li>
       </ul>
     </div>
 
-    <!--Profile-->
     <div class="container-bottom">
       <div class="container-profile" title="Perfil">
         <div class="image-profile">
           <img src="../assets/images/perfil.png" alt="Foto de perfil" />
         </div>
-
         <div class="info">
           <span id="usuarionome" class="role"></span>
           <span id="usuariocargo" class="name"></span>
+        </div>
+      </div>
+
+
+      <div class="logout-area" id="logout">
+        <div class="logout">
+          <button type="button">
+            <svg width="25px" height="25px" viewBox="0 -0.5 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M11.75 9.874C11.75 10.2882 12.0858 10.624 12.5 10.624C12.9142 10.624 13.25 10.2882 13.25 9.874H11.75ZM13.25 4C13.25 3.58579 12.9142 3.25 12.5 3.25C12.0858 3.25 11.75 3.58579 11.75 4H13.25ZM9.81082 6.66156C10.1878 6.48991 10.3542 6.04515 10.1826 5.66818C10.0109 5.29121 9.56615 5.12478 9.18918 5.29644L9.81082 6.66156ZM5.5 12.16L4.7499 12.1561L4.75005 12.1687L5.5 12.16ZM12.5 19L12.5086 18.25C12.5029 18.25 12.4971 18.25 12.4914 18.25L12.5 19ZM19.5 12.16L20.2501 12.1687L20.25 12.1561L19.5 12.16ZM15.8108 5.29644C15.4338 5.12478 14.9891 5.29121 14.8174 5.66818C14.6458 6.04515 14.8122 6.48991 15.1892 6.66156L15.8108 5.29644ZM13.25 9.874V4H11.75V9.874H13.25ZM9.18918 5.29644C6.49843 6.52171 4.7655 9.19951 4.75001 12.1561L6.24999 12.1639C6.26242 9.79237 7.65246 7.6444 9.81082 6.66156L9.18918 5.29644ZM4.75005 12.1687C4.79935 16.4046 8.27278 19.7986 12.5086 19.75L12.4914 18.25C9.08384 18.2892 6.28961 15.5588 6.24995 12.1513L4.75005 12.1687ZM12.4914 19.75C16.7272 19.7986 20.2007 16.4046 20.2499 12.1687L18.7501 12.1513C18.7104 15.5588 15.9162 18.2892 12.5086 18.25L12.4914 19.75ZM20.25 12.1561C20.2345 9.19951 18.5016 6.52171 15.8108 5.29644L15.1892 6.66156C17.3475 7.6444 18.7376 9.79237 18.75 12.1639L20.25 12.1561Z"
+                fill="var(--color-danger)" />
+            </svg>
+            <span>Fazer logout</span>
+          </button>
         </div>
       </div>
 
@@ -280,19 +196,38 @@
     </div>
   </aside>
 
-  <!--Body-->
-  <div class="body">
-    <!--Container-->
+  <dialog class="logout-modal" id="logout-modal">
     <div class="container">
-      <!--Title-->
-      <div class="title">
-        <span>Painel de monitoramento / <a href="#">Zonas</a> </span>
+      <div class="content">
+        <div class="title">
+          <h2>Sair da conta</h2>
+        </div>
+
+        <span>Tem certeza que deseja sair da conta?</span>
       </div>
 
+      <div class="btns">
+        <button type="button" id="confirmar-logout">Sim</button>
+        <button type="button" id="cancelar-logout">Cancelar</button>
+      </div>
+    </div>
+  </dialog>
+  </aside>
+
+  <!--Body-->
+  <div class="body">
+    <div id="notification-area"></div>
+    <div class="container">
+      <div class="title">
+        <span>Painel de monitoramento / <a href="#">Zonas</a></span>
+      </div>
+
+      <!--KPIs-->
       <div class="items">
         <div class="kpis">
           <div class="card">
             <div class="icon">
+              <span class="desc">Zonas com Alertas</span>
               <div class="i">
                 <div class="ii">
                   <svg width="45" height="45" viewBox="0 0 45 45" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -310,46 +245,36 @@
                     </g>
                   </svg>
                 </div>
-
-                <span class="number">2/6</span>
+                <span class="number" id="kpi-zonas-alerta">—</span>
               </div>
-
-              <span class="desc">Zonas com Alertas</span>
             </div>
-            <div class="info"></div>
           </div>
 
           <div class="card">
             <div class="icon">
+              <span class="desc">Disponibilidade (Uptime)</span>
               <div class="i">
                 <div class="ii">
-                  <svg width="45" height="45" viewBox="0 0 45 45" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <g>
-                      <g transform="translate(3.674 1.817)">
-                        <path
-                          d="M15.2091 3.4399C15.6418 3.00721 15.6418 2.3149 15.2091 1.88221C15.2091 1.88221 13.6514 0.32452 13.6514 0.32452C13.2187 -0.108173 12.5264 -0.108173 12.0937 0.32452C12.0937 0.32452 8.28605 4.13221 8.28605 4.13221C8.02644 4.39183 7.50721 4.39183 7.24759 4.13221C7.24759 4.13221 3.4399 0.32452 3.4399 0.32452C3.00721 -0.108173 2.3149 -0.108173 1.88221 0.32452C1.88221 0.32452 0.324519 1.88221 0.324519 1.88221C-0.108173 2.3149 -0.108173 3.00721 0.324519 3.4399C0.324519 3.4399 4.13221 7.2476 4.13221 7.2476C4.39182 7.50721 4.39182 8.02644 4.13221 8.28606C4.13221 8.28606 0.324519 12.0938 0.324519 12.0938C-0.108173 12.5264 -0.108173 13.2188 0.324519 13.6514C0.324519 13.6514 1.88221 15.2091 1.88221 15.2091C2.3149 15.6418 3.00721 15.6418 3.4399 15.2091C3.4399 15.2091 7.24759 11.4014 7.24759 11.4014C7.50721 11.1418 8.02644 11.1418 8.28605 11.4014C8.28605 11.4014 12.0937 15.2091 12.0937 15.2091C12.5264 15.6418 13.2187 15.6418 13.6514 15.2091C13.6514 15.2091 15.2091 13.6514 15.2091 13.6514C15.6418 13.2188 15.6418 12.5264 15.2091 12.0938C15.2091 12.0938 11.4014 8.28606 11.4014 8.28606C11.1418 8.02644 11.1418 7.50721 11.4014 7.2476C11.4014 7.2476 15.2091 3.4399 15.2091 3.4399C15.2091 3.4399 15.2091 3.4399 15.2091 3.4399Z"
-                          fill="#FFFFFF" transform="matrix(1 0 0 1 11.146 25.983)" />
-                        <path
-                          d="M37.605 8.22115C32.8454 2.94231 26.0954 0 18.9127 0C11.73 0 4.97998 2.94231 0.220362 8.22115C-0.125792 8.56731 -0.0392539 9.17307 0.3069 9.43269C0.3069 9.43269 2.90305 11.6827 2.90305 11.6827C3.24921 12.0288 3.76844 11.9423 4.11459 11.5962C7.92228 7.52885 13.2877 5.19231 18.9127 5.19231C24.5377 5.19231 29.903 7.52885 33.7107 11.5962C34.0569 11.9423 34.5761 11.9423 34.9223 11.6827C34.9223 11.6827 37.5184 9.43269 37.5184 9.43269C37.8646 9.08654 37.9511 8.56731 37.605 8.22115C37.605 8.22115 37.605 8.22115 37.605 8.22115Z"
-                          fill="#FFFFFF" transform="scale(1 1)" />
-                        <path
-                          d="M9.73959 0C6.10498 0 2.64344 1.55769 0.220361 4.32692C-0.125793 4.67307 -0.0392542 5.27884 0.3069 5.625C0.3069 5.625 3.07613 7.70192 3.07613 7.70192C3.42229 7.96153 3.94152 7.96153 4.20113 7.61538C5.67229 6.05769 7.66267 5.19231 9.73959 5.19231C11.8165 5.19231 13.8069 6.05769 15.1915 7.52884C15.4511 7.875 15.9704 7.875 16.3165 7.61538C16.3165 7.61538 19.0857 5.53846 19.0857 5.53846C19.5184 5.19231 19.5184 4.67308 19.1723 4.24039C16.8357 1.55769 13.3742 0 9.73959 0C9.73959 0 9.73959 0 9.73959 0Z"
-                          fill="#FFFFFF" transform="matrix(1 0 0 1 9.173 12.115)" />
+                  <svg width="45px" height="45px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                    <g id="SVGRepo_iconCarrier">
+                      <g id="System / Wifi_High">
+                        <path id="Vector"
+                          d="M8.34277 14.5899C8.80861 14.0903 9.37187 13.6915 9.9978 13.418C10.6237 13.1446 11.2995 13.0025 11.9826 13.0001C12.6656 12.9977 13.3419 13.1353 13.9697 13.4044C14.5975 13.6735 15.1637 14.0683 15.633 14.5646M6.14941 11.5439C6.89476 10.7446 7.79597 10.1066 8.79745 9.66902C9.79893 9.23148 10.8793 9.00389 11.9721 9.00007C13.065 8.99626 14.1466 9.21651 15.1511 9.64704C16.1556 10.0776 17.0617 10.7094 17.8127 11.5035M3.22363 8.81635C4.34165 7.61742 5.69347 6.66028 7.19569 6.00398C8.69791 5.34768 10.3179 5.0058 11.9572 5.00007C13.5966 4.99435 15.2208 5.32472 16.7276 5.97052C18.2344 6.61632 19.5931 7.56458 20.7195 8.75568M12 19.0001C11.4477 19.0001 11 18.5524 11 18.0001C11 17.4478 11.4477 17.0001 12 17.0001C12.5523 17.0001 13 17.4478 13 18.0001C13 18.5524 12.5523 19.0001 12 19.0001Z"
+                          stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                       </g>
                     </g>
                   </svg>
                 </div>
-
-                <span class="number">95%</span>
+                <span class="number" id="kpi-uptime">—</span>
               </div>
-
-              <span class="desc">Disponibilidade (Uptime)</span>
             </div>
-            <div class="info"></div>
           </div>
 
           <div class="card">
             <div class="icon">
+              <span class="desc">Zona com mais alertas</span>
               <div class="i">
                 <div class="ii">
                   <svg width="45" height="45" viewBox="0 0 45 45" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -364,52 +289,48 @@
                     </g>
                   </svg>
                 </div>
-
-                <span class="text">Zona D</span>
+                <span class="text" id="kpi-zona-critica">—</span>
               </div>
-
-              <span class="desc">Zona Crítica</span>
             </div>
-            <div class="info"></div>
           </div>
 
           <div class="card">
             <div class="icon">
+              <span class="desc">Zona mais estável</span>
               <div class="i">
                 <div class="ii">
-                  <?xml version="1.0" encoding="utf-8"?>
-                  <svg width="45" height="45" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <g>
+                  <svg width="45px" height="45px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                    <g id="SVGRepo_iconCarrier">
                       <path
-                        d="M7 0L35 0C38.8665 0 42 3.13348 42 7L42 35C42 38.8665 38.8665 42 35 42L7 42C3.13348 42 0 38.8665 0 35L0 7C0 3.13348 3.13348 0 7 0L7 0Z"
-                        fill="#6D33FF" transform="scale(1 1)" />
-                      <g transform="matrix(1 0 0 1 1.5 1.5)">
-                        <path d="M0 0L0 6.50004L4.87501 11.3751" fill="none" stroke-width="3" stroke="#FFFFFF"
-                          stroke-linecap="round" transform="matrix(1 0 0 1 19.501 13)" />
-                        <path
-                          d="M0 14.6253C0 6.54798 6.54795 0 14.6253 0C22.7026 0 29.2505 6.54798 29.2505 14.6253C29.2505 22.7027 22.7026 29.2507 14.6253 29.2507C6.54795 29.2507 0 22.7027 0 14.6253Z"
-                          fill="none" stroke-width="3" stroke="#FFFFFF" transform="matrix(1 0 0 1 4.876 4.875)" />
-                      </g>
+                        d="M4 11.9998H8L9.5 8.99976L11.5 13.9998L13 11.9998H15M12 6.42958C12.4844 5.46436 13.4683 4.72543 14.2187 4.35927C16.1094 3.43671 17.9832 3.91202 19.5355 5.46436C21.4881 7.41698 21.4881 10.5828 19.5355 12.5354L12.7071 19.3639C12.3166 19.7544 11.6834 19.7544 11.2929 19.3639L4.46447 12.5354C2.51184 10.5828 2.51184 7.41698 4.46447 5.46436C6.0168 3.91202 7.89056 3.43671 9.78125 4.35927C10.5317 4.72543 11.5156 5.46436 12 6.42958Z"
+                        stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                     </g>
                   </svg>
                 </div>
-
-                <div class="kpi-texto">
-
-                  <span class="number">Zona B</span>
-                </div>
+                <span class="number" id="kpi-zona-estavel">—</span>
               </div>
-              <span class="desc">Zona mais estável</span>
             </div>
           </div>
         </div>
-
       </div>
 
+      <!--Gráficos-->
       <div class="sec2">
-
         <div class="kpis2">
           <div class="grafico-card">
+            <!--Toggle 24h / 7 dias-->
+            <div style="display:flex;gap:8px;justify-content:flex-end;padding:8px 8px 0;">
+              <button id="btn-24h"
+                style="padding:4px 14px;border-radius:20px;border:none;cursor:pointer;background:#6D33FF;color:#fff;font-size:12px;">
+                Últimas 24h
+              </button>
+              <button id="btn-7d"
+                style="padding:4px 14px;border-radius:20px;border:1px solid #6D33FF;cursor:pointer;background:transparent;color:#6D33FF;font-size:12px;">
+                Últimos 7 dias
+              </button>
+            </div>
             <canvas id="uptime-zonas"></canvas>
           </div>
         </div>
@@ -421,60 +342,509 @@
         </div>
       </div>
 
-      <div class="sec2.5">
+      <!--Tabela-->
+      <div class="sec2-5">
         <div class="container-table" id="table-displays">
           <table id="lista_displays">
             <tr id="primeiro_item">
               <th>Zonas</th>
               <th>Displays</th>
               <th>Alertas</th>
-              <th>Localização</th>
-              <th>Status</th>
+              <th>Meta Uptime</th>
               <th>Uptime</th>
-              <th>
-              </th>
+              <th>Status</th>
             </tr>
           </table>
         </div>
       </div>
 
+      <!--Mapa-->
       <div class="sec3">
         <div class="mapa">
-          <div class="title">
-            <span>Distribuição no mapa</span>
-          </div>
-          <div id="map">
-
-          </div>
+          <div class="title"><span>Distribuição no mapa</span></div>
+          <div id="map"></div>
         </div>
       </div>
-
-
     </div>
   </div>
-  </div>
 
-  <!--Sidebar-->
   <script src="../assets/javascript/sidebar.js"></script>
-
-  <!--Comparação grupos x alertas-->
-  <script src="../assets/javascript/graficos-zonas.js"></script>
-
-  <!--Mapa-->
-  <script src="../assets/javascript/mapa2.js"></script>
-
-  <!--Carregar Mapa-->
-  <script>
-    window.onload = carregarMapa2();
-  </script>
-
 </body>
 
 </html>
 
 <script>
-  usuarionome.innerHTML = sessionStorage.NOME_USUARIO;
-  usuariocargo.innerHTML = sessionStorage.TIPO_USUARIO;
-</script>
 
-  <script src="../assets/javascript/carregarZonas.js"></script>
+  document.getElementById("usuarionome").innerHTML = sessionStorage.NOME_USUARIO || "";
+  document.getElementById("usuariocargo").innerHTML = sessionStorage.TIPO_USUARIO || "";
+
+  const CORES = ["#564592", "#ff4d6d", "#33C1FF", "#C6FF33", "#FF5733", "#33FF8A"];
+
+  let chartUptime = null;
+  let chartAlertas = null;
+
+  let dadosDashboard = null;
+  let registroHoje = null;
+
+  let modoGrafico = "24h";
+
+
+  async function inicializar() {
+    const idEmpresa = sessionStorage.FKEMPRESA;
+
+    if (!idEmpresa) {
+      console.error("FKEMPRESA não encontrado no sessionStorage");
+      return;
+    }
+
+    try {
+      const resposta = await fetch(`/dashboard/zonas/${idEmpresa}`);
+
+      if (!resposta.ok) {
+        console.error("Erro ao buscar dados:", resposta.status);
+        return;
+      }
+
+      dadosDashboard = await resposta.json();
+
+      registroHoje = obterRegistroMaisRecente(dadosDashboard);
+
+      if (!registroHoje) {
+        console.warn("Nenhum dado disponível");
+        return;
+      }
+
+      const chavesDias = Object.keys(dadosDashboard.dias || {}).sort((a, b) => {
+        const toDate = s => { const [d, m, y] = s.split("-"); return new Date(`${y}-${m}-${d}`); };
+        return toDate(b) - toDate(a);
+      });
+      const registroAnterior = chavesDias.length > 1
+        ? dadosDashboard.dias[chavesDias[1]]
+        : null;
+
+      preencherKPIs(registroHoje.kpis, registroAnterior);
+      renderizarGrafico24h(registroHoje);
+      renderizarGraficoAlertas(registroHoje);
+      preencherTabela(registroHoje.zonas);
+      setTimeout(() => iniciarMapa(registroHoje.zonas), 100);
+
+    } catch (erro) {
+      console.error("Erro ao carregar dashboard:", erro);
+    }
+  }
+
+  function obterRegistroMaisRecente(dados) {
+    const chavesDias = Object.keys(dados.dias || {});
+    if (!chavesDias.length) return null;
+
+    const maisRecente = chavesDias.sort((a, b) => {
+      const toDate = (s) => {
+        const [d, m, y] = s.split("-");
+        return new Date(`${y}-${m}-${d}`);
+      };
+      return toDate(b) - toDate(a);
+    })[0];
+
+    return dados.dias[maisRecente];
+  }
+
+
+  function classeStatus(valor, meta) {
+    if (valor >= meta + 3) return "kpi-verde";
+    if (valor >= meta) return "kpi-amarelo";
+    return "kpi-vermelho";
+  }
+
+  function aplicarCorCard(elementoId, classe) {
+    const card = document.getElementById(elementoId).closest(".card");
+    card.classList.remove("kpi-verde", "kpi-amarelo", "kpi-vermelho");
+    card.classList.add(classe);
+  }
+
+  function criarSub(elementoId, texto, tipoCls) {
+    const existing = document.getElementById(elementoId + "-sub");
+    if (existing) existing.remove();
+
+    const sub = document.createElement("div");
+    sub.id = elementoId + "-sub";
+    sub.className = "kpi-sub " + tipoCls;
+    sub.innerHTML = texto;
+
+
+    const el = document.getElementById(elementoId);
+    let wrapper = el.closest(".kpi-texto");
+    if (!wrapper) {
+      wrapper = document.createElement("div");
+      wrapper.className = "kpi-texto";
+      el.parentNode.insertBefore(wrapper, el);
+      wrapper.appendChild(el);
+    }
+    wrapper.appendChild(sub);
+  }
+
+  function preencherKPIs(kpis, registroAnterior) {
+    const totalZonas = kpis.totalZonas || 0;
+    const comAlerta = kpis.zonasComAlerta || 0;
+    const uptime = kpis.uptimeGeral ?? 0;
+
+    const primeiraZona = registroHoje && Object.values(registroHoje.zonas || {})[0];
+    const meta = primeiraZona ? primeiraZona.metaDisponibilidade : 95;
+
+    document.getElementById("kpi-zonas-alerta").textContent = `${comAlerta}/${totalZonas}`;
+
+    const clsAlerta = comAlerta === 0 ? "kpi-verde"
+      : comAlerta <= Math.ceil(totalZonas / 2) ? "kpi-amarelo"
+        : "kpi-vermelho";
+    aplicarCorCard("kpi-zonas-alerta", clsAlerta);
+
+    const totalAlertasHoje = Object.values(registroHoje?.zonas || {})
+      .reduce((acc, z) => acc + (z.alertas?.total || 0), 0);
+    const totalAlertasOntem = registroAnterior
+      ? Object.values(registroAnterior.zonas || {}).reduce((acc, z) => acc + (z.alertas?.total || 0), 0)
+      : null;
+
+    if (totalAlertasOntem !== null) {
+      const diffAlertas = totalAlertasHoje - totalAlertasOntem;
+      const sinalAlertas = diffAlertas > 0 ? "▲" : diffAlertas < 0 ? "▼" : "●";
+      const clsSubAlertas = diffAlertas > 0 ? "negativo" : diffAlertas < 0 ? "positivo" : "neutro";
+      criarSub("kpi-zonas-alerta", `${sinalAlertas} ${Math.abs(diffAlertas)} vs ontem`, clsSubAlertas);
+    } else {
+      criarSub("kpi-zonas-alerta", `${totalAlertasHoje} alertas hoje`, "neutro");
+    }
+
+    document.getElementById("kpi-uptime").textContent = `${uptime}%`;
+    aplicarCorCard("kpi-uptime", classeStatus(uptime, meta));
+
+    if (registroAnterior) {
+      const uptimeOntem = registroAnterior.kpis?.uptimeGeral ?? null;
+      if (uptimeOntem !== null) {
+        const diff = +(uptime - uptimeOntem).toFixed(2);
+        const sinal = diff > 0 ? "▲" : diff < 0 ? "▼" : "●";
+        const clsSub = diff > 0 ? "positivo" : diff < 0 ? "negativo" : "neutro";
+        criarSub("kpi-uptime", `${sinal} ${Math.abs(diff)}% vs ontem`, clsSub);
+      }
+    } else {
+      criarSub("kpi-uptime", `Meta: ${meta}%`, "neutro");
+    }
+
+    const zonaCritica = kpis.zonaCritica;
+    document.getElementById("kpi-zona-critica").textContent =
+      zonaCritica ? zonaCritica.nomeZona : "—";
+    aplicarCorCard("kpi-zona-critica", "kpi-vermelho");
+
+    if (zonaCritica) {
+      const dadosZC = Object.values(registroHoje?.zonas || {})
+        .find(z => z.idZona === zonaCritica.idZona);
+      const alertasZC = dadosZC?.alertas?.total ?? 0;
+      criarSub("kpi-zona-critica", `⚠ ${alertasZC} alertas`, alertasZC > 0 ? "negativo" : "neutro");
+    }
+
+    const zonaEstavel = kpis.zonaEstavel;
+    document.getElementById("kpi-zona-estavel").textContent =
+      zonaEstavel ? zonaEstavel.nomeZona : "—";
+    aplicarCorCard("kpi-zona-estavel", "kpi-verde");
+
+    if (zonaEstavel) {
+      const dadosZE = Object.values(registroHoje?.zonas || {})
+        .find(z => z.idZona === zonaEstavel.idZona);
+      const alertasZE = dadosZE?.alertas?.total ?? 0;
+      criarSub("kpi-zona-estavel", `✓ ${alertasZE} alertas`, alertasZE === 0 ? "positivo" : "neutro");
+    }
+  }
+
+  function renderizarGrafico24h(registro) {
+    const historico = registro.historico24h || {};
+    const todasHoras = new Set();
+    Object.values(historico).forEach(h => Object.keys(h).forEach(k => todasHoras.add(k)));
+    const labels = [...todasHoras].sort();
+
+    const datasets = Object.entries(historico).map(([nomeZona, horas], i) => ({
+      label: nomeZona,
+      data: labels.map(h => horas[h] ?? null),
+      borderColor: CORES[i % CORES.length],
+      backgroundColor: CORES[i % CORES.length],
+      tension: 0.4,
+      borderWidth: 2,
+      pointRadius: 0,
+      spanGaps: true
+    }));
+
+    renderizarChartUptime(labels, datasets, "Histórico de uptime por zona — últimas 24h");
+  }
+
+  function renderizarGrafico7dias(dados) {
+    const historico = dados.historico7dias || {};
+    const todasDatas = new Set();
+    Object.values(historico).forEach(d => Object.keys(d).forEach(k => todasDatas.add(k)));
+    const labels = [...todasDatas].sort((a, b) => {
+      const toMs = (s) => { const [d, m] = s.split("-"); return new Date(2000, m - 1, d); };
+      return toMs(a) - toMs(b);
+    });
+
+    const datasets = Object.entries(historico).map(([nomeZona, dias], i) => ({
+      label: nomeZona,
+      data: labels.map(d => dias[d] ?? null),
+      borderColor: CORES[i % CORES.length],
+      backgroundColor: CORES[i % CORES.length],
+      tension: 0.4,
+      borderWidth: 2,
+      pointRadius: 3,
+      spanGaps: true
+    }));
+
+    renderizarChartUptime(labels, datasets, "Histórico de uptime por zona — últimos 7 dias");
+  }
+
+  function renderizarChartUptime(labels, datasets, titulo) {
+    const ctx = document.getElementById("uptime-zonas");
+    if (chartUptime) chartUptime.destroy();
+
+    const todosValores = datasets.flatMap(ds => ds.data.filter(v => v !== null));
+    const menorValor = todosValores.length ? Math.min(...todosValores) : 0;
+    const maiorValor = todosValores.length ? Math.max(...todosValores) : 100;
+    const yMin = Math.max(0, Math.floor(menorValor) - 2);
+    const yMax = 100
+
+    chartUptime = new Chart(ctx, {
+      type: "line",
+      data: { labels, datasets },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: "bottom", labels: { color: "#8b8ba7", boxWidth: 18 } },
+          title: { display: true, text: titulo }
+        },
+        scales: {
+          x: { ticks: { color: "#7c7ca1" }, grid: { color: "rgba(255,255,255,0.05)" } },
+          y: {
+            min: yMin,
+            max: yMax,
+            ticks: { color: "#7c7ca1", callback: v => v + "%" },
+            grid: { color: "rgba(255,255,255,0.05)" }
+          }
+        }
+      }
+    });
+  }
+
+  document.getElementById("btn-24h").addEventListener("click", () => {
+    if (!dadosDashboard) return;
+    modoGrafico = "24h";
+    atualizarEstiloToggle();
+    renderizarGrafico24h(obterRegistroMaisRecente(dadosDashboard));
+  });
+
+  document.getElementById("btn-7d").addEventListener("click", () => {
+    if (!dadosDashboard) return;
+    modoGrafico = "7d";
+    atualizarEstiloToggle();
+    renderizarGrafico7dias(dadosDashboard);
+  });
+
+  function atualizarEstiloToggle() {
+    const btn24 = document.getElementById("btn-24h");
+    const btn7d = document.getElementById("btn-7d");
+    if (modoGrafico === "24h") {
+      btn24.style.background = "#6D33FF"; btn24.style.color = "#fff"; btn24.style.border = "none";
+      btn7d.style.background = "transparent"; btn7d.style.color = "#6D33FF"; btn7d.style.border = "1px solid #6D33FF";
+    } else {
+      btn7d.style.background = "#6D33FF"; btn7d.style.color = "#fff"; btn7d.style.border = "none";
+      btn24.style.background = "transparent"; btn24.style.color = "#6D33FF"; btn24.style.border = "1px solid #6D33FF";
+    }
+  }
+
+
+  function renderizarGraficoAlertas(registro) {
+    const zonas = Object.values(registro.zonas || {});
+    const labels = zonas.map(z => z.nomeZona);
+    const metricas = ["cpu", "ram", "disco", "latencia"];
+    const cores = ["#564592", "#724CF9", "#EDF67D", "#FF5733"];
+
+    const datasets = metricas.map((m, i) => ({
+      label: m.toUpperCase(),
+      backgroundColor: cores[i],
+      data: zonas.map(z => z.alertas[m] || 0)
+    }));
+
+    const ctx = document.getElementById("comparacao-grupo-alertas");
+    if (chartAlertas) chartAlertas.destroy();
+
+    chartAlertas = new Chart(ctx, {
+      type: "bar",
+      data: { labels, datasets },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: true },
+          title: { display: true, text: "Comparação Zonas x Alertas de componentes" }
+        },
+        scales: {
+          x: { stacked: true, title: { display: true, text: "Zonas" } },
+          y: { stacked: true, beginAtZero: true, title: { display: true, text: "Alertas" } }
+        }
+      }
+    });
+  }
+
+
+  function preencherTabela(zonas) {
+    const referencia = document.getElementById("primeiro_item");
+
+    const tbody = referencia.parentNode;
+    while (tbody.rows.length > 1) {
+      tbody.deleteRow(1);
+    }
+
+    const statusCor = { "Estável": "#22c55e", "Em Risco": "#f97316", "Crítico": "#ef4444" };
+
+    for (const zona of Object.values(zonas)) {
+      const cor = statusCor[zona.status] || "#8b8ba7";
+      const tr = tbody.insertRow();
+
+      tr.innerHTML = `
+        <td class="id-display" style="color:#6D33FF;font-weight:600;">${zona.nomeZona}</td>
+        <td>${zona.totalDisplays}</td>
+        <td>${zona.alertas.total}</td>
+        <td>${zona.metaDisponibilidade}%</td>
+        <td>${zona.uptime}%</td>
+        <td>
+          <div class="g-status" style="background:${cor}22;color:${cor};">
+            <div class="status" style="background:${cor};width:10px;height:10px;border-radius:50%;margin-right:6px;"></div>
+            <span>${zona.status}</span>
+          </div>
+        </td>
+      `;
+    }
+  }
+
+
+  async function iniciarMapa(zonas) {
+    const idEmpresa = sessionStorage.FKEMPRESA;
+
+    let gruposEndereco = [];
+    try {
+      const resposta = await fetch("/maquina/listarZona", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ idEmpresa })
+      });
+
+      if (resposta.ok) {
+        const json = await resposta.json();
+        gruposEndereco = json.map((item, index) => ({
+          nome: item.nome,
+          cor: CORES[index % CORES.length],
+          enderecos: item.enderecos_brutos
+            ? item.enderecos_brutos.split(";").map(e => e.trim())
+            : []
+        }));
+      }
+    } catch (e) {
+      console.warn("Não foi possível carregar endereços para o mapa:", e.message);
+    }
+
+    const zonasPorNome = {};
+    for (const zona of Object.values(zonas)) {
+      zonasPorNome[zona.nomeZona] = zona;
+    }
+
+    const map = L.map("map").setView([-23.55, -46.64], 15);
+    L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png", {
+      attribution: "© OpenStreetMap contributors © CARTO"
+    }).addTo(map);
+
+    function corPorUptime(uptime, meta) {
+      if (uptime >= meta + 3) return "#22c55e";
+      if (uptime >= meta) return "#f59e0b";
+      return "#ef4444";
+    }
+
+    function criarIcone(cor) {
+      return L.divIcon({
+        className: "",
+        iconSize: [32, 42],
+        iconAnchor: [16, 42],
+        popupAnchor: [0, -42],
+        html: `<svg width="32" height="42" viewBox="0 0 32 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+                 <path d="M16 0C7.163 0 0 7.163 0 16C0 24.837 16 42 16 42C16 42 32 24.837 32 16C32 7.163 24.837 0 16 0Z" fill="${cor}"/>
+                 <circle cx="16" cy="16" r="6" fill="white" opacity="0.9"/>
+               </svg>`
+      });
+    }
+
+    async function geocodificar(endereco) {
+      const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(endereco)}`;
+      const resp = await fetch(url, { headers: { "User-Agent": "VOOH_Dashboard_App/1.0" } });
+      const data = await resp.json();
+      if (data.length > 0) return [parseFloat(data[0].lat), parseFloat(data[0].lon)];
+      return null;
+    }
+
+    const aguardar = (ms) => new Promise(res => setTimeout(res, ms));
+
+    for (const grupo of gruposEndereco) {
+      const dadosZona = zonasPorNome[grupo.nome] || {};
+      const coordenadas = [];
+
+      // Cor do pin/polígono baseada no uptime real da zona
+      const meta = dadosZona.metaDisponibilidade ?? 95;
+      const uptime = dadosZona.uptime ?? 100;
+      const corZona = corPorUptime(uptime, meta);
+
+      for (const endereco of grupo.enderecos) {
+        try {
+          const coord = await geocodificar(endereco);
+          if (coord) {
+            coordenadas.push(coord);
+            L.marker(coord, { icon: criarIcone(corZona) })
+              .addTo(map)
+              .bindPopup(`<b style="color:${corZona}">${grupo.nome}</b><br>${endereco}`);
+          }
+        } catch (erro) {
+          console.error(`Erro geocodificação ${endereco}:`, erro);
+        }
+        await aguardar(1200);
+      }
+
+      if (coordenadas.length >= 2) {
+        const popupConteudo = `
+          <div style="min-width:200px;">
+            <h3 style="margin:0;color:${corZona};">${grupo.nome}</h3>
+            <hr>
+            <p> Uptime: <b>${dadosZona.uptime ?? "—"}%</b></p>
+            <p> Alertas: <b>${dadosZona.alertas?.total ?? "—"}</b></p>
+            <p> Displays: <b>${dadosZona.totalDisplays ?? "—"}</b></p>
+            <p> Status: <b>${dadosZona.status ?? "—"}</b></p>
+            <p> Meta: <b>${dadosZona.metaDisponibilidade ?? "—"}%</b></p>
+          </div>`;
+
+        const tooltipConteudo = `
+          <div style="min-width:180px;font-family:sans-serif;">
+            <strong style="font-size:14px;">${grupo.nome}</strong>
+            <hr style="margin:5px 0">
+            <div> Uptime: <b>${dadosZona.uptime ?? "—"}%</b></div>
+            <div> Alertas: <b>${dadosZona.alertas?.total ?? "—"}</b></div>
+            <div> Status: <b>${dadosZona.status ?? "—"}</b></div>
+          </div>`;
+
+        if (coordenadas.length === 2) {
+          L.polyline(coordenadas, { color: corZona, weight: 2, opacity: 0.8 })
+            .addTo(map)
+            .bindPopup(popupConteudo);
+        } else {
+          const polygon = L.polygon(coordenadas, {
+            color: corZona, weight: 2, opacity: 0.8,
+            fillColor: corZona, fillOpacity: 0.15
+          }).addTo(map);
+
+          polygon.bindTooltip(tooltipConteudo, { sticky: true, direction: "top" });
+          polygon.bindPopup(popupConteudo);
+          polygon.on("mouseover", function () { this.setStyle({ weight: 3, fillOpacity: 0.35 }); });
+          polygon.on("mouseout", function () { this.setStyle({ weight: 2, fillOpacity: 0.15 }); });
+        }
+      }
+    }
+  }
+</script>

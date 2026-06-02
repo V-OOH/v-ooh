@@ -5,4 +5,7 @@ router.get("/", function (req, res) {
     res.render("index");
 });
 
-module.exports = router;
+var redeRouter = require('./rede')
+router.use('/rede', redeRouter)
+
+module.exports = router; 
