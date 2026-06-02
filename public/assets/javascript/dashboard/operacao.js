@@ -293,3 +293,10 @@ document.addEventListener("DOMContentLoaded", () => {
   mttr();
   tendenciaPontuacao();
 });
+
+/**
+ * Busca os dados da dashboard de operação
+ */
+const buscarDados = () => {
+  fetch();
+};

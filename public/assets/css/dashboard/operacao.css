@@ -4,6 +4,9 @@
 /*Sidebar*/
 @import url("sidebar.css");
 
+/*Tooltip*/
+@import url("tooltip.css");
+
 /*Estilos para telas até 480px de largura (<= 30rem)*/
 @media screen and (max-width: 480px) {
     body {
