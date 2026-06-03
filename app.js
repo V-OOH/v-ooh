@@ -33,6 +33,7 @@ app.use("/usuarios", usuarioRouter);
 app.use("/maquina", maquinaRouter);
 app.use("/componente", componenteRouter);
 app.use("/display", displayRouter);
+app.use("/display_componentes",display_componentesRouter);
 app.use("/config", configRouter);
 app.use("/lia", liaRouter);
 app.use("/incidentes", incidenteRouter);
