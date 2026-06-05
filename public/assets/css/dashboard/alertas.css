@@ -70,14 +70,14 @@
     background-color: var(--color-purple);
   }
 
-.filtro-zonas {
+  .filtro-zonas {
     display: flex;
     gap: 8px;
     margin-bottom: 16px;
     flex-wrap: wrap;
-}
+  }
 
-.btn-zona {
+  .btn-zona {
     padding: 6px 16px;
     height: auto;
     border-radius: 20px;
@@ -89,12 +89,12 @@
     font-weight: bold;
     width: auto;
     transition: 180ms ease-in-out;
-}
+  }
 
-.btn-zona.active {
+  .btn-zona.active {
     background: #c6ff33;
     color: #1e0b36;
-}
+  }
 
   .button-purple span {
     margin-left: 10px;
@@ -656,7 +656,7 @@
     background-color: var(--color-purple);
   }
 
-    .filtro-zonas {
+  .filtro-zonas {
     display: flex;
     gap: 8px;
     margin-top: 12px;
@@ -680,6 +680,20 @@
   .btn-zona.active {
     background: #c6ff33;
     color: #1e0b36;
+  }
+
+  .baixar-relatorio {
+    padding: 6px 16px;
+    height: auto;
+    border-radius: 20px;
+    border: 1px solid #c6ff33;
+    background: #c6ff33;
+    color: #1e0b36;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: bold;
+    width: auto;
+    transition: 180ms ease-in-out;
   }
 
   .card-dispositivos {
