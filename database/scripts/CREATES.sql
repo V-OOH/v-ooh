@@ -253,3 +253,7 @@ CREATE TABLE display_componentes (
             FOREIGN KEY (fkComponente)
                 REFERENCES componentes(idComponente)
 );
+
+
+
+

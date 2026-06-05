@@ -23,6 +23,7 @@ const incidenteRouter = require("./src/routes/incidentes");
 const recomendacaoRouter = require("./src/routes/recomendacao");
 const alertasRouter = require("./src/routes/alertasRouter");
 
+
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

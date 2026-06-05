@@ -1,5 +1,6 @@
 const AWS = require("aws-sdk");
 const liaModel = require("../models/liaModel");
+const recomendacaoModel = require("../models/recomendacaoModel");
 
 
 const s3 = new AWS.S3({
@@ -47,21 +48,36 @@ async function recomendacaoIA(req, res) {
     try {
         const idEmpresa = req.params.idEmpresa;
 
+        const recomendacao = await recomendacaoModel.buscarRecomendacao(idEmpresa);
+
+        if (recomendacao.length > 0) {
+            console.log("Recomendação encontrada no banco");
+
+            return res.status(200).json({
+                alerta: recomendacao[0].recomendacao,
+                origem: "recomendacao"
+            });
+        }
+
+        console.log("Banco vazio. Chamando Gemini...");
+
         const params = {
             Bucket: process.env.AWS_BUCKET_NAME,
-            Key: `client/dashIncidente_Empresa2.json`
+            Key: `client/dashIncidente_Empresa${idEmpresa}.json`
         };
         
         const arquivo = await s3.getObject(params).promise();
         const dados = JSON.parse(arquivo.Body.toString("utf-8"));
 
         const ultimaLeitura = pegarUltimaLeitura(dados);
-        
 
         const respostaIA = await liaModel.recomendacaoIncidente(ultimaLeitura);
 
+        await recomendacaoModel.salvarRecomendacao(idEmpresa, respostaIA);
+
         res.status(200).json({
-            alerta: respostaIA
+            alerta: respostaIA,
+            origem: "gemini"
         });
 
     } catch (erro) {
