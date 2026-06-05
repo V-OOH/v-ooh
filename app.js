@@ -21,6 +21,7 @@ const configRouter = require("./src/routes/config");
 const liaRouter = require("./src/routes/lia");
 const incidenteRouter = require("./src/routes/incidentes");
 const recomendacaoRouter = require("./src/routes/recomendacao");
+const alertasRouter = require("./src/routes/alertasRouter");
 
 app.use(cors());
 app.use(express.json());
@@ -38,6 +39,7 @@ app.use("/config", configRouter);
 app.use("/lia", liaRouter);
 app.use("/incidentes", incidenteRouter);
 app.use("/recomendacao", recomendacaoRouter);
+app.use("/api/alertas", alertasRouter);
 
 app.listen(PORTA_APP, function () {
   console.log(

@@ -1,9 +1,8 @@
-
 let _dadosCompletos = null;
 
 const AlertaController = {
 
-    // Função assincrona que recebe os dados do Service
+    // Função assíncrona que recebe os dados do Service
     async init() {
         try {
             const dados = await AlertaService.buscarDados();
@@ -23,18 +22,18 @@ const AlertaController = {
         }
     },
 
-    // Atualiza os dados das KPI
+    // Atualiza os dados das KPIs
     atualizarKPIs(kpis) {
         if (!kpis) return;
 
-        // KPI 1 - "Visão dos Dispositivos" — "X / Y"
+        // KPI 1 — "Visão dos Dispositivos" 
         const spanValues = document.querySelectorAll(".stat-value span");
         if (spanValues.length >= 3) {
             spanValues[0].textContent = kpis.displays_precisam_atencao ?? "--";
             spanValues[2].textContent = kpis.total_displays ?? "--";
         }
 
-        // KPI 1 - Displays sem alertas
+        // KPI 1 — Displays sem alertas
         const semAlertas = document.querySelector(".side-info");
         if (semAlertas) {
             semAlertas.textContent = `${kpis.displays_sem_alertas ?? "--"} sem alertas`;
@@ -52,13 +51,13 @@ const AlertaController = {
             footerTotal.textContent = `${kpis.total_displays ?? "--"} total`;
         }
 
-        // KPI 2 - Funcionamento Global — percentual em alerta
+        // KPI 2 — Funcionamento Global — percentual em alerta
         const statValueDisp = document.querySelector(".stat-value-disp");
         if (statValueDisp) {
             statValueDisp.textContent = `${kpis.percentual_em_alerta ?? "--"}%`;
         }
 
-        // KPI2 - Funcionamento Global — variação vs ontem
+        // KPI 2 — Funcionamento Global — variação vs ontem
         const footerDisp = document.querySelector(".card-footer-disp span");
         if (footerDisp) {
             if (kpis.variacao_ontem !== null && kpis.variacao_ontem !== undefined) {
@@ -70,85 +69,95 @@ const AlertaController = {
         }
     },
 
-    // KPI 3 - Tempo Médio de Resolução (Jira)
+    // KPI 3 — Tempo Médio de Resolução (Jira)
     atualizarJira(jira) {
         if (!jira) return;
 
-        // Valor principal — MTTR médio
         const statValue = document.querySelector(".kpi-card:nth-child(3) .stat-value");
         if (statValue) {
             statValue.textContent = `${Math.round(jira.mttr_medio)} min`;
         }
 
-        // Variação vs ontem (por enquanto só exibe o valor)
         const statValue2 = document.querySelector(".stat-value-2");
         if (statValue2) {
             statValue2.textContent = `MTTR médio calculado`;
         }
 
-        // Min e Max
         const minMax = document.querySelectorAll(".min-max-info strong");
         if (minMax.length >= 2) {
             minMax[0].textContent = `${Math.round(jira.melhor_mttr)} min`;
             minMax[1].textContent = `${Math.round(jira.pior_mttr)} min`;
         }
 
-        // Footer — alertas críticos abertos
         const footerSpan = document.querySelector(".kpi-card:nth-child(3) .card-footer span:last-child");
         if (footerSpan) {
             footerSpan.textContent = `${jira.abertos} incidente(s) em aberto`;
         }
     },
 
-    // Renderizar botão da zona dinamicamente
+    // Renderiza botões de zona dinamicamente
     renderizarBotoesZona(zonas) {
-    if (!zonas) return;
+        if (!zonas) return;
 
-    const container = document.querySelector(".filtro-zonas");
-    if (!container) return;
+        const container = document.querySelector(".filtro-zonas");
+        if (!container) return;
 
-    container.innerHTML = "";
+        container.innerHTML = "";
 
-    // Botão "Todas"
-    const btnTodas = document.createElement("button");
-    btnTodas.textContent = "Todas as Zonas";
-    btnTodas.classList.add("btn-zona", "active");
-    btnTodas.addEventListener("click", () => {
+        // Botão "Todas as Zonas"
+        const btnTodas = document.createElement("button");
+        btnTodas.textContent = "Todas as Zonas";
+        btnTodas.classList.add("btn-zona", "active");
 
-        document.querySelectorAll(".btn-zona").forEach(b => b.classList.remove("active"));
-        btnTodas.classList.add("active");
-        
-        AlertaController.atualizarKPIs(_dadosCompletos.kpis);
-        AlertaApex.renderizarTodos(_dadosCompletos);
-    });
-    container.appendChild(btnTodas);
-
-    // Botão por zona
-    for (const idZona in zonas) {
-        const btn = document.createElement("button");
-        btn.textContent = `Zona ${idZona}`;
-        btn.classList.add("btn-zona");
-        btn.addEventListener("click", () => {
+        btnTodas.addEventListener("click", () => {
             document.querySelectorAll(".btn-zona").forEach(b => b.classList.remove("active"));
-            btn.classList.add("active");
+            btnTodas.classList.add("active");
 
-            const dadosZona = zonas[idZona];
-            AlertaController.atualizarKPIs(dadosZona.kpis);
-            AlertaApex.renderizarTodos(dadosZona);
+            // Restaura KPIs e gráficos com dados completos (todas as zonas somadas)
+            AlertaController.atualizarKPIs(_dadosCompletos.kpis);
+            AlertaApex.renderizarTodos(_dadosCompletos);
         });
-        container.appendChild(btn);
-    }
-},
 
-    // Caso os dados não aparecem na tela, mensagem de aviso
+        container.appendChild(btnTodas);
+
+        // Botão por zona
+        for (const idZona in zonas) {
+            const btn = document.createElement("button");
+            btn.textContent = `Zona ${idZona}`;
+            btn.classList.add("btn-zona");
+
+            btn.addEventListener("click", () => {
+                document.querySelectorAll(".btn-zona").forEach(b => b.classList.remove("active"));
+                btn.classList.add("active");
+
+                const dadosZona = zonas[idZona];
+
+                // Monta objeto com estrutura completa esperada pelo renderizarTodos
+                // mas usando os dados específicos da zona
+                const dadosParaRenderizar = {
+                    kpis: dadosZona.kpis,
+                    grafico_dispersao_alertas: dadosZona.grafico_dispersao_alertas,
+                    grafico_ranking_displays: dadosZona.grafico_ranking_displays,
+                    grafico_evolucao_diaria: dadosZona.grafico_evolucao_diaria,
+                    grafico_causa_raiz: dadosZona.grafico_causa_raiz,
+                    telemetria_detalhada: dadosZona.telemetria_detalhada
+                };
+
+                AlertaController.atualizarKPIs(dadosZona.kpis);
+                AlertaApex.renderizarTodos(dadosParaRenderizar);
+            });
+
+            container.appendChild(btn);
+        }
+    },
+
+    // Exibe mensagem de erro na tela
     exibirErro(mensagem) {
         const container = document.querySelector(".graficos") || document.body;
         const div = document.createElement("div");
-
         div.textContent = `Não foi possível carregar os dados: ${mensagem}`;
         container.prepend(div);
     }
-
-}
+};
 
 document.addEventListener("DOMContentLoaded", () => AlertaController.init());
