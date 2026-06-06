@@ -1,5 +1,5 @@
 // ID dinamico
-document.addEventListener("DOMContentLoaded", async() => {
+document.addEventListener("DOMContentLoaded", async () => {
   // Busca o ?id= na URL
   const urlParams = new URLSearchParams(window.location.search);
   const idDisplay = urlParams.get('id');
@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", async() => {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ idEmpresa: 1 })
   })
-  const json  = await resposta.json()
+  const json = await resposta.json()
   const dados = json[idDisplay]
 
   if (!dados) {
@@ -24,31 +24,42 @@ document.addEventListener("DOMContentLoaded", async() => {
     return
   }
 
-  // ── Preenche KPIs ───────────────────────────────────────────────────────────
+
   function formatarVelocidade(valorMBs) {
 
-  if (valorMBs === 0) {
+    if (valorMBs === 0) {
+      return {
+        valor: '0',
+        unidade: 'B/s'
+      };
+    }
+
+    const valorKBs = valorMBs * 1024;
+
+    if (valorKBs < 1024) {
+      return {
+        valor: valorKBs.toFixed(1),
+        unidade: 'KB/s'
+      };
+    }
+
     return {
-      valor: '0',
-      unidade: 'B/s'
+      valor: valorMBs.toFixed(2),
+      unidade: 'MB/s'
     };
   }
 
-  const valorKBs = valorMBs * 1024;
-
-  if (valorKBs < 1024) {
-    return {
-      valor: valorKBs.toFixed(1),
-      unidade: 'KB/s'
-    };
+  function corIcone(valor) {
+    if (valor === 0) return 'var(--color-success)'
+    if (valor === 1) return 'var(--color-amber)'
+    return 'var(--color-danger)'
   }
 
-  return {
-    valor: valorMBs.toFixed(2),
-    unidade: 'MB/s'
-  };
-}
-
+  function corLatencia(ms) {
+    if (ms < 20) return 'var(--color-success)'  
+    if (ms < 50) return 'var(--color-amber)'    
+    return 'var(--color-danger)'                  
+  }
 
   function atualizarKPIs() {
     const leituraFluxo = dados.fluxoDados[indiceAtual];
@@ -56,41 +67,49 @@ document.addEventListener("DOMContentLoaded", async() => {
 
     const download = formatarVelocidade(leituraFluxo.download_mbs);
     const upload = formatarVelocidade(leituraFluxo.upload_mbs);
+    const pacotes = Number(dados.kpis.pacotes_descartados)
+    const erros = Number(dados.kpis.erros_io)
+    const latenciaMs = leituraLatencia.latencia
 
     document.getElementById('kpi-download').innerHTML =
-    `${download.valor}<small style="font-size:1rem;"> ${download.unidade}</small>`;
+      `${download.valor}<small style="font-size:1rem;"> ${download.unidade}</small>`;
 
     document.getElementById('kpi-upload').innerHTML =
-    `${upload.valor}<small style="font-size:1rem;"> ${upload.unidade}</small>`;
+      `${upload.valor}<small style="font-size:1rem;"> ${upload.unidade}</small>`;
 
     document.getElementById('kpi-latencia').innerHTML =
-    `${leituraLatencia.latencia.toFixed(1)}<small style="font-size:1rem;"> ms</small>`;
+      `${latenciaMs.toFixed(1)}<small style="font-size:1rem;"> ms</small>`;
 
-    document.getElementById('kpi-pacotes').textContent = dados.kpis.pacotes_descartados
+    document.getElementById('icone-latencia').style.backgroundColor = corLatencia(latenciaMs)
+    document.getElementById('kpi-latencia').style.color             = corLatencia(latenciaMs)
 
-    document.getElementById('kpi-erros').textContent   = dados.kpis.erros_io
- 
-  indiceAtual++;
+    document.getElementById('kpi-pacotes').textContent = pacotes
+    document.getElementById('kpi-erros').textContent = erros
+    
+    document.getElementById('icone-pacotes').style.backgroundColor = corIcone(pacotes)
+    document.getElementById('icone-erros').style.backgroundColor = corIcone(erros)
 
-  if (indiceAtual >= dados.fluxoDados.length) {
-    indiceAtual = 0;
+    indiceAtual++;
+
+    if (indiceAtual >= dados.fluxoDados.length) {
+      indiceAtual = 0;
+    }
   }
-}
   atualizarKPIs();
   setInterval(atualizarKPIs, 60000);
 
-// ── Prepara dados: Fluxo de Dados ───────────────────────────────────────────
+
   const labelsFluxo = dados.fluxoDados.map(p => p.timestamp)
-  const dlData      = dados.fluxoDados.map(p => p.download_mbs)
-  const ulData      = dados.fluxoDados.map(p => p.upload_mbs)
+  const dlData = dados.fluxoDados.map(p => p.download_mbs)
+  const ulData = dados.fluxoDados.map(p => p.upload_mbs)
 
-  // ── Prepara dados: Latência ─────────────────────────────────────────────────
+
   const labelsLat = dados.latenciaHistorico.map(p => p.timestamp)
-  const latData   = dados.latenciaHistorico.map(p => p.latencia)
+  const latData = dados.latenciaHistorico.map(p => p.latencia)
 
-  // ── Prepara dados: Conexões ─────────────────────────────────────────────────
+
   const labelsConexoes = ['ESTABLISHED', 'LISTEN', 'TIME_WAIT', 'CLOSE_WAIT', 'SYN_SENT']
-  const conexoesData   = [
+  const conexoesData = [
     dados.conexoes.established,
     dados.conexoes.listen,
     dados.conexoes.time_wait,
@@ -99,16 +118,18 @@ document.addEventListener("DOMContentLoaded", async() => {
   ]
   const CONN_COLORS = ['#6D33FF', '#3DD68C', '#FFB547', '#FF4D6A', '#4A9EFF']
 
-  // ── Prepara dados: Estabilidade ─────────────────────────────────────────────
-  // Remove duplicata de hora (pode acontecer na primeira/última hora do CSV)
-  const estabSemDup   = dados.estabilidade.filter((item, index, self) =>
+
+  const estabSemDup = dados.estabilidade.filter((item, index, self) =>
     self.findIndex(i => i.hora === item.hora) === index
   )
-  const labelsEstab   = estabSemDup.map(p => p.hora)
-  const uptimeData    = estabSemDup.map(p => p.uptime)
-  const lossData      = estabSemDup.map(p => p.perdaPacotes)
+  const labelsEstab = estabSemDup.map(p => p.hora)
+  const uptimeData = estabSemDup.map(p => p.uptime)
+  const lossData = estabSemDup.map(p => p.perdaPacotes)
 
-  // ── Gráfico: Fluxo de Dados ─────────────────────────────────────────────────
+  // calculo média fluxo de dados
+  const mediaDownload = parseFloat((dlData.reduce((a, b) => a + b, 0) / dlData.length).toFixed(2))
+
+  // Fluxo de dados
   new Chart(document.getElementById('graficoTp'), {
     type: 'line',
     data: {
@@ -139,22 +160,44 @@ document.addEventListener("DOMContentLoaded", async() => {
     options: {
       responsive: true,
       maintainAspectRatio: false,
-      plugins: { legend: { display: true, position: 'top' } },
+      plugins: {
+        legend: { display: true, position: 'top' },
+        annotation: {
+          annotations: {
+            limiteNormal: {
+              type: 'line',
+              yMin: mediaDownload,
+              yMax: mediaDownload,
+              borderColor: 'var(--color-amber)',
+              borderWidth: 1.5,
+              borderDash: [6, 6],
+              label: {
+                display: true,
+                content: `Média: ${mediaDownload} MB/s`,
+                position: 'end',
+                color: 'var(--color-amber)',
+                backgroundColor: 'transparent',
+                font: { size: 10 }
+              }
+            }
+          }
+        }
+      },
       scales: {
         x: {
           ticks: { color: '#9B9B9B', font: { size: 9 }, callback: (val, index) => labelsFluxo[index].substring(0, 5) },
-          grid:  { color: 'rgba(0,0,0,0.05)' }
+          grid: { color: 'rgba(0,0,0,0.05)' }
         },
         y: {
           beginAtZero: true,
           ticks: { color: '#9B9B9B', font: { size: 9 }, callback: v => v + ' MB/s' },
-          grid:  { color: 'rgba(0,0,0,0.06)' }
+          grid: { color: 'rgba(0,0,0,0.06)' }
         }
       }
     }
   })
 
-  // ── Gráfico: Latência ───────────────────────────────────────────────────────
+  // Latência
   new Chart(document.getElementById('graficoLat'), {
     type: 'line',
     data: {
@@ -176,21 +219,21 @@ document.addEventListener("DOMContentLoaded", async() => {
       maintainAspectRatio: false,
       plugins: { legend: { display: false } },
       scales: {
-       x: {
+        x: {
           ticks: { color: '#9B9B9B', font: { size: 9 }, callback: (val, index) => labelsLat[index].substring(0, 5) },
-          grid:  { color: 'rgba(0,0,0,0.05)' }  
+          grid: { color: 'rgba(0,0,0,0.05)' }
         },
         y: {
           beginAtZero: true,
           ticks: { color: '#9B9B9B', font: { size: 9 }, callback: v => v + ' ms' },
-          grid:  { color: 'rgba(0,0,0,0.06)' }
+          grid: { color: 'rgba(0,0,0,0.06)' }
         }
       }
     }
   })
 
 
-  // ── Gráfico: Conexões ───────────────────────────────────────────────────────
+  // Conexões
   new Chart(document.getElementById('graficoCon'), {
     type: 'bar',
     data: {
@@ -211,11 +254,11 @@ document.addEventListener("DOMContentLoaded", async() => {
       scales: {
         x: {
           beginAtZero: true,
-          grid:  { color: 'rgba(0,0,0,0.05)' },
+          grid: { color: 'rgba(0,0,0,0.05)' },
           ticks: { color: '#9B9B9B', font: { size: 10 } }
         },
         y: {
-          grid:  { display: false },
+          grid: { display: false },
           ticks: { color: '#4A4A4A', font: { size: 11, weight: '700' } }
         }
       }
@@ -223,7 +266,7 @@ document.addEventListener("DOMContentLoaded", async() => {
   })
 
 
-  // ── Gráfico: Estabilidade 24h ───────────────────────────────────────────────
+  //  Estabilidade 24h 
   new Chart(document.getElementById('graficoEstab'), {
     type: 'line',
     data: {
@@ -266,7 +309,7 @@ document.addEventListener("DOMContentLoaded", async() => {
       scales: {
         x: {
           ticks: { color: '#9B9B9B', font: { size: 9 }, maxTicksLimit: 12 },
-          grid:  { color: 'rgba(0,0,0,0.05)' }
+          grid: { color: 'rgba(0,0,0,0.05)' }
         },
         yUptime: {
           type: 'linear',
@@ -274,20 +317,20 @@ document.addEventListener("DOMContentLoaded", async() => {
           min: 88,
           max: 100,
           ticks: { color: '#3DD68C', font: { size: 9 }, callback: v => v + '%' },
-          grid:  { color: 'rgba(0,0,0,0.06)' }
+          grid: { color: 'rgba(0,0,0,0.06)' }
         },
         yMetrics: {
           type: 'linear',
           position: 'right',
           min: 0,
           ticks: { color: '#9B9B9B', font: { size: 9 }, callback: v => v },
-          grid:  { drawOnChartArea: false }
+          grid: { drawOnChartArea: false }
         }
       }
     }
   })
 
-  // ── Diagnóstico ─────────────────────────────────────────────────────────────
+  // Diagnóstico 
   const diagList = document.getElementById('diag-list')
   if (diagList) {
     const d = dados.diagnostico
