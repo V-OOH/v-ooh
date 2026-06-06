@@ -23,9 +23,10 @@ const liaRouter = require("./src/routes/lia");
 const incidenteRouter = require("./src/routes/incidentes");
 const recomendacaoRouter = require("./src/routes/recomendacao");
 const alertasRouter = require("./src/routes/alertasRouter");
-const dashboardRouter = require("./src/routes/dashboard")
-const operacaoRouter = require("./src/routes/operacao")
-const relatorioRouter = require("./src/routes/relatorio")
+const dashboardRouter = require("./src/routes/dashboard");
+const operacaoRouter = require("./src/routes/operacao");
+const relatorioRouter = require("./src/routes/relatorio");
+const contratoRouter = require("./src/routes/contratoRouter");
 
 app.use(cors());
 app.use(express.json());
@@ -38,16 +39,16 @@ app.use("/usuarios", usuarioRouter);
 app.use("/maquina", maquinaRouter);
 app.use("/componente", componenteRouter);
 app.use("/display", displayRouter);
-app.use("/display_componentes",display_componentesRouter);
+app.use("/display_componentes", display_componentesRouter);
 app.use("/config", configRouter);
 app.use("/lia", liaRouter);
 app.use("/incidentes", incidenteRouter);
 app.use("/recomendacao", recomendacaoRouter);
 app.use("/api/alertas", alertasRouter);
 app.use("/dashboard", dashboardRouter);
-app.use("/operacao", operacaoRouter)
-app.use("/relatorio", relatorioRouter)
-
+app.use("/operacao", operacaoRouter);
+app.use("/relatorio", relatorioRouter);
+app.use("/contratos", contratoRouter);
 
 app.listen(PORTA_APP, function () {
   console.log(

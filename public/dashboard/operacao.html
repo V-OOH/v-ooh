@@ -138,11 +138,7 @@
                 <ul class="tabs">
                     <!--Saúde Operacional-->
                     <li>
-                        <a
-                            class="active"
-                            href="dashboard.html"
-                            title="Saúde Operacional"
-                        >
+                        <a class="active" href="#" title="Saúde Operacional">
                             <svg
                                 width="30"
                                 height="30"
@@ -463,52 +459,59 @@
                     <div class="timer">
                         <span
                             >Última atualização:
-                            <span>13 de maio de 2026 às 16:35:03</span></span
+                            <span id="data_atualizacao">Carregando...</span></span
                         >
                     </div>
                 </div>
 
-                <div class="data">Últimos 14 dias</div>
+                <div class="filtros-periodo">
+                    <button class="filtro-periodo" data-periodo="semanal">
+                        Semanal
+                    </button>
+                    <button
+                        class="filtro-periodo active"
+                        data-periodo="duas_semanas"
+                    >
+                        Quinzenal
+                    </button>
+                    <button class="filtro-periodo" data-periodo="mensal">
+                        Mensal
+                    </button>
+                </div>
 
                 <!--KPI's-->
                 <div class="kpis">
                     <!--ìndice de saúde operacional-->
                     <div id="kpi1">
+                        <div class="tooltip">
+                            <button
+                                class="info-btn"
+                                data-tooltip="A Nota final é calculada usando os pontos de uptime + pontos de downtime + pontos de MTTR + pontos de reincidência:
+                                (Se nota >= 85: 'saudável'
+                                Se nota >= 70: 'degradada'
+                                Se nota >= 50: 'crítica'
+                                Senão 'colapso')
+                                "
+                            >
+                                i
+                            </button>
+                        </div>
+
                         <div class="title">
-                            <span>ÍNDICE DE SAÚDE OPERACIONAL</span>
+                            <span>SAÚDE OPERACIONAL</span>
                         </div>
                         <div class="content">
                             <div class="pontuacao-container">
                                 <div id="pontuacao"></div>
                             </div>
                             <div class="info">
-                                <span>Degradada</span>
-                                <span>-6 pts vs 14 dias atrás</span>
-                                <span>Tendência (14 dias)</span>
+                                <span id="status-saude-operacao"></span>
+
+                                <span>Tendência</span>
                                 <div class="tendencia-container">
                                     <div id="tendencia-pontuacao-chart"></div>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="tooltip" hidden>
-                            <p>
-                                É um fato conhecido de todos que um leitor se
-                                distrairá com o conteúdo de texto legível de uma
-                                página quando estiver examinando sua
-                                diagramação. A vantagem de usar Lorem Ipsum é
-                                que ele tem uma distribuição normal de letras,
-                                ao contrário de "Conteúdo aqui, conteúdo aqui",
-                                fazendo com que ele tenha uma aparência similar
-                                a de um texto legível. Muitos softwares de
-                                publicação e editores de páginas na internet
-                                agora usam Lorem Ipsum como texto-modelo padrão,
-                                e uma rápida busca por 'lorem ipsum' mostra
-                                vários websites ainda em sua fase de construção.
-                                Várias versões novas surgiram ao longo dos anos,
-                                eventualmente por acidente, e às vezes de
-                                propósito (injetando humor, e coisas do gênero).
-                            </p>
                         </div>
                     </div>
 
@@ -543,8 +546,11 @@
                             <span>▼ 1,6% abaixo da meta</span>
                             <span
                                 >Meta contratual:
-                                <span class="val">99%</span></span
-                            >
+                                <span
+                                    class="val"
+                                    id="meta-contratual-disponibilidade"
+                                ></span
+                            ></span>
                         </div>
                     </div>
 
@@ -587,11 +593,11 @@
                         </div>
 
                         <div class="info">
-                            <span>▼ 42h que no 14 dias atrás</span>
+                            <span></span>
                             <span
                                 >Projeção até o fim do mês:
-                                <span class="val">+87h</span></span
-                            >
+                                <span class="val"></span
+                            ></span>
                         </div>
                     </div>
 
@@ -625,7 +631,7 @@
 
                         <div class="info">
                             <span>Risco de violação de SLA</span>
-                            <span>Em 4 dias no cenário atual</span>
+                            <span></span>
                         </div>
                     </div>
                 </div>
@@ -640,16 +646,13 @@
                     <!--MTTR-->
                     <div class="mttr">
                         <div class="kpi-eficiencia">
-                            <span
-                                >Eficiência da equipe (MTTR) (últimos 14
-                                dias)</span
-                            >
+                            <span>Eficiência da equipe (MTTR)</span>
 
                             <div class="information">
-                                <div class="big-kpi">48 min</div>
+                                <div class="big-kpi">0 min</div>
                                 <div class="desc-kpi">
-                                    <div>▼ 14%</div>
-                                    <div>Melhor que 14 dias anteriores</div>
+                                    <div></div>
+                                    <div></div>
                                 </div>
                             </div>
 
@@ -663,7 +666,7 @@
                             <!--Meta-->
                             <div class="meta-container">
                                 <div class="text">
-                                    <span id="value-meta">35 min</span>
+                                    <span id="value-meta">0 min</span>
                                     <span>Meta</span>
                                 </div>
                                 <div class="">
@@ -692,14 +695,14 @@
 
                             <div class="mini-kpis">
                                 <div class="mini-card">
-                                    <span>128 min</span>
-                                    <span>Pior caso</span>
-                                    <span>Zona A</span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
                                 </div>
                                 <div class="mini-card">
-                                    <span>18 min</span>
-                                    <span>Melhor caso</span>
-                                    <span>Zona C</span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
                                 </div>
                             </div>
 
@@ -712,11 +715,11 @@
                                 <div class="cards">
                                     <div class="card">
                                         <span>Dentro da SLA</span>
-                                        <span>91%</span>
+                                        <span></span>
                                     </div>
                                     <div class="card">
                                         <span>Resolvidos</span>
-                                        <span>128</span>
+                                        <span></span>
                                     </div>
                                 </div>
                             </div>
@@ -727,10 +730,7 @@
                 <!--Tabela-->
                 <div class="tabela">
                     <div class="title">
-                        <span
-                            >Zonas com instabilidade e reincidência (últimos 7
-                            dias)</span
-                        >
+                        <span>Zonas com instabilidade e reincidência</span>
                     </div>
 
                     <div class="table-container">
@@ -743,55 +743,6 @@
                                     <th>DOWNTIME</th>
                                     <th>TENDÊNCIA</th>
                                     <th>DISPLAYS</th>
-                                    <th>AÇÃO</th>
-                                </tr>
-
-                                <tr>
-                                    <td>Zona A</td>
-                                    <td>Alto</td>
-                                    <td>5x</td>
-                                    <td>34h 03min</td>
-                                    <td>A</td>
-                                    <td>18 (12%)</td>
-                                    <td>Investigar</td>
-                                </tr>
-                                <tr>
-                                    <td>Zona A</td>
-                                    <td>Alto</td>
-                                    <td>5x</td>
-                                    <td>34h 03min</td>
-                                    <td>A</td>
-                                    <td>18 (12%)</td>
-                                    <td>Investigar</td>
-                                </tr>
-
-                                <tr>
-                                    <td>Zona A</td>
-                                    <td>Alto</td>
-                                    <td>5x</td>
-                                    <td>34h 03min</td>
-                                    <td>A</td>
-                                    <td>18 (12%)</td>
-                                    <td>Investigar</td>
-                                </tr>
-                                <tr>
-                                    <td>Zona A</td>
-                                    <td>Alto</td>
-                                    <td>5x</td>
-                                    <td>34h 03min</td>
-                                    <td>A</td>
-                                    <td>18 (12%)</td>
-                                    <td>Investigar</td>
-                                </tr>
-
-                                <tr>
-                                    <td>Zona A</td>
-                                    <td>Alto</td>
-                                    <td>5x</td>
-                                    <td>34h 03min</td>
-                                    <td>A</td>
-                                    <td>18 (12%)</td>
-                                    <td>Investigar</td>
                                 </tr>
                             </tbody>
                         </table>
