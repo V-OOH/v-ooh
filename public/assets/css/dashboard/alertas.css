@@ -702,7 +702,7 @@
   }
 
   .info-btn {
-    background: #555;
+    background: #DEE2E6;
     color: white;
     border: none;
     border-radius: 50%;
@@ -727,7 +727,7 @@
     padding: 10px 14px;
     line-height: 1.4;
     text-align: left;
-    background-color: #222;
+    background-color: #DEE2E6;
     color: #fff;
     font-size: 13px;
     border-radius: 6px;
@@ -745,7 +745,7 @@
   }
 
     .info-btn2 {
-    background: #555;
+    background: #DEE2E6;
     color: white;
     border: none;
     border-radius: 50%;
@@ -770,7 +770,7 @@
     padding: 10px 14px;
     line-height: 1.4;
     text-align: left;
-    background-color: #222;
+    background-color: #DEE2E6;
     color: #fff;
     font-size: 13px;
     border-radius: 6px;
