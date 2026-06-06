@@ -17,6 +17,7 @@ const usuarioRouter = require("./src/routes/usuarios");
 const maquinaRouter = require("./src/routes/maquina");
 const componenteRouter = require("./src/routes/componente");
 const displayRouter = require("./src/routes/display");
+const display_componentesRouter = require("./src/routes/display_componentes");
 const configRouter = require("./src/routes/config");
 const liaRouter = require("./src/routes/lia");
 const incidenteRouter = require("./src/routes/incidentes");

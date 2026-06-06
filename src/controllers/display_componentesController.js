@@ -1,5 +1,5 @@
 var displayComponenteModel =
-    require("../models/display_componenteModel");
+    require("../models/display_componentesModel");
 
 function buscarDashboard(req, res) {
 
