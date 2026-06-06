@@ -696,7 +696,11 @@
     transition: 180ms ease-in-out;
   }
 
-  /* 1. Configuração da base do botão */
+  .kpi-card {
+    position: relative;
+    overflow: visible
+  }
+
   .info-btn {
     background: #555;
     color: white;
@@ -713,22 +717,22 @@
   .info-btn::after {
     content: attr(data-tooltip);
     position: absolute;
-    bottom: 130%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 240px;        
-    white-space: normal;  
-    text-align: left;      
+    bottom: 135%;
+    left: 0;
+    right: auto;
+    transform: none;
+    width: max-content;
+    max-width: 280px;
+    white-space: normal;
+    padding: 10px 14px;
     line-height: 1.4;
-    background-color: #333;
+    text-align: left;
+    background-color: #222;
     color: #fff;
-    padding: 6px 10px;
-    border-radius: 4px;
-    font-size: 12px;
-    font-weight: normal;
-    white-space: nowrap;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    z-index: 10;
+    font-size: 13px;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 9999;
     opacity: 0;
     pointer-events: none;
     visibility: hidden;
@@ -736,6 +740,49 @@
   }
 
   .info-btn:hover::after {
+    opacity: 1;
+    visibility: visible;
+  }
+
+    .info-btn2 {
+    background: #555;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    position: relative;
+  }
+
+  .info-btn2::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 135%;
+    left: auto;
+    right: 0;
+    transform: none;
+    width: max-content;
+    max-width: 280px;
+    white-space: normal;
+    padding: 10px 14px;
+    line-height: 1.4;
+    text-align: left;
+    background-color: #222;
+    color: #fff;
+    font-size: 13px;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+  }
+
+  .info-btn2:hover::after {
     opacity: 1;
     visibility: visible;
   }
@@ -765,13 +812,20 @@
   }
 
   .card-title {
-    font-size: 0.9rem;
-    margin-bottom: 10px;
-    font-weight: 700;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;    
+    width: 100%;               
+    margin-bottom: 15px;
+    font-size: 1rem;
   }
 
   .card-title-disp {
-    font-size: 0.9rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;    
+    width: 100%;               
+    font-size: 1rem;
     font-weight: 700;
   }
 

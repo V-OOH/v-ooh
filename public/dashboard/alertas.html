@@ -270,45 +270,54 @@
         <!--KPIS-->
         <div class="dashboard-container">
             <div class="kpi-card">
-                <h2 class="card-title">Visão dos Dispositivos 
-                   <button class="info-btn" data-tooltip="Esta KPI indica quantos displays do total possuem alertas. Sendo atualizada conforme o dia anterior (d - 1)">
-    i
-</button>
-                <div class="card-body">
-                    <div class="main-stat">
-                        <div class="ii">
-                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-                                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-                                <line x1="8" y1="21" x2="16" y2="21"></line>
-                                <line x1="12" y1="17" x2="12" y2="21"></line>
-                            </svg>
+                <h2 class="card-title">Visão dos Dispositivos
+                    <button class="info-btn"
+                        data-tooltip="Exibe a quantidade de displays que possuem alertas em relação ao total monitorado. Dados atualizados com base no dia anterior (D-1).">
+                        i
+                    </button>
+                    </h2>
+                    <div class="card-body">
+                        <div class="main-stat">
+                            <div class="ii">
+                                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white"
+                                    stroke-width="2">
+                                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                                    <line x1="8" y1="21" x2="16" y2="21"></line>
+                                    <line x1="12" y1="17" x2="12" y2="21"></line>
+                                </svg>
+                            </div>
+                            <div class="stat-value">
+                                <span>2</span>
+                                <span>/</span>
+                                <span>50</span>
+                            </div>
                         </div>
-                        <div class="stat-value">
-                            <span>2</span>
-                            <span>/</span>
-                            <span>50</span>
-                        </div>
-                    </div>
 
-                    <div class="vertical-divider"></div>
-                    <div class="side-info">48 sem alertas</div>
-                </div>
-                <div class="card-footer">
-                    <span class="warning-icon"
-                        style="border: 1px solid; border-radius: 50%; width: 16px; height: 16px; display: inline-flex; justify-content: center; align-items: center; font-size: 12px;">!</span>
-                    <span>2 precisam de atenção</span>
-                    <span style="color: #ccc">|</span>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <rect x="2" y="3" width="20" height="14" rx="2"></rect>
-                        <line x1="8" y1="21" x2="16" y2="21"></line>
-                        <line x1="12" y1="17" x2="12" y2="21"></line>
-                    </svg>
-                    <span>50 total</span>
-                </div>
+                        <div class="vertical-divider"></div>
+                        <div class="side-info">48 sem alertas</div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="warning-icon"
+                            style="border: 1px solid; border-radius: 50%; width: 16px; height: 16px; display: inline-flex; justify-content: center; align-items: center; font-size: 12px;">!</span>
+                        <span>2 precisam de atenção</span>
+                        <span style="color: #ccc">|</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <rect x="2" y="3" width="20" height="14" rx="2"></rect>
+                            <line x1="8" y1="21" x2="16" y2="21"></line>
+                            <line x1="12" y1="17" x2="12" y2="21"></line>
+                        </svg>
+                        <span>50 total</span>
+                    </div>
             </div>
 
             <div class="kpi-card">
-                <h2 class="card-title-disp">Funcionamento Global</h2>
+                <h2 class="card-title-disp">Funcionamento Global
+                    <button class="info-btn"
+                        data-tooltip="Mede a proporção de displays que geraram alertas em relação ao total. Posição referente ao dia anterior (D-1)">
+                        i
+                    </button>
+                </h2>
                 <div class="card-body">
                     <div class="main-stat">
                         <div class="ii">
@@ -332,7 +341,11 @@
             </div>
 
             <div class="kpi-card">
-                <h2 class="card-title">Tempo Médio de Resolução</h2>
+                <h2 class="card-title">Tempo Médio de Resolução
+                    <button class="info-btn2" data-tooltip="Exibe a média, o tempo mínimo e o máximo que um alerta leva para ser resolvido. Dados atualizados com base no dia anterior (D-1).">
+                        i
+                    </button>
+                </h2>
                 <div class="card-body">
                     <div class="main-stat">
                         <div class="ii">
@@ -386,7 +399,7 @@
     </div>
 
     <!--Sidebar-->
-    <!-- <script src="../assets/javascript/sidebar.js"></script> -->
+    <script src="../assets/javascript/sidebar.js"></script>
 
     <script src="../assets/javascript/dashboard/alerta_apex.js"></script>
 
