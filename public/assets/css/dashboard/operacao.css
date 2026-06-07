@@ -2069,14 +2069,23 @@
             visibility 0.2s ease;
     }
 
+    .info-btn.left::after {
+        left: auto;
+        right: 0;
+    }
+
     .info-btn:hover::after {
         opacity: 1;
         visibility: visible;
     }
 
-    .body .tooltip {
+    /* Ajuste específico para alinhar tooltip com o título APENAS nos cards do topo */
+    .body .kpis > div .title {
         display: flex;
-        justify-content: flex-end;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        margin-bottom: 10px;
     }
 
     .info-btn {
@@ -2090,6 +2099,7 @@
         font-size: 12px;
         font-weight: bold;
         position: relative;
+        flex-shrink: 0;
     }
 
     .body .disponibilidade .mttr .information .desc-kpi {
