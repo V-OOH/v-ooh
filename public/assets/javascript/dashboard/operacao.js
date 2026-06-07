@@ -15,6 +15,7 @@ let mapaZonas = {};
 const fetchZonas = async () => {
   try {
     const response = await fetch("/operacao/zonas");
+    tentativasFetchS3--;
     if (response.ok) {
       const zonas = await response.json();
       zonas.forEach((z) => {
@@ -41,9 +42,10 @@ const fetchData = async () => {
     // Busca zonas sem bloquear o carregamento principal
     fetchZonas();
 
-    // FUTURO: const response = await fetch("/rota-do-node");
-    const response = await fetch("./dashboard.json");
+    const response = await fetch("/operacao/dados/operacao");
+
     if (!response.ok) throw new Error("Erro ao buscar JSON");
+
     return await response.json();
   } catch (error) {
     console.error("Erro ao buscar dados:", error);
