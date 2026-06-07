@@ -323,13 +323,17 @@ const renderMttr = (periodo, jira) => {
     miniCards[0].querySelector("span:nth-child(1)").innerHTML =
       `${Math.round(piorZona.mttr_min)} min`;
     miniCards[0].querySelector("span:nth-child(2)").innerHTML = "Pior caso";
-    miniCards[0].querySelector("span:nth-child(3)").innerHTML = getNomeZona(piorZona.zona);
+    miniCards[0].querySelector("span:nth-child(3)").innerHTML = getNomeZona(
+      piorZona.zona,
+    );
 
     // Melhor caso
     miniCards[1].querySelector("span:nth-child(1)").innerHTML =
       `${Math.round(melhorZona.mttr_min)} min`;
     miniCards[1].querySelector("span:nth-child(2)").innerHTML = "Melhor caso";
-    miniCards[1].querySelector("span:nth-child(3)").innerHTML = getNomeZona(melhorZona.zona);
+    miniCards[1].querySelector("span:nth-child(3)").innerHTML = getNomeZona(
+      melhorZona.zona,
+    );
   }
 };
 
@@ -491,7 +495,24 @@ const configurarFiltros = (dados) => {
 const renderTudo = (periodo, nomePeriodo, dados) => {
   const dataAtuEl = document.getElementById("data_atualizacao");
   if (dataAtuEl && dados.ultima_atualizacao) {
-    dataAtuEl.innerHTML = dados.ultima_atualizacao;
+    let dadosAtualizacao = dados.ultima_atualizacao.split(" ");
+
+    let dataAtt = dadosAtualizacao[0];
+
+    let dataObjeto = new Date(dataAtt);
+
+    let dia = dataObjeto.toLocaleString("pt-BR", {
+      weekday: "long",
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    });
+
+    let horaAtt = dadosAtualizacao[1];
+
+    let formatado = `${dia} às ${horaAtt}`;
+
+    dataAtuEl.innerHTML = formatado;
   }
 
   renderPontuacao(periodo);

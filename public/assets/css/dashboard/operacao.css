@@ -1715,7 +1715,7 @@
     }
 
     .body .container .title .timer span {
-        font-weight: normal;
+        font-weight: bold;
         background-color: var(--color-white);
         color: var(--color-deep-purple);
     }
