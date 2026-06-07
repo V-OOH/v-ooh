@@ -5,4 +5,9 @@ function buscarDadosZona(idZona) {
     return database.executar(instrucaoSql);
 }
 
-module.exports = { buscarDadosZona };
+function buscarZonas() {
+    var instrucaoSql = "SELECT idZona, nome FROM zona";
+    return database.executar(instrucaoSql);
+}
+
+module.exports = { buscarDadosZona, buscarZonas };
