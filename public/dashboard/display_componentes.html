@@ -287,7 +287,7 @@
   <!--Dashboard conteúdo-->
   <div class="content">
     <div class="kpis">
-      <div class="card">
+      <div class="card" id="card-cpu">
         <P><B>CPU</B></P>
         <div class="icon">
           <div class="i">
@@ -335,20 +335,13 @@
                 </g>
               </svg>
             </div>
-
-            <span class="number">95%</span>
+            <span class="number" id="cpu-val">--%</span>
           </div>
-
-          <span class="desc">✗ Alto</span>
+          <span class="desc" id="cpu-desc">--</span>
 
         </div>
-        <!-- <div class="info">
-          <div class="barra-container">
-            <div class="barra-preenchimento" style="width: 95%; background-color: #fa2d37;"></div>
-          </div>
-        </div> -->
       </div>
-      <div class="card">
+      <div class="card" id="card-ram">
         <P><B>RAM</B></P>
         <div class="icon">
           <div class="i">
@@ -376,11 +369,9 @@
                 </g>
               </svg>
             </div>
-
-            <span class="number">80%</span>
+            <span class="number" id="ram-val">--%</span>
           </div>
-
-          <span class="desc">⚠ Elevado</span>
+          <span class="desc" id="ram-desc">--</span>
         </div>
         <!-- <div class="info">
           <div class="barra-container">
@@ -389,7 +380,7 @@
         </div> -->
       </div>
 
-      <div class="card">
+      <div class="card" id="card-disco">
         <p><b>DISCO</b></p>
         <div class="icon">
           <div class="i">
@@ -414,11 +405,9 @@
                 </g>
               </svg>
             </div>
-
-            <span class="number">35%</span>
+            <span class="number" id="disco-val">--%</span>
           </div>
-
-          <span class="desc">✔ Normal</span>
+          <span class="desc" id="disco-desc">--</span>
         </div>
         <!-- <div class="info">
           <div class="barra-container">
@@ -428,7 +417,7 @@
       </div>
 
 
-      <div class="card">
+      <div class="card" id="card-temp">
         <p><b>Temperatura</b></p>
         <div class="icon">
           <div class="i">
@@ -448,14 +437,9 @@
                 </g>
               </svg>
             </div>
-
-            <span class="number">35°</span>
-            <!--<span style="font-size: 12px; margin-left: 10px;"> <b>MB/s</b></span>-->
+            <span class="number" id="temp-val">--°C</span>
           </div>
-
-          <span class="desc">⚠ Elevado</span>
-          <!--<span class="desc">↑ 0.7 MB/s ↓ 2.8 MB/s</span>-->
-
+          <span class="desc" id="temp-desc">--</span>
         </div>
         <!-- <div class="info">
           <div class="barra-container">
@@ -537,5 +521,65 @@
 
   usuarionome.innerHTML = sessionStorage.NOME_USUARIO;
   usuariocargo.innerHTML = sessionStorage.TIPO_USUARIO;
+
+  // Definição de limites
+const REGRAS = {
+    porcentagem: { alerta: 70, critico: 90 }, // Acima de 90% Vermelho, acima de 70% Amarelo, menos que isso Verde
+    temperatura: { alerta: 50, critico: 75 }  /* Graus Celsius */
+};
+
+// Função para definir a classe de cor e o texto de descrição
+function obterStatus(valor, tipo) {
+    const limite = REGRAS[tipo];
+    if (valor >= limite.critico) return { classe: 'status-critico', desc: '✗ Crítico' };
+    if (valor >= limite.alerta) return { classe: 'status-alerta', desc: '⚠ Elevado' };
+    return { classe: 'status-ok', desc: '✔ Normal' };
+}
+
+// Função principal que lê o JSON do S3 e atualiza o HTML
+async function atualizarDashboard(idDisplay) {
+    try {
+        // Tem que modificar pelo bucket que estamos utilizando
+        const url = `https://BUCKET_S3/displays/${idDisplay}.json`;
+        const resposta = await fetch(url);
+        const dadosJson = await resposta.json();
+
+        // 1. Extrai os dados gerados pela Lambda (último registro do card)
+        const cpu = dadosJson.dashboard.cards.cpu.percentual;
+        const ram = dadosJson.dashboard.cards.ram.percentual;
+        const disco = dadosJson.dashboard.cards.disco.percentual;
+        const temp = dadosJson.dashboard.grafico_cpu.temperatura_atual;
+
+        // 2. Aplica validação e atualiza a CPU
+        const statusCpu = obterStatus(cpu, 'porcentagem');
+        document.getElementById('cpu-val').innerText = `${cpu}%`;
+        document.getElementById('cpu-val').className = `number ${statusCpu.classe}`;
+        document.getElementById('cpu-desc').innerText = statusCpu.desc;
+
+        // 3. Aplica validação e atualiza a RAM
+        const statusRam = obterStatus(ram, 'porcentagem');
+        document.getElementById('ram-val').innerText = `${ram}%`;
+        document.getElementById('ram-val').className = `number ${statusRam.classe}`;
+        document.getElementById('ram-desc').innerText = statusRam.desc;
+
+        // 4. Aplica validação e atualiza o DISCO
+        const statusDisco = obterStatus(disco, 'porcentagem');
+        document.getElementById('disco-val').innerText = `${disco}%`;
+        document.getElementById('disco-val').className = `number ${statusDisco.classe}`;
+        document.getElementById('disco-desc').innerText = statusDisco.desc;
+
+        // 5. Aplica validação e atualiza a Temperatura
+        const statusTemp = obterStatus(temp, 'temperatura');
+        document.getElementById('temp-val').innerText = `${temp}°C`;
+        document.getElementById('temp-val').className = `number ${statusTemp.classe}`;
+        document.getElementById('temp-desc').innerText = statusTemp.desc;
+
+    } catch (erro) {
+        console.error("Erro ao buscar dados do display:", erro);
+    }
+}
+
+// Executa a função passando o ID do display desejado (ex: display 2)
+atualizarDashboard(2);
 
 </script>

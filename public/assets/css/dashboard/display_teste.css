@@ -1027,3 +1027,7 @@
         margin: 0 5px;
     }
 }
+
+.status-ok { color: #009966 !important; }
+.status-alerta { color: #FF9B00 !important; }
+.status-critico { color: #FA2D37 !important; }
