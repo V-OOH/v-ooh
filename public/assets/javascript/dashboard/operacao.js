@@ -10,8 +10,37 @@ let chartUptimeInst = null;
 let chartMttrInst = null;
 let chartTendenciaInst = null;
 
+let mapaZonas = {};
+
+const fetchZonas = async () => {
+  try {
+    const response = await fetch("/operacao/zonas");
+    if (response.ok) {
+      const zonas = await response.json();
+      zonas.forEach((z) => {
+        mapaZonas[z.idZona] = z.nome;
+      });
+    }
+  } catch (error) {
+    console.error("Erro ao carregar nomes das zonas:", error);
+  }
+};
+
+const getNomeZona = (idOuTexto) => {
+  if (!idOuTexto) return "N/A";
+  if (mapaZonas[idOuTexto]) return mapaZonas[idOuTexto];
+  if (typeof idOuTexto === "string" && idOuTexto.startsWith("Zona ")) {
+    const id = idOuTexto.replace("Zona ", "");
+    if (mapaZonas[id]) return mapaZonas[id];
+  }
+  return idOuTexto;
+};
+
 const fetchData = async () => {
   try {
+    // Busca zonas sem bloquear o carregamento principal
+    fetchZonas();
+
     // FUTURO: const response = await fetch("/rota-do-node");
     const response = await fetch("./dashboard.json");
     if (!response.ok) throw new Error("Erro ao buscar JSON");
@@ -285,21 +314,8 @@ const renderMttr = (periodo, jira) => {
   }
 
   // Melhor e pior zona
-  // Prioridade 1: Jira com zona numérica válida (> 0)
-  // Prioridade 2: fallback calculado pelo downtime das zonas do CSV
   let piorZona = periodo.mttr.pior_zona;
   let melhorZona = periodo.mttr.melhor_zona;
-
-  const jiraTemZona =
-    piorZona && piorZona.zona && piorZona.zona !== "N/A" && piorZona.zona !== 0;
-
-  if (!jiraTemZona) {
-    const fallback = mttrPorZonaCsv(periodo);
-    if (fallback) {
-      piorZona = fallback.pior;
-      melhorZona = fallback.melhor;
-    }
-  }
 
   const miniCards = document.querySelectorAll(".mini-card");
   if (miniCards.length >= 2 && piorZona && melhorZona) {
@@ -307,19 +323,13 @@ const renderMttr = (periodo, jira) => {
     miniCards[0].querySelector("span:nth-child(1)").innerHTML =
       `${Math.round(piorZona.mttr_min)} min`;
     miniCards[0].querySelector("span:nth-child(2)").innerHTML = "Pior caso";
-    miniCards[0].querySelector("span:nth-child(3)").innerHTML =
-      typeof piorZona.zona === "number"
-        ? `Zona ${piorZona.zona}`
-        : piorZona.zona;
+    miniCards[0].querySelector("span:nth-child(3)").innerHTML = getNomeZona(piorZona.zona);
 
     // Melhor caso
     miniCards[1].querySelector("span:nth-child(1)").innerHTML =
       `${Math.round(melhorZona.mttr_min)} min`;
     miniCards[1].querySelector("span:nth-child(2)").innerHTML = "Melhor caso";
-    miniCards[1].querySelector("span:nth-child(3)").innerHTML =
-      typeof melhorZona.zona === "number"
-        ? `Zona ${melhorZona.zona}`
-        : melhorZona.zona;
+    miniCards[1].querySelector("span:nth-child(3)").innerHTML = getNomeZona(melhorZona.zona);
   }
 };
 
@@ -393,8 +403,6 @@ const renderIncidentes = (periodo) => {
   const incidenteCards = document.querySelectorAll(".incidentes .card");
   if (incidenteCards.length < 2) return;
 
-  // "dentro_sla_pct" é o campo no JSON novo (antes era "percentual_dentro_sla")
-  // O JSON novo usa "percentual_dentro_sla" — lê os dois por segurança
   const slaPct =
     periodo.incidentes.percentual_dentro_sla ??
     periodo.incidentes.dentro_sla_pct ??
@@ -417,13 +425,11 @@ const renderTabela = (periodo) => {
   const tbody = document.querySelector(".tabela table tbody");
   if (!tbody) return;
 
-  // Remove linhas antigas (mantém o cabeçalho)
   tbody.querySelectorAll("tr:not(:first-child)").forEach((tr) => tr.remove());
 
   periodo.zonas.forEach((zona) => {
     const tr = document.createElement("tr");
 
-    // Tendência — o JSON usa "atual_percentual" (não "atual_pct")
     const tendenciaTexto = zona.disponibilidade.tendencia;
     const tendenciaMap = { melhora: "▲", piora: "▼", estável: "→" };
     const tendenciaSimbolo = tendenciaMap[tendenciaTexto] || "→";
@@ -441,7 +447,6 @@ const renderTabela = (periodo) => {
           ? "color:var(--color-amber)"
           : "color:var(--color-success)";
 
-    // Displays: o JSON novo não tem "percentual" — calcula na hora
     const totalDisplays = zona.displays.total;
     const afetadosDisplays = zona.displays.afetados;
     const pctDisplays =
@@ -450,7 +455,7 @@ const renderTabela = (periodo) => {
         : 0;
 
     tr.innerHTML = `
-      <td>${zona.zona}</td>
+      <td>${getNomeZona(zona.zona)}</td>
       <td style="${corRisco}">${capitalizar(zona.indice_risco)}</td>
       <td>${zona.reincidencias}x</td>
       <td>${zona.downtime.formatado}</td>
@@ -462,11 +467,6 @@ const renderTabela = (periodo) => {
   });
 };
 
-/**
- * Filtros de período
- *
- * @param {*} dados
- */
 const configurarFiltros = (dados) => {
   const botoes = document.querySelectorAll(".filtro-periodo");
 
@@ -488,15 +488,7 @@ const configurarFiltros = (dados) => {
   });
 };
 
-/**
- * Função para carregar tudo
- *
- * @param {*} periodo
- * @param {*} nomePeriodo
- * @param {*} dados
- */
 const renderTudo = (periodo, nomePeriodo, dados) => {
-  // Atualiza a data de última atualização no topo do dashboard
   const dataAtuEl = document.getElementById("data_atualizacao");
   if (dataAtuEl && dados.ultima_atualizacao) {
     dataAtuEl.innerHTML = dados.ultima_atualizacao;
@@ -511,14 +503,10 @@ const renderTudo = (periodo, nomePeriodo, dados) => {
   renderTabela(periodo);
 };
 
-// Carrega tudo na tela
 document.addEventListener("DOMContentLoaded", async () => {
   const dados = await fetchData();
   if (!dados) return;
 
-  // Inicia com período quinzenal
   renderTudo(dados.periodos["duas_semanas"], "duas_semanas", dados);
-
-  // Liga botões de filtro
   configurarFiltros(dados);
 });
