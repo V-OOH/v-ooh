@@ -1313,6 +1313,8 @@
     .container-profile .image-profile img {
         width: 45px;
         border-radius: 500px;
+        height: 45px;
+        object-fit: cover;
     }
 
     .container-profile .info .role {

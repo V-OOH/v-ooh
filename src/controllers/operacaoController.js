@@ -19,3 +19,23 @@ function buscarDados(req, res) {
 
   module.exports = { buscarDados };
 }
+
+function listarZonas(req, res) {
+  var operacaoModel = require("../models/operacaoModel");
+  operacaoModel.buscarZonas()
+      .then(function (resultado) {
+          if (resultado.length > 0) {
+              res.status(200).json(resultado);
+          } else {
+              res.status(240).send("Nenhum resultado encontrado!");
+          }
+      }).catch(function (erro) {
+          console.log(erro);
+          res.status(500).json(erro.sqlMessage);
+      });
+}
+
+module.exports = {
+  buscarDados,
+  listarZonas
+};

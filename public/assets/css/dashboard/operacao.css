@@ -4,9 +4,6 @@
 /*Sidebar*/
 @import url("sidebar.css");
 
-/*Tooltip*/
-@import url("tooltip.css");
-
 /*Estilos para telas até 480px de largura (<= 30rem)*/
 @media screen and (max-width: 480px) {
     body {
@@ -2019,9 +2016,90 @@
     }
 
     .body .disponibilidade .mttr .information .big-kpi {
-        font-size: 2rem;
+        font-size: 1.8rem;
         color: var(--color-purple);
         font-weight: bold;
+    }
+
+    .body .filtros-periodo {
+        margin-top: 20px;
+    }
+
+    .body .filtros-periodo button {
+        padding: 5px 10px;
+        border: none;
+        color: var(--color-deep-purple);
+        transition: 180ms ease-in-out;
+        border-radius: 16px;
+    }
+
+    body .filtros-periodo button.active {
+        padding: 5px 10px;
+        border: none;
+        color: var(--color-deep-purple);
+        background-color: var(--color-lemon);
+        font-weight: bold;
+    }
+
+    .info-btn::after {
+        content: attr(data-tooltip);
+        white-space: pre-wrap;
+        position: absolute;
+        bottom: 135%;
+        left: 0;
+        right: auto;
+        transform: none;
+        width: max-content;
+        max-width: 280px;
+        white-space: normal;
+        padding: 10px 14px;
+        line-height: 1.4;
+        text-align: left;
+        background-color: var(--color-white);
+        color: var(--color-deep-purple);
+        font-size: 13px;
+        border-radius: 6px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.201);
+        z-index: 9999;
+        opacity: 0;
+        pointer-events: none;
+        visibility: hidden;
+        transition:
+            opacity 0.2s ease,
+            visibility 0.2s ease;
+    }
+
+    .info-btn.left::after {
+        left: auto;
+        right: 0;
+    }
+
+    .info-btn:hover::after {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* Ajuste específico para alinhar tooltip com o título APENAS nos cards do topo */
+    .body .kpis > div .title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .info-btn {
+        background: var(--color-light-purple);
+        color: var(--color-white);
+        border: none;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: bold;
+        position: relative;
+        flex-shrink: 0;
     }
 
     .body .disponibilidade .mttr .information .desc-kpi {

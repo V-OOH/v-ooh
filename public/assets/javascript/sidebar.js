@@ -25,6 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
     sessionStorage.NOME_USUARIO;
   document.getElementById("usuariocargo").innerText =
     sessionStorage.TIPO_USUARIO;
+  buscarFotoPerfil();
 });
 
 let modalLogout = document.getElementById("logout-modal");
@@ -51,6 +52,7 @@ function logout() {
   window.location.href = "../login.html";
 }
 
+// Lança uma notificação na tela
 function notification(titulo, mensagem, tempo) {
   document.getElementById("notification-area").innerHTML = `
     <div class="container-notification">
@@ -80,4 +82,40 @@ function notification(titulo, mensagem, tempo) {
   setTimeout(() => {
     document.getElementById("notification-area").innerHTML = "";
   }, tempo);
+}
+
+let previewFoto = document.getElementById("preview-avatar");
+
+// Busca a foto de perfil do usuário
+function buscarFotoPerfil() {
+  fetch("/usuarios/foto-perfil", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      idUsuario: sessionStorage.ID_USUARIO,
+    }),
+  }).then((resp) => {
+    if (resp.ok) {
+      resp.json().then((json) => {
+        let fotoCaminho = "../storage/";
+
+        let areaFoto = document.getElementById("profile");
+
+        areaFoto.innerHTML = "";
+
+        areaFoto.innerHTML = `
+          <img
+            src="${fotoCaminho}/${json[0].fotoPerfil}"
+            alt="Foto de perfil"
+          />
+          `;
+
+        if (previewFoto) {
+          previewFoto.src = `${fotoCaminho}/${json[0].fotoPerfil}`;
+        }
+      });
+    }
+  });
 }
