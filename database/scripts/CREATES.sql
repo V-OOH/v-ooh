@@ -255,5 +255,8 @@ CREATE TABLE display_componentes (
 );
 
 
+-- Adicionar o campo de foto de perfil do usuário
+ALTER TABLE usuario ADD COLUMN fotoPerfil VARCHAR(255);
+
 
 
