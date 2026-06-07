@@ -483,7 +483,8 @@
                 <div class="kpis">
                     <!--ìndice de saúde operacional-->
                     <div id="kpi1">
-                        <div class="tooltip">
+                        <div class="title">
+                            <span>SAÚDE OPERACIONAL</span>
                             <button
                                 class="info-btn"
                                 data-tooltip="A Nota final é calculada usando os pontos de uptime + pontos de downtime + pontos de MTTR + pontos de reincidência:
@@ -495,10 +496,6 @@
                             >
                                 i
                             </button>
-                        </div>
-
-                        <div class="title">
-                            <span>SAÚDE OPERACIONAL</span>
                         </div>
                         <div class="content">
                             <div class="pontuacao-container">
@@ -519,6 +516,12 @@
                     <div id="kpi2">
                         <div class="title">
                             <span>UPTIME ATUAL</span>
+                            <button
+                                class="info-btn"
+                                data-tooltip="Percentual de tempo em que os displays estiveram operacionais. Calculado como: (1 - Downtime Total / Tempo Total Possível) x 100."
+                            >
+                                i
+                            </button>
                         </div>
 
                         <div class="valor">
@@ -558,6 +561,12 @@
                     <div id="kpi3">
                         <div class="title">
                             <span>DOWNTIME ACUMULADO</span>
+                            <button
+                                class="info-btn"
+                                data-tooltip="Tempo total acumulado em que os displays ficaram offline. Detectado através de intervalos (gaps) superiores a 2 minutos entre capturas."
+                            >
+                                i
+                            </button>
                         </div>
 
                         <div class="valor">
@@ -605,6 +614,12 @@
                     <div id="kpi4">
                         <div class="title">
                             <span>NÍVEL DE RISCO OPERACIONAL</span>
+                            <button
+                                class="info-btn left"
+                                data-tooltip="Avaliação preditiva de falha. Considera a tendência de piora dos indicadores e estima quantos dias restam antes de violar a meta de disponibilidade (SLA)."
+                            >
+                                i
+                            </button>
                         </div>
 
                         <div class="valor">
@@ -647,7 +662,6 @@
                     <div class="mttr">
                         <div class="kpi-eficiencia">
                             <span>Eficiência da equipe (MTTR)</span>
-
                             <div class="information">
                                 <div class="big-kpi">0 min</div>
                                 <div class="desc-kpi">
