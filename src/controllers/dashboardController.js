@@ -11,7 +11,7 @@ const s3 = new S3Client({
   }
 });
 
-const BUCKET = process.env.S3_BUCKET || "s3-grupovooh-raw";
+const BUCKET = process.env.S3_BUCKET || "vooh-bucket";
 
 // Lê um stream do S3 e devolve string
 async function streamParaString(stream) {

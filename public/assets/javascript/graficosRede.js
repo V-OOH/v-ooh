@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const resposta = await fetch('/rede/buscarDadosRede', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ idEmpresa: 1 })
+    body: JSON.stringify({ idEmpresa: 2 })
   })
   const json = await resposta.json()
   const dados = json[idDisplay]
