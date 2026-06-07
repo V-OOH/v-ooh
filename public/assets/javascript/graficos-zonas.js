@@ -1,12 +1,11 @@
 // Grupos
 const grupos = ["ZONA A", "ZONA B", "ZONA C", "ZONA D"];
-const componentes = ["CPU", "RAM", "DISCO", "REDE"]
+const componentes = ["CPU", "RAM", "DISCO",]
 
 const valores = [
   [2, 2, 2, 2],
    [1, 0, 3, 3],
    [2, 2, 1, 3],
-   [3, 1, 2, 2],
 ];
 
 const data = {
@@ -24,13 +23,8 @@ const data = {
     },
     {
       label: componentes[2],
-      backgroundColor: "#CA7DF9",
-      data: valores[2],
-    },
-    {
-      label: componentes[3],
       backgroundColor: "#EDF67D",
-      data: valores[3],
+      data: valores[2],
     },
   ],
 };

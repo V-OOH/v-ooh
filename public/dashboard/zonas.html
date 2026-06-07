@@ -220,6 +220,13 @@
     <div class="container">
       <div class="title">
         <span>Painel de monitoramento / <a href="#">Zonas</a></span>
+
+                    <div class="timer">
+                        <span>
+                          Dados consolidados de:
+                            <span id="data_att">Carregando...</span></span
+                        >
+                    </div>
       </div>
 
       <!--KPIs-->
@@ -407,6 +414,19 @@
 
       dadosDashboard = await resposta.json();
 
+      const chavesDias = Object.keys(dadosDashboard.dias || {}).sort((a, b) => {
+        const toDate = s => { const [d, m, y] = s.split("-"); return new Date(`${y}-${m}-${d}`); };
+        return toDate(b) - toDate(a);
+      });
+
+      if (chavesDias.length > 0) {
+        const [d, m, y] = chavesDias[0].split("-");
+        document.getElementById("data_att").textContent =
+          new Date(parseInt(y), parseInt(m) - 1, parseInt(d)).toLocaleDateString('pt-BR', {
+            weekday: 'long', day: '2-digit', month: 'long', year: 'numeric'
+          });
+      }
+
       registroHoje = obterRegistroMaisRecente(dadosDashboard);
 
       if (!registroHoje) {
@@ -414,10 +434,6 @@
         return;
       }
 
-      const chavesDias = Object.keys(dadosDashboard.dias || {}).sort((a, b) => {
-        const toDate = s => { const [d, m, y] = s.split("-"); return new Date(`${y}-${m}-${d}`); };
-        return toDate(b) - toDate(a);
-      });
       const registroAnterior = chavesDias.length > 1
         ? dadosDashboard.dias[chavesDias[1]]
         : null;

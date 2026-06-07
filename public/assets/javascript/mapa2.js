@@ -136,16 +136,111 @@ async function carregarMapa2() {
 
             } else if (coordenadas.length >= 3) {
 
-                L.polygon(coordenadas, {
-                    color: grupo.cor,
-                    weight: 2,
-                    opacity: 0.8,
-                    fillColor: grupo.cor,
-                    fillOpacity: 0.15,
-                })
-                    .addTo(map)
-                    .bindPopup(`<b>${grupo.nome}</b>`);
-            }
+    // MOCK
+    const dadosZona = {
+        uptime: 98.5,
+        alertas: 12,
+        displays: coordenadas.length,
+        status: "Estável"
+    };
+
+    const polygon = L.polygon(coordenadas, {
+        color: grupo.cor,
+        weight: 2,
+        opacity: 0.8,
+        fillColor: grupo.cor,
+        fillOpacity: 0.15,
+    }).addTo(map);
+
+
+    polygon.bindTooltip(
+        `
+        <div style="
+            min-width:180px;
+            font-family:sans-serif;
+        ">
+            <strong style="font-size:14px;">
+                ${grupo.nome}
+            </strong>
+
+            <hr style="margin:5px 0">
+
+            <div>
+                📊 Uptime: <b>${dadosZona.uptime}%</b>
+            </div>
+
+            <div>
+                ⚠️ Alertas: <b>${dadosZona.alertas}</b>
+            </div>
+
+            <div>
+                🖥️ Displays: <b>${dadosZona.displays}</b>
+            </div>
+
+            <div>
+                📍 Status: <b>${dadosZona.status}</b>
+            </div>
+        </div>
+        `,
+        {
+            sticky: true,
+            direction: "top"
+        }
+    );
+
+    // Hover
+    polygon.on("mouseover", function () {
+
+        this.setStyle({
+            weight: 3,
+            fillOpacity: 0.35
+        });
+
+    });
+
+    polygon.on("mouseout", function () {
+
+        this.setStyle({
+            weight: 2,
+            fillOpacity: 0.15
+        });
+
+    });
+
+    // Clique
+    polygon.bindPopup(`
+        <div style="min-width:200px;">
+            <h3 style="
+                margin:0;
+                color:${grupo.cor};
+            ">
+                ${grupo.nome}
+            </h3>
+
+            <hr>
+
+            <p>
+                📊 Uptime:
+                <b>${dadosZona.uptime}%</b>
+            </p>
+
+            <p>
+                ⚠️ Alertas:
+                <b>${dadosZona.alertas}</b>
+            </p>
+
+            <p>
+                🖥️ Displays:
+                <b>${dadosZona.displays}</b>
+            </p>
+
+            <p>
+                📍 Status:
+                <b>${dadosZona.status}</b>
+            </p>
+        </div>
+    `);
+}
         }
     }
 
