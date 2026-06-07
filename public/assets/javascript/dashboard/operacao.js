@@ -15,7 +15,6 @@ let mapaZonas = {};
 const fetchZonas = async () => {
   try {
     const response = await fetch("/operacao/zonas");
-    tentativasFetchS3--;
     if (response.ok) {
       const zonas = await response.json();
       zonas.forEach((z) => {
