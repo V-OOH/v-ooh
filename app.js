@@ -24,7 +24,7 @@ const incidenteRouter = require("./src/routes/incidentes");
 const recomendacaoRouter = require("./src/routes/recomendacao");
 const alertasRouter = require("./src/routes/alertasRouter");
 const dashboardRouter = require("./src/routes/dashboard")
-const operacaoRouter = require("./src/routes/operacao")
+//const operacaoRouter = require("./src/routes/operacao")
 const relatorioRouter = require("./src/routes/relatorio")
 
 app.use(cors());
@@ -45,7 +45,7 @@ app.use("/incidentes", incidenteRouter);
 app.use("/recomendacao", recomendacaoRouter);
 app.use("/api/alertas", alertasRouter);
 app.use("/dashboard", dashboardRouter);
-app.use("/operacao", operacaoRouter)
+//app.use("/operacao", operacaoRouter)
 app.use("/relatorio", relatorioRouter)
 
 

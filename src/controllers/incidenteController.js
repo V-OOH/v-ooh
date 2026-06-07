@@ -1,6 +1,7 @@
 const AWS = require("aws-sdk");
 const liaModel = require("../models/liaModel");
 const recomendacaoModel = require("../models/recomendacaoModel");
+const database = require("../database/config");
 
 
 const s3 = new AWS.S3({
@@ -89,7 +90,34 @@ async function recomendacaoIA(req, res) {
     }
 }
 
+
+
+
+async function buscarMetaDisponibilidade(req, res) {
+    try {
+        const idEmpresa = req.params.idEmpresa;
+
+        const resultado = await database.executar(`
+            SELECT metaDisponibilidade
+            FROM contrato
+            WHERE fkEmpresa = ${idEmpresa};
+        `);
+
+        res.status(200).json({
+            metaDisponibilidade: resultado[0].metaDisponibilidade
+        });
+
+    } catch (erro) {
+        console.error("Erro ao buscar meta de disponibilidade:", erro);
+
+        res.status(500).json({
+            erro: "Erro ao buscar meta de disponibilidade"
+        });
+    }
+}
+
 module.exports = {
     buscarDadosS3,
-    recomendacaoIA
+    recomendacaoIA,
+    buscarMetaDisponibilidade
 };

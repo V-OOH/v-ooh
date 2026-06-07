@@ -5,7 +5,7 @@ function buscarRecomendacao(idEmpresa) {
         SELECT recomendacao
         FROM recomendacaoIA
         WHERE fkEmpresa = ${idEmpresa}
-        AND dataRecomendacao >= DATE_SUB(NOW(), INTERVAL 1 MINUTE)
+        AND dataRecomendacao >= DATE_SUB(NOW(), INTERVAL 30 MINUTE)
         ORDER BY dataRecomendacao DESC
         LIMIT 1;
     `;

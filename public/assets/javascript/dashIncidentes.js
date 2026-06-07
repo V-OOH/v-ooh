@@ -44,34 +44,30 @@ function atualizarKPIs(dados) {
     const comparacaoHoras = document.getElementById("comparacaoHorasOff");
 
 if (kpis.comparacaoHorasOff > 0) {
-    comparacaoHoras.innerHTML =
-        `↑ ${kpis.comparacaoHorasOff}h em relação a ontem`;
-
+    comparacaoHoras.innerHTML =`↑ ${kpis.comparacaoHorasOff}h em relação a ontem`;
     comparacaoHoras.style.color = "#ef4444";
+    comparacaoHoras.style.backgroundColor = "rgba(227, 87, 99, 0.1)";
+
 }
 else if (kpis.comparacaoHorasOff < 0) {
-    comparacaoHoras.innerHTML =
-        `↓ ${Math.abs(kpis.comparacaoHorasOff)}h em relação a ontem`;
-
+    comparacaoHoras.innerHTML = `↓ ${Math.abs(kpis.comparacaoHorasOff)}h em relação a ontem`;
     comparacaoHoras.style.color = "#22c55e";
+    comparacaoOffline.style.backgroundColor = 'rgba(0, 200, 83, 0.10)'
 }
 else {
-    comparacaoHoras.innerHTML =
-        "→ Mesmo tempo offline de ontem";
-
+    comparacaoHoras.innerHTML ="→ Mesmo tempo offline de ontem";
     comparacaoHoras.style.color = "#a3a3a3";
 }
 
 if(kpis.comparacaoOffline > 0){
-    comparacaoOffline.innerHTML = 
-    `↑ ${kpis.comparacaoOffline} dispositivos em relação a ontem`;
-
+    comparacaoOffline.innerHTML = `↑ ${kpis.comparacaoOffline} dispositivos em relação a ontem`;
     comparacaoOffline.style.color = "#ef4444"
-}else if(kpis.comparacaoOffline < 0){
-    comparacaoOffline.innerHTML = 
-    `↓ ${Math.abs(kpis.comparacaoOffline)} dispositivos em relação a ontem`
+    comparacaoOffline.style.backgroundColor = "rgba(227, 87, 99, 0.1)";
 
+}else if(kpis.comparacaoOffline < 0){
+    comparacaoOffline.innerHTML = `↓ ${Math.abs(kpis.comparacaoOffline)} dispositivos em relação a ontem`
     comparacaoOffline.style.color = "#22c55e";
+    comparacaoOffline.style.backgroundColor = 'rgba(0, 200, 83, 0.10)'
 }else {
     comparacaoOffline.innerHTML = 
     `→ Mesma quantidade offline de ontem`
@@ -79,6 +75,66 @@ if(kpis.comparacaoOffline > 0){
     comparacaoOffline.style.color = "#a3a3a3"
 }
 
+
+const legendaMtbf = document.getElementById("comparacaoMtbf");
+const legendaDisponibilidade = document.getElementById("comparacaoDisponibilidade");
+
+if (kpis.comparacaoMtbf > 0) {
+    legendaMtbf.innerHTML = `↑ ${kpis.comparacaoMtbf}h vs média dos últimos 7 dias`;
+    legendaMtbf.style.color = "#22c55e";
+    legendaMtbf.style.backgroundColor = 'rgba(0, 200, 83, 0.10)'
+
+} else if (kpis.comparacaoMtbf < 0) {
+    legendaMtbf.innerHTML = `↓ ${Math.abs(kpis.comparacaoMtbf)}h vs média dos últimos 7 dias`;
+    legendaMtbf.style.color = "#ef4444";
+    legendaMtbf.style.backgroundColor = "rgba(227, 87, 99, 0.1)";
+
+} else {
+    legendaMtbf.innerHTML = "→ Sem variação vs média dos últimos 7 dias";
+    legendaMtbf.style.color = "#a3a3a3";
+}
+
+const idEmpresa = sessionStorage.getItem("FKEMPRESA");
+
+fetch(`/incidentes/meta-disponibilidade/${idEmpresa}`)
+    .then(resposta => {
+        if (!resposta.ok) {
+            throw new Error("Erro ao buscar meta");
+        }
+
+        return resposta.json();
+    })
+    .then(dadosMeta => {
+
+        const metaDisponibilidade = Number(dadosMeta.metaDisponibilidade);
+
+        const legendaDisponibilidade = document.getElementById("comparacaoDisponibilidade");
+
+        const diferencaMeta =
+            Number((kpis.disponibilidade - metaDisponibilidade).toFixed(1));
+
+        if (diferencaMeta > 0) {
+            legendaDisponibilidade.innerHTML = `↑ ${diferencaMeta}% acima da meta`;
+            legendaDisponibilidade.style.color = "#22c55e";
+            legendaDisponibilidade.style.backgroundColor = 'rgba(0, 200, 83, 0.10)'
+
+        } else if (diferencaMeta < 0) {
+
+            legendaDisponibilidade.innerHTML =`↓ ${Math.abs(diferencaMeta)}% abaixo da meta`;
+            legendaDisponibilidade.style.color = "#ef4444";
+            legendaDisponibilidade.style.backgroundColor = "rgba(227, 87, 99, 0.1)";
+
+        } else {
+
+            legendaDisponibilidade.innerHTML =
+                `→ Meta atingida`;
+
+            legendaDisponibilidade.style.color = "#a3a3a3";
+        }
+    })
+    .catch(erro => {
+        console.error("Erro ao buscar meta:", erro);
+    });
 
 }
 
