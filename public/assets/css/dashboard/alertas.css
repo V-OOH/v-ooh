@@ -703,7 +703,7 @@
 
   .info-btn {
     background: #DEE2E6;
-    color: white;
+    color: var(--color-deep-purple);
     border: none;
     border-radius: 50%;
     width: 20px;
@@ -728,7 +728,7 @@
     line-height: 1.4;
     text-align: left;
     background-color: #DEE2E6;
-    color: #fff;
+    color: var(--color-deep-purple);
     font-size: 13px;
     border-radius: 6px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
@@ -746,7 +746,7 @@
 
   .info-btn2 {
     background: #DEE2E6;
-    color: white;
+    color: var(--color-deep-purple);
     border: none;
     border-radius: 50%;
     width: 20px;
@@ -771,7 +771,7 @@
     line-height: 1.4;
     text-align: left;
     background-color: #DEE2E6;
-    color: #fff;
+    color: var(--color-deep-purple);
     font-size: 13px;
     border-radius: 6px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
