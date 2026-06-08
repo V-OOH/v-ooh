@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
     sessionStorage.NOME_USUARIO;
   document.getElementById("usuariocargo").innerText =
     sessionStorage.TIPO_USUARIO;
-  buscarFotoPerfil();
+  // buscarFotoPerfil();
 });
 
 let modalLogout = document.getElementById("logout-modal");
