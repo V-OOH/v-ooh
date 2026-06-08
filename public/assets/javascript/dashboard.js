@@ -8,7 +8,7 @@ function fecharModalDashboard() {
 // Função para abrir o modal da dashboard
 function abrirDashboard(idDisplay) {
   // document.getElementById("dashboard").style.display = "flex";
-    window.location.href = `rede.html?id=${idDisplay}`;
+    window.location.href = `display_componentes.html?id=${idDisplay}`;
   atualizar(idDisplay);
 }
 
