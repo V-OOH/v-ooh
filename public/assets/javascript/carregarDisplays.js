@@ -19,6 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
         
         if (resposta.ok) {
             resposta.json().then((json) => {
+                document.getElementById('total-displays').textContent = json.length;
                 console.log(json);
                 console.log(JSON.stringify(json));
 
