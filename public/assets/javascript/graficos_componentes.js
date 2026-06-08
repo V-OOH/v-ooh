@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", async() => {
   }
 
   // Faz a requisição para buscar os dados de monitoramento
-  const resposta = await fetch('/display_componentes/buscarDashboard', {
+  const resposta = await fetch(`/display_componentes/dashboard/${idDisplay}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ idEmpresa: 1 })
