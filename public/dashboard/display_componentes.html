@@ -684,7 +684,7 @@ function obterStatus(valor, tipo) {
 async function atualizarDashboard(idDisplay) {
     try {
         // Tem que modificar pelo bucket que estamos utilizando
-        const url = `https://BUCKET_S3/displays/${idDisplay}.json`;
+        const url = `/dashboard/${idDisplay}`;
         const resposta = await fetch(url);
         const dadosJson = await resposta.json();
 
