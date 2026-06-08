@@ -1,5 +1,29 @@
 let _dadosCompletos = null;
 
+const fetchZonas = async () => {
+    try {
+        const response = await fetch("/operacao/zonas");
+        if (response.ok) {
+            const zonas = await response.json();
+            zonas.forEach((z) => {
+                mapaZonas[z.idZona] = z.nome;
+            });
+        }
+    } catch (error) {
+        console.error("Erro ao carregar nomes das zonas:", error);
+    }
+};
+
+const getNomeZona = (idOuTexto) => {
+    if (!idOuTexto) return "N/A";
+    if (mapaZonas[idOuTexto]) return mapaZonas[idOuTexto];
+    if (typeof idOuTexto === "string" && idOuTexto.startsWith("Zona ")) {
+        const id = idOuTexto.replace("Zona ", "");
+        if (mapaZonas[id]) return mapaZonas[id];
+    }
+    return idOuTexto;
+};
+
 const AlertaController = {
 
     async init() {
@@ -93,7 +117,7 @@ const AlertaController = {
 
         for (const idZona in zonas) {
             const btn = document.createElement("button");
-            btn.textContent = `Zona ${idZona}`;
+            btn.textContent = `Zona ${idZona.getNomeZona}`;
             btn.classList.add("btn-zona");
 
             btn.addEventListener("click", () => {
