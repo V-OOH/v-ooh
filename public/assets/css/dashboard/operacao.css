@@ -1162,6 +1162,24 @@
         color: var(--color-deep-purple);
     }
 
+    .body #update-btn {
+        background-color: var(--color-purple);
+        color: var(--color-white);
+        transition: 180ms ease-in-out;
+    }
+
+    .body #update-btn:hover {
+        background-color: var(--color-light-purple);
+    }
+
+    .body #update-btn span {
+        margin-left: 5px;
+    }
+
+    .body .container .title .timer {
+        display: flex;
+    }
+
     .body .container .title .timer span > span {
         color: var(--color-purple);
     }
@@ -1695,6 +1713,28 @@
         display: flex;
     }
 
+    .body #update-btn {
+        background-color: var(--color-purple);
+        color: var(--color-white);
+        display: flex;
+        align-items: center;
+        transition: 180ms ease-in-out;
+    }
+
+    .body #update-btn:hover {
+        background-color: var(--color-light-purple);
+        transition: 180ms ease-in-out;
+    }
+
+    .body #update-btn:hover > svg {
+        transition: 180ms ease-in-out;
+        transform: rotate(90deg);
+    }
+
+    .body #update-btn span {
+        margin-left: 5px;
+    }
+
     .body {
         width: calc(100% - 8vw);
         height: 100vh;
@@ -2023,6 +2063,7 @@
 
     .body .filtros-periodo {
         margin-top: 20px;
+        display: flex;
     }
 
     .body .filtros-periodo button {
@@ -2031,6 +2072,7 @@
         color: var(--color-deep-purple);
         transition: 180ms ease-in-out;
         border-radius: 16px;
+        margin-left: 5px;
     }
 
     body .filtros-periodo button.active {

@@ -528,7 +528,13 @@ const renderTudo = (periodo, nomePeriodo, dados) => {
 document.addEventListener("DOMContentLoaded", async () => {
   const dados = await fetchData();
   if (!dados) return;
+  renderTudo(dados.periodos["duas_semanas"], "duas_semanas", dados);
+  configurarFiltros(dados);
+});
 
+document.getElementById("update-btn").addEventListener("click", async () => {
+  const dados = await fetchData();
+  if (!dados) return;
   renderTudo(dados.periodos["duas_semanas"], "duas_semanas", dados);
   configurarFiltros(dados);
 });
