@@ -232,3 +232,9 @@ document.addEventListener("DOMContentLoaded", async() => {
   });
 
 });
+
+  function abrirRede() {
+    const idDisplay = new URLSearchParams(window.location.search).get('id');
+
+    window.location.href = `rede.html?id=${idDisplay}`;
+}
