@@ -744,7 +744,7 @@
     visibility: visible;
   }
 
-    .info-btn2 {
+  .info-btn2 {
     background: #DEE2E6;
     color: white;
     border: none;
@@ -814,8 +814,8 @@
   .card-title {
     display: flex;
     justify-content: space-between;
-    align-items: center;    
-    width: 100%;               
+    align-items: center;
+    width: 100%;
     margin-bottom: 15px;
     font-size: 1rem;
   }
@@ -823,8 +823,8 @@
   .card-title-disp {
     display: flex;
     justify-content: space-between;
-    align-items: center;    
-    width: 100%;               
+    align-items: center;
+    width: 100%;
     font-size: 1rem;
     font-weight: 700;
   }
@@ -1023,6 +1023,21 @@
     display: flex;
     align-items: baseline;
     gap: 5px;
+  }
+
+  .stat-value {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #111;
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+  }
+
+  .btn-relatorio {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 20px;
   }
 
   .stat-value-disp {
