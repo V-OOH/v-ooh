@@ -1,4 +1,5 @@
 let _dadosCompletos = null;
+let mapaZonas = {};
 
 const fetchZonas = async () => {
     try {
@@ -21,6 +22,8 @@ const getNomeZona = (idOuTexto) => {
         const id = idOuTexto.replace("Zona ", "");
         if (mapaZonas[id]) return mapaZonas[id];
     }
+
+    console.log(idOuTexto)
     return idOuTexto;
 };
 
@@ -91,7 +94,7 @@ const AlertaController = {
         }
 
         const footerSpan = document.querySelector(".kpi-card:nth-child(3) .card-footer span:last-child");
-        if (footerSpan) footerSpan.textContent = `${jira.abertos} incidente(s) em aberto`;
+        if (footerSpan) footerSpan.textContent = `${jira.abertos} alertas(s) em aberto`;
     },
 
     renderizarBotoesZona(zonas) {
@@ -117,7 +120,7 @@ const AlertaController = {
 
         for (const idZona in zonas) {
             const btn = document.createElement("button");
-            btn.textContent = `Zona ${idZona.getNomeZona}`;
+            btn.textContent =  `Zona ${getNomeZona(idZona)}`|| `Zona ${idZona}`;
             btn.classList.add("btn-zona");
 
             btn.addEventListener("click", () => {
@@ -150,4 +153,7 @@ const AlertaController = {
     }
 };
 
-document.addEventListener("DOMContentLoaded", () => AlertaController.init());
+document.addEventListener("DOMContentLoaded", async () => {
+    await fetchZonas();
+    AlertaController.init();
+});
