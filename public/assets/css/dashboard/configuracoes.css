@@ -157,6 +157,16 @@
 
     .body .container .empresa-container h2 {
         color: var(--color-purple);
+        margin-left: 10px;
+    }
+
+    .body .container .container-outros {
+        margin-top: 5%;
+    }
+
+    .body .container .container-outros h2 {
+        color: var(--color-purple);
+        margin-left: 10px;
     }
 
     .body .container .container-empresa {
