@@ -1,11 +1,11 @@
 const AWS = require('aws-sdk');
-const s3 = new AWS.S3({ region: 'us-east-2' }); 
+const s3 = new AWS.S3({ region: 'us-east-1' }); 
 
 function buscarDashboard(idDisplay) {
     return new Promise((resolve, reject) => {
         // Define o que vai ser buscado no S3
         const params = {
-            Bucket: "BUCKET_S3",
+            Bucket: "vooh-bucket",
             Key: `displays/${idDisplay}.json`
         };
 

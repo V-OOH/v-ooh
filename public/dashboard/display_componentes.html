@@ -517,11 +517,6 @@
           </div>
           <span class="desc" id="ram-desc">--</span>
         </div>
-        <!-- <div class="info">
-          <div class="barra-container">
-            <div class="barra-preenchimento" style="width: 80%; background-color: #ff9b00;"></div>
-          </div>
-        </div> -->
       </div>
 
       <div class="card" id="card-disco">
@@ -553,11 +548,6 @@
           </div>
           <span class="desc" id="disco-desc">--</span>
         </div>
-        <!-- <div class="info">
-          <div class="barra-container">
-            <div class="barra-preenchimento" style="width: 35%; background-color: #009966;"></div>
-          </div>
-        </div> -->
       </div>
 
 
@@ -585,11 +575,6 @@
           </div>
           <span class="desc" id="temp-desc">--</span>
         </div>
-        <!-- <div class="info">
-          <div class="barra-container">
-            <div class="barra-preenchimento" style="width: 25%; background-color: #6d33ff;"></div>
-          </div>
-        </div> -->
       </div>
     </div>
 
@@ -667,7 +652,7 @@
   usuariocargo.innerHTML = sessionStorage.TIPO_USUARIO;
 
   // Definição de limites
-const REGRAS = {
+    const REGRAS = {
     porcentagem: { alerta: 70, critico: 90 }, // Acima de 90% Vermelho, acima de 70% Amarelo, menos que isso Verde
     temperatura: { alerta: 50, critico: 75 }  /* Graus Celsius */
 };
@@ -684,7 +669,7 @@ function obterStatus(valor, tipo) {
 async function atualizarDashboard(idDisplay) {
     try {
         // Tem que modificar pelo bucket que estamos utilizando
-        const url = `/dashboard/${idDisplay}`;
+        const url = `/display_componentes/dashboard/${idDisplay}`;
         const resposta = await fetch(url);
         const dadosJson = await resposta.json();
 

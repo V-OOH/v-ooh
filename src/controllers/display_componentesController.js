@@ -3,6 +3,8 @@ var displayComponenteModel = require("../models/display_componentesModel");
 function buscarDashboard(req, res) {
     var idDisplay = req.params.idDisplay;
 
+     console.log("CHEGOU NO CONTROLLER!");
+
     if (idDisplay == undefined) {
         return res.status(400).send("Seu idDisplay está undefined!");
     }
