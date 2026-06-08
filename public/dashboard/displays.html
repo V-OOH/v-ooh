@@ -117,7 +117,7 @@
 
         <!--Displays-->
         <li>
-          <a class="active" href="#" title="Displays">
+          <a class="active" href="displays.html" title="Displays">
             <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
               <g>
                 <g transform="translate(4.286 5)">
@@ -246,8 +246,27 @@
     </div>
   </aside>
 
+    <dialog class="logout-modal" id="logout-modal">
+    <div class="container">
+      <div class="content">
+        <div class="title">
+          <h2>Sair da conta</h2>
+        </div>
+
+        <span>Tem certeza que deseja sair da conta?</span>
+      </div>
+
+      <div class="btns">
+        <button type="button" id="confirmar-logout">Sim</button>
+        <button type="button" id="cancelar-logout">Cancelar</button>
+      </div>
+    </div>
+  </dialog>
+  </aside>
+
   <!--Body-->
   <div class="body">
+        <div id="notification-area"></div>
     <!--Container-->
     <div class="container">
       <!--Title-->
@@ -276,7 +295,7 @@
                 </svg>
               </div>
 
-              <span class="number" id="total-displays" >51</span>
+              <span class="number" id="total_display">51</span>
             </div>
 
             <span class="desc">Displays totais</span>
@@ -323,7 +342,7 @@
                 </svg>
               </div>
 
-              <span class="number">0</span>
+              <span class="number" id="kpi-criticos">--</span>
             </div>
 
             <span class="desc">Displays Críticos</span>
@@ -348,7 +367,7 @@
                 </svg>
               </div>
 
-              <span class="number">0</span>
+              <span class="number" id="kpi-em-risco">--</span>
             </div>
 
             <span class="desc">Displays em risco</span>
@@ -377,17 +396,30 @@
       </div>
 
       <div class="btns">
-        <button class="button-white">
-          <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g>
-              <path
-                d="M18.75 2.08345L16.6667 2.08345M18.75 8.33556L13.5417 8.33556M18.75 14.5878L13.5417 14.5878M4.16667 16.6667C4.16667 16.6667 4.16667 9.95958 4.16667 9.95958C4.16667 9.74292 4.16667 9.63458 4.1454 9.53094C4.12653 9.43906 4.09532 9.3501 4.05263 9.26646C4.00449 9.17229 3.93681 9.08771 3.80145 8.91844C3.80145 8.91844 0.365219 4.62319 0.365219 4.62319C0.229854 4.45399 0.162177 4.36938 0.114042 4.27518C0.0713439 4.19159 0.0401356 4.10262 0.021271 4.01069C0 3.90706 0 3.79872 0 3.58203C0 3.58203 0 1.66667 0 1.66667C0 1.08328 0 0.791584 0.113531 0.56876C0.213406 0.37276 0.372761 0.213407 0.56876 0.113532C0.791583 0 1.08328 0 1.66667 0C1.66667 0 10.8333 0 10.8333 0C11.4168 0 11.7084 0 11.9313 0.113532C12.1273 0.213407 12.2866 0.37276 12.3865 0.56876C12.5 0.791584 12.5 1.08328 12.5 1.66667C12.5 1.66667 12.5 3.58203 12.5 3.58203C12.5 3.79872 12.5 3.90706 12.4788 4.01069C12.4599 4.10262 12.4286 4.19159 12.3859 4.27518C12.3378 4.36938 12.2701 4.45399 12.1348 4.62319C12.1348 4.62319 8.69854 8.91844 8.69854 8.91844C8.56323 9.08771 8.49552 9.17229 8.4474 9.26646C8.40469 9.3501 8.37344 9.43906 8.35458 9.53094C8.33333 9.63458 8.33333 9.74292 8.33333 9.95958C8.33333 9.95958 8.33333 13.5417 8.33333 13.5417C8.33333 13.5417 4.16667 16.6667 4.16667 16.6667Z"
-                fill="none" stroke-width="2" stroke="#6D33FF" stroke-linecap="round" stroke-linejoin="round"
-                transform="translate(3.125 4.167)" />
-            </g>
-          </svg>
-          <span>Filtrar e ordenar</span>
-        </button>
+        <div class="filtro-wrapper">
+          <button class="button-white" onclick="toggleFiltroStatus()" id="btn-filtro">
+            <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g>
+                <path
+                  d="M18.75 2.08345L16.6667 2.08345M18.75 8.33556L13.5417 8.33556M18.75 14.5878L13.5417 14.5878M4.16667 16.6667C4.16667 16.6667 4.16667 9.95958 4.16667 9.95958C4.16667 9.74292 4.16667 9.63458 4.1454 9.53094C4.12653 9.43906 4.09532 9.3501 4.05263 9.26646C4.00449 9.17229 3.93681 9.08771 3.80145 8.91844C3.80145 8.91844 0.365219 4.62319 0.365219 4.62319C0.229854 4.45399 0.162177 4.36938 0.114042 4.27518C0.0713439 4.19159 0.0401356 4.10262 0.021271 4.01069C0 3.90706 0 3.79872 0 3.58203C0 3.58203 0 1.66667 0 1.66667C0 1.08328 0 0.791584 0.113531 0.56876C0.213406 0.37276 0.372761 0.213407 0.56876 0.113532C0.791583 0 1.08328 0 1.66667 0C1.66667 0 10.8333 0 10.8333 0C11.4168 0 11.7084 0 11.9313 0.113532C12.1273 0.213407 12.2866 0.37276 12.3865 0.56876C12.5 0.791584 12.5 1.08328 12.5 1.66667C12.5 1.66667 12.5 3.58203 12.5 3.58203C12.5 3.79872 12.5 3.90706 12.4788 4.01069C12.4599 4.10262 12.4286 4.19159 12.3859 4.27518C12.3378 4.36938 12.2701 4.45399 12.1348 4.62319C12.1348 4.62319 8.69854 8.91844 8.69854 8.91844C8.56323 9.08771 8.49552 9.17229 8.4474 9.26646C8.40469 9.3501 8.37344 9.43906 8.35458 9.53094C8.33333 9.63458 8.33333 9.74292 8.33333 9.95958C8.33333 9.95958 8.33333 13.5417 8.33333 13.5417C8.33333 13.5417 4.16667 16.6667 4.16667 16.6667Z"
+                  fill="none" stroke-width="2" stroke="#6D33FF" stroke-linecap="round" stroke-linejoin="round"
+                  transform="translate(3.125 4.167)" />
+              </g>
+            </svg>
+            <span>Filtrar e ordenar</span>
+          </button>
+
+          <!-- Dropdown de filtro por status -->
+          <div class="filtro-dropdown hidden" id="filtro-dropdown">
+            <p class="filtro-titulo">Filtrar por status</p>
+            <div class="filtro-opcoes">
+              <button class="filtro-chip active" onclick="filtrarStatus('todos')">Todos</button>
+              <button class="filtro-chip chip-critico" onclick="filtrarStatus('Crítico')">● Crítico</button>
+              <button class="filtro-chip chip-atencao" onclick="filtrarStatus('Atenção')">● Atenção</button>
+              <button class="filtro-chip chip-estavel" onclick="filtrarStatus('Estável')">● Estável</button>
+            </div>
+          </div>
+        </div>
         <button class="button-purple" onclick="validarModal()">
           <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g>
@@ -409,65 +441,6 @@
           <th>Endereço MAC</th>
           <th>Localização</th>
           <th>Estado</th>
-          <th>Uptime</th>
-          <th>
-            <!--Drop Down-->
-            <div class="drop-visualizacao hidden" id="drop-v">
-              <div class="title">
-                <span>Alternar visualização</span>
-              </div>
-
-              <!--Mudar visualizacao-->
-              <div class="icon-v">
-                <div class="btn active">
-                  <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <g>
-                      <path
-                        d="M0 5.20734L18.75 5.20734M0 10.4194L18.75 10.4194M5.20734 0L5.20734 15.625M15.4167 15.625C16.5834 15.625 17.1669 15.625 17.6125 15.3979C18.0045 15.1982 18.3232 14.8795 18.5229 14.4875C18.75 14.0419 18.75 13.4584 18.75 12.2917C18.75 12.2917 18.75 3.33333 18.75 3.33333C18.75 2.16656 18.75 1.58317 18.5229 1.13752C18.3232 0.745511 18.0045 0.426802 17.6125 0.227073C17.1669 0 16.5834 0 15.4167 0C15.4167 0 3.33333 0 3.33333 0C2.16656 0 1.58317 0 1.13752 0.227073C0.74551 0.426802 0.426802 0.745511 0.227073 1.13752C0 1.58317 0 2.16655 0 3.33333C0 3.33333 0 12.2917 0 12.2917C0 13.4584 0 14.0419 0.227073 14.4875C0.426802 14.8795 0.74551 15.1982 1.13752 15.3979C1.58317 15.625 2.16655 15.625 3.33333 15.625C3.33333 15.625 15.4167 15.625 15.4167 15.625Z"
-                        fill="none" stroke-width="2" stroke="#FFFFFF" transform="translate(3 5)" />
-                    </g>
-                  </svg>
-                  <span>Tabela</span>
-                </div>
-
-                <div class="btn" id="map-btn">
-                  <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <g transform="scale(1 1)">
-                      <path
-                        d="M0.521586 2.69346C0.204902 2.82922 -0.000306129 3.14075 -9.53674e-07 3.48531C-9.53674e-07 3.48531 -9.53674e-07 18.6156 -9.53674e-07 18.6156C-9.53674e-07 18.9048 0.145353 19.1748 0.386887 19.3341C0.628418 19.4933 0.933807 19.5206 1.19973 19.4066C1.19973 19.4066 8.3298 16.3511 8.3298 16.3511C9.2634 15.9508 9.86868 15.0327 9.86874 14.0169C9.86874 14.0169 9.86874 2.5394 9.86874 2.5394C9.86844 1.68547 9.43941 0.889112 8.72673 0.419313C8.01405 -0.0504856 7.11305 -0.130888 6.32845 0.2053C6.32845 0.2053 0.521586 2.69346 0.521586 2.69346ZM1.72141 4.05424C1.72141 4.05424 7.00871 1.78714 7.00871 1.78714C7.26152 1.67853 7.55201 1.70435 7.7817 1.85586C8.01139 2.00737 8.14947 2.26424 8.14914 2.5394C8.14914 2.5394 8.14914 14.0169 8.14914 14.0169C8.14894 14.3441 7.95405 14.6399 7.6534 14.7691C7.6534 14.7691 1.72141 17.3091 1.72141 17.3091C1.72141 17.3091 1.72141 4.05424 1.72141 4.05424Z"
-                        fill="#FFFFFF" fill-rule="evenodd" transform="matrix(1 0 0 1 15.131 3.2)" />
-                      <path
-                        d="M9.03394 0L8.94099 0L8.92636 0L8.90656 0L8.89451 0L8.87471 0L8.8618 0L8.84889 0L8.82135 0.00602484L8.80586 0.00602484L8.7568 0.0189354L8.7129 0.0335674L8.70429 0.0335674L8.69138 0.0395923L8.66901 0.0481997C8.66901 0.0481997 1.53894 3.12521 1.53894 3.12521C0.605342 3.52555 5.62269e-05 4.44363 0 5.45944C0 5.45944 0 16.9369 0 16.9369C0.000294473 17.7909 0.429356 18.5873 1.14207 19.0571C1.85478 19.5269 2.75581 19.6072 3.54041 19.271C3.54041 19.271 8.98092 16.9394 8.98092 16.9394C8.98092 16.9394 15.6083 20.2531 15.6083 20.2531C15.8759 20.3868 16.1937 20.372 16.4477 20.214C16.7016 20.056 16.8554 19.7775 16.8538 19.4784C16.8538 19.4784 16.8538 4.28802 16.8538 4.28802L16.8486 4.23724L16.8486 4.23294L16.8486 4.22003L16.8486 4.20195L16.8486 4.18818L16.8486 4.17441L16.8486 4.1615L16.8374 4.11674L16.8323 4.09953L16.8035 4.07973L16.8035 4.07113L16.8035 4.0608L16.8035 4.05047L16.8035 4.04358L16.794 4.02121L16.788 4.00657L16.7829 3.99539L16.7699 3.96784L16.7622 3.95321L16.757 3.94374L16.751 3.93169L16.7381 3.91104C16.7381 3.91104 16.7312 3.89985 16.7312 3.89985C16.7225 3.88457 16.7127 3.8699 16.702 3.85595C16.702 3.85595 16.6822 3.82755 16.6822 3.82755C16.6822 3.82755 16.6529 3.80259 16.6529 3.80259C16.6294 3.77377 16.6038 3.74672 16.5763 3.72168C16.5763 3.72168 16.5565 3.70361 16.5565 3.70361C16.5565 3.70361 16.5281 3.68037 16.5281 3.68037C16.5137 3.66843 16.4988 3.65722 16.4833 3.6468C16.4833 3.6468 16.4532 3.63045 16.4532 3.63045L16.4369 3.62012L16.43 3.61581C16.43 3.61581 16.4248 3.61581 16.4248 3.61581C16.4093 3.60635 16.393 3.59774 16.3766 3.58913C16.3766 3.58913 9.39286 0.090374 9.39286 0.090374L9.34638 0.0688562L9.34638 0.0688562L9.33347 0.0645525L9.31023 0.0550847L9.30162 0.0550847L9.29474 0.0550847L9.28269 0.0550847L9.26547 0.0490599L9.25256 0.0490599L9.24223 0.0490599L9.23277 0.0490599L9.22072 0.0490599L9.20178 0.0447562L9.18887 0.0447562L9.1751 0.0447562L9.14325 0.0111892L9.1269 0.0111892L9.07698 0.00516415L9.03222 0.00516415L9.03394 0ZM9.86883 15.4591L15.1312 18.0903L15.1312 4.8845L9.86883 2.25333L9.86883 15.4591L9.86883 15.4591ZM8.14742 2.16553C8.14742 2.16553 2.21717 4.70719 2.21717 4.70719C1.91652 4.83644 1.72161 5.13219 1.72141 5.45945C1.72141 5.45945 1.72141 16.9369 1.72141 16.9369C1.72107 17.2121 1.85914 17.4689 2.08882 17.6204C2.31851 17.772 2.60899 17.7978 2.86181 17.6892C2.86181 17.6892 8.14742 15.4221 8.14742 15.4221L8.14742 2.16725L8.14742 2.16553Z"
-                        fill="#FFFFFF" fill-rule="evenodd" transform="matrix(1 0 0 1 0 2.333)" />
-                    </g>
-                  </svg>
-                  <span>Mapa</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="icon" id="drop-icon">
-              <svg id="opcao-visuzalizacao" width="32" height="31" viewBox="0 0 32 31" fill="none"
-                xmlns="http://www.w3.org/2000/svg">
-                <g>
-                  <path
-                    d="M5 0L27 0C29.7618 0 32 2.2382 32 5L32 26C32 28.7618 29.7618 31 27 31L5 31C2.2382 31 0 28.7618 0 26L0 5C0 2.2382 2.2382 0 5 0L5 0Z"
-                    fill="#FFFFFF" />
-                  <g transform="translate(5.5 13)">
-                    <path
-                      d="M2.5 0L2.5 0C3.8809 0 5 1.1191 5 2.5L5 2.5C5 3.8809 3.8809 5 2.5 5L2.5 5C1.1191 5 0 3.8809 0 2.5L0 2.5C0 1.1191 1.1191 0 2.5 0L2.5 0Z"
-                      fill="#1E0B36" />
-                    <path
-                      d="M2.5 0L2.5 0C3.8809 0 5 1.1191 5 2.5L5 2.5C5 3.8809 3.8809 5 2.5 5L2.5 5C1.1191 5 0 3.8809 0 2.5L0 2.5C0 1.1191 1.1191 0 2.5 0L2.5 0Z"
-                      fill="#1E0B36" transform="translate(8 0)" />
-                    <path
-                      d="M2.5 0L2.5 0C3.8809 0 5 1.1191 5 2.5L5 2.5C5 3.8809 3.8809 5 2.5 5L2.5 5C1.1191 5 0 3.8809 0 2.5L0 2.5C0 1.1191 1.1191 0 2.5 0L2.5 0Z"
-                      fill="#1E0B36" transform="translate(16 0)" />
-                  </g>
-                </g>
-              </svg>
-            </div>
-          </th>
         </tr>
       </table>
 
@@ -1119,6 +1092,7 @@
 
   <!--Carregar lista de displays-->
   <script src="../assets/javascript/carregarDisplays.js"></script>
+  <script src="../assets/javascript/carregarDisplaysKpis.js"></script>
 
   <!--Dashboard-->
   <script src="../assets/javascript/dashboard.js"></script>
@@ -1133,6 +1107,68 @@
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation"></script>
 
   <script src="../assets/javascript/graficos.js"></script>
+
+  <script>
+    // ── Filtro por Status ──────────────────────────────────────
+    let filtroAtivo = "todos";
+
+    function toggleFiltroStatus() {
+      const dropdown = document.getElementById("filtro-dropdown");
+      dropdown.classList.toggle("hidden");
+    }
+
+    // Fecha o dropdown ao clicar fora
+    document.addEventListener("click", function (e) {
+      const wrapper = document.querySelector(".filtro-wrapper");
+      if (wrapper && !wrapper.contains(e.target)) {
+        document.getElementById("filtro-dropdown").classList.add("hidden");
+      }
+    });
+
+    function filtrarStatus(status) {
+      filtroAtivo = status;
+
+      // Atualiza chips ativos
+      document.querySelectorAll(".filtro-chip").forEach(btn => btn.classList.remove("active"));
+      event.target.classList.add("active");
+
+      // Atualiza visual do botão principal
+      const btnFiltro = document.getElementById("btn-filtro");
+      if (status === "todos") {
+        btnFiltro.classList.remove("filtro-ativo");
+      } else {
+        btnFiltro.classList.add("filtro-ativo");
+      }
+
+      // Filtra as linhas da tabela
+      const linhas = document.querySelectorAll("#lista_displays tr:not(#primeiro_item)");
+      linhas.forEach(linha => {
+        if (status === "todos") {
+          linha.style.display = "";
+          return;
+        }
+
+        const gStatus = linha.querySelector(".g-status");
+        if (!gStatus) {
+          linha.style.display = "none";
+          return;
+        }
+
+        const classeMap = {
+          "Crítico": "status-critico",
+          "Atenção": "status-atencao",
+          "Estável": "status-estavel",
+        };
+
+        const classeFiltro = classeMap[status];
+        linha.style.display = gStatus.classList.contains(classeFiltro) ? "" : "none";
+      });
+
+      // Fecha dropdown
+      document.getElementById("filtro-dropdown").classList.add("hidden");
+    }
+  </script>
+
 </body>
 
 </html>

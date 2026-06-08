@@ -671,21 +671,60 @@
         content: "";
         width: 10px;
         height: 10px;
-        border-radius: 20px;
+        border-radius: 50%;
         margin: 0 5px;
+        flex-shrink: 0;
+    }
+
+    /* Pill de status — base */
+    .g-status {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-weight: bold;
+        font-size: 0.8rem;
+        gap: 4px;
+        white-space: nowrap;
+    }
+
+    /* Estável */
+    .g-status.status-estavel {
+        background-color: #7cf2a9;
+        color: #016630;
+    }
+    .g-status.status-estavel .status {
         background-color: #016630;
     }
 
-    .g-status {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 5px 10px;
-        background-color: #7cf2a9;
-        border-radius: 20px;
-        color: #016630;
-        font-weight: bold;
-        font-size: 0.8rem;
+    /* Crítico */
+    .g-status.status-critico {
+        background-color: #ffd6d9;
+        color: #9b1c26;
+    }
+    .g-status.status-critico .status {
+        background-color: #DC3545;
+        box-shadow: 0 0 6px 2px #DC354555;
+    }
+
+    /* Atenção */
+    .g-status.status-atencao {
+        background-color: #fff3cd;
+        color: #856404;
+    }
+    .g-status.status-atencao .status {
+        background-color: #FFC107;
+        box-shadow: 0 0 6px 2px #FFC10755;
+    }
+
+    /* Desconhecido */
+    .g-status.status-desconhecido {
+        background-color: #e9ecef;
+        color: #495057;
+    }
+    .g-status.status-desconhecido .status {
+        background-color: #6c757d;
     }
 
     .mac {
@@ -742,7 +781,6 @@
     }
 
     .container-table tr:nth-child(1) {
-        position: sticky;
         top: 90px;
     }
 
@@ -973,4 +1011,88 @@
     .drop-visualizacao .icon-v .btn span {
         margin: 0 5px;
     }
+
+    /* Filtro de status */
+    .filtro-wrapper {
+        position: relative;
+    }
+
+    .filtro-dropdown {
+        position: absolute;
+        top: calc(100% + 8px);
+        right: 0;
+        background-color: var(--color-white);
+        border-radius: 16px;
+        padding: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        z-index: 100;
+        min-width: 220px;
+    }
+
+    .filtro-titulo {
+        font-size: 0.75rem;
+        font-weight: bold;
+        color: var(--color-gray);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 10px;
+    }
+
+    .filtro-opcoes {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .filtro-chip {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 14px;
+        border-radius: 20px;
+        border: 2px solid transparent;
+        font-weight: bold;
+        font-size: 0.85rem;
+        cursor: pointer;
+        background-color: #f3f3f3;
+        color: var(--color-deep-purple);
+        transition: 0.15s ease;
+        text-align: left;
+    }
+
+    .filtro-chip.active,
+    .filtro-chip:hover {
+        border-color: var(--color-purple);
+        background-color: #f3e8ff;
+        color: var(--color-purple);
+    }
+
+    .filtro-chip.chip-critico.active,
+    .filtro-chip.chip-critico:hover {
+        border-color: #DC3545;
+        background-color: #ffd6d9;
+        color: #9b1c26;
+    }
+
+    .filtro-chip.chip-atencao.active,
+    .filtro-chip.chip-atencao:hover {
+        border-color: #FFC107;
+        background-color: #fff3cd;
+        color: #856404;
+    }
+
+    .filtro-chip.chip-estavel.active,
+    .filtro-chip.chip-estavel:hover {
+        border-color: #28A745;
+        background-color: #7cf2a9;
+        color: #016630;
+    }
+
+    /* Badge de filtro ativo no botão */
+    #btn-filtro.filtro-ativo {
+        border-color: var(--color-purple);
+        background-color: #f3e8ff;
+    }
+
+
 }

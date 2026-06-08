@@ -1,7 +1,7 @@
 var database = require("../database/config")
 
 
-function cadastrarDisplay(fkEmpresa, nome, id, so, ip,zona,mac) {
+function cadastrarDisplay(fkEmpresa, nome, id, so, ip, zona, mac) {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():", fkEmpresa, nome, id, so, ip);
 
     var instrucaoSql = `
@@ -44,21 +44,22 @@ function buscarDisplays(fkEmpresa) {
 
     var instrucaoSql = `
 SELECT 
-            d.idDisplay AS id, 
-            d.enderecoIP AS ip,
-            d.mac AS mac,
-            d.nome,
-            d.sistemaOperacional AS so,
-            e.logradouro, 
-            e.numero, 
-            e.bairro, 
-            e.cidade, 
-            e.uf, 
-            e.cep, 
-            e.complemento
-        FROM display d
-        LEFT JOIN endereco e ON e.fkDisplay = d.idDisplay
-        WHERE d.fkEmpresa = ${fkEmpresa};
+    d.idDisplay AS id,
+    d.enderecoIP AS ip,
+    d.mac AS mac,
+    d.nome,
+    d.sistemaOperacional AS so,
+    e.logradouro,
+    e.numero,
+    e.bairro,
+    e.cidade,
+    e.uf,
+    e.cep,
+    e.complemento,
+    COUNT(*) OVER() AS totalDisplays
+FROM display d
+LEFT JOIN endereco e ON e.fkDisplay = d.idDisplay
+WHERE d.fkEmpresa = ${fkEmpresa};
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
