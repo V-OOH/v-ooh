@@ -25,6 +25,11 @@ VALUES
 (2, 1, 'Servidor Principal Laranja', 'SRV-002', 'Ubuntu 23.04','192.168.1.1', 'a4:63:a1:6e:67:09'),
 (2, 1, 'Servidor Principal Laranja', 'SRV-002', 'Ubuntu 23.04','192.168.1.1', 'E0-2B-E9-6D-2E-C3');
 
+INSERT INTO display 
+(fkEmpresa, fkZona, nome, numeroIdentificacao, sistemaOperacional, enderecoIP, mac)
+VALUES 
+(2, 1, 'Servidor Principal Laranja', 'SRV-002', 'Ubuntu 23.04','192.168.1.1', 'E0-2B-E9-6D-2E-C3');
+
 select * from zona;
 -- 5. Insert endereço (Depende de empresa e display)
 INSERT INTO endereco 
@@ -78,6 +83,7 @@ INSERT INTO display (idDisplay, fkEmpresa, fkZona, nome, numeroIdentificacao, si
 (7, 2, 1, 'Display Tatuapé 01', 'DSP-TAT-001', 'Ubuntu', '10.0.2.15', '7C:D1:C3:88:54:22'),
 (8, 2, 1, 'Display São Miguel 01', 'DSP-SM-001', 'Ubuntu', '10.0.2.16', 'F0:18:98:AA:11:BC');
 
+select * from display;
 
 INSERT INTO endereco (fkEmpresa, fkDisplay, cep, logradouro, numero, complemento, bairro, cidade, uf) VALUES
 (2, 3, '01310-100', 'Avenida Paulista', 1000, 'Próximo ao metrô Trianon-Masp', 'Bela Vista', 'São Paulo', 'SP'),
