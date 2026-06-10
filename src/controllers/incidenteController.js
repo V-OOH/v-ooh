@@ -18,7 +18,7 @@ async function buscarDadosS3(req, res) {
 
         const params = {
             Bucket: process.env.AWS_BUCKET_NAME,
-            Key: `client/dashIncidente_Empresa2.json`
+            Key: `client/dashIncidente_Empresa${idEmpresa}.json`
         };
 
         const arquivo = await s3.getObject(params).promise();

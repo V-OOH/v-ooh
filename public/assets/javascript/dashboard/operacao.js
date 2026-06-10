@@ -51,6 +51,16 @@ const fetchData = async () => {
   }
 };
 
+const fetchDadosOperacao = async () => {
+    const response = await fetch("/operacao/dados/operacao", { cache: "no-cache" });
+
+    if (!response.ok) {
+        throw new Error("Erro ao buscar dados de operação");
+    }
+
+    return await response.json();
+};
+
 const buscarMetaContratual = () => {
   fetch("/contratos/meta-operacao", {
     method: "POST",

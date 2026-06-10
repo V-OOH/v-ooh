@@ -15,6 +15,26 @@ async function buscarDadosS3() {
     return dados;
 }
 
+async function buscarDadosDashZonas() {
+    const idEmpresa = sessionStorage.getItem("FKEMPRESA");
+
+    const resposta = await fetch(`/dashboard/zonas/${idEmpresa}`);
+
+    if (!resposta.ok) {
+        console.error("Erro ao buscar dashZonas:", resposta.status);
+        return null;
+    }
+
+    return await resposta.json();
+}
+
+function pegarUltimoDiaDashZonas(dadosZonas) {
+    const dias = Object.keys(dadosZonas.dias || {});
+    const ultimoDia = dias[dias.length - 1];
+
+    return dadosZonas.dias[ultimoDia];
+}
+
 let graficoLinha;
 let graficoRanking;
 
@@ -29,15 +49,18 @@ function pegarUltimaLeitura(dados) {
     return dados[ultimoDia][ultimaHora];
 }
 
-function atualizarKPIs(dados) {
+function atualizarKPIs(dados, dadosZonas) {
     const ultimaLeitura = pegarUltimaLeitura(dados);
     const kpis = ultimaLeitura.kpis;
+    const ultimaLeituraZonas = dadosZonas ? pegarUltimoDiaDashZonas(dadosZonas) : null;
+    const disponibilidadeDashZonas = ultimaLeituraZonas?.kpis?.uptimeGeral;
+    const disponibilidade = disponibilidadeDashZonas ?? kpis.disponibilidade;
 
     document.getElementById("kpiDisplaysOff").innerHTML = kpis.quantidadeOffline;
     document.getElementById("totalDisplay").innerHTML = kpis.quantidadeDisplays;
     document.getElementById("kpiHorasOff").innerHTML = kpis.horasOffline;
     document.getElementById("kpiMTBF").innerHTML = kpis.mtbf.toFixed(2);
-    document.getElementById("kpiDisponibilidade").innerHTML = `${kpis.disponibilidade.toFixed(1)}%`;
+    document.getElementById("kpiDisponibilidade").innerHTML = `${Number(disponibilidade).toFixed(1)}%`;
     document.getElementById("comparacaoOffline").innerHTML = kpis.comparacaoOffline;
     document.getElementById("comparacaoHorasOff").innerHTML = kpis.comparacaoHorasOff;
 
@@ -111,7 +134,7 @@ fetch(`/incidentes/meta-disponibilidade/${idEmpresa}`)
         const legendaDisponibilidade = document.getElementById("comparacaoDisponibilidade");
 
         const diferencaMeta =
-            Number((kpis.disponibilidade - metaDisponibilidade).toFixed(1));
+            Number((disponibilidade - metaDisponibilidade).toFixed(1));
 
         if (diferencaMeta > 0) {
             legendaDisponibilidade.innerHTML = `↑ ${diferencaMeta}% acima da meta`;
@@ -463,17 +486,15 @@ function atualizarHeatmap(dados) {
 window.onload = async function () {
     await criarGraficoLinha();
     await criarGraficoRanking();
-    
 
     const dados = await buscarDadosS3();
+    const dadosZonas = await buscarDadosDashZonas();
 
-    
     atualizarGraficoLinha(dados);
     atualizarGraficoRanking(dados);
-    atualizarKPIs(dados);
+    atualizarKPIs(dados, dadosZonas);
     atualizarHeatmap(dados);
     buscarRecomendacaoIA();
-
 };
 
 async function buscarRecomendacaoIA() {

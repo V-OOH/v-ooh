@@ -15,6 +15,16 @@ const fetchZonas = async () => {
     }
 };
 
+const fetchDadosOperacao = async () => {
+    const response = await fetch("/operacao/dados/operacao", { cache: "no-cache" });
+
+    if (!response.ok) {
+        throw new Error(`Erro ao buscar dados de operação: ${response.status} ${response.statusText}`);
+    }
+
+    return await response.json();
+};
+
 const getNomeZona = (idOuTexto) => {
     if (!idOuTexto) return "N/A";
     if (mapaZonas[idOuTexto]) return mapaZonas[idOuTexto];
@@ -30,21 +40,27 @@ const getNomeZona = (idOuTexto) => {
 const AlertaController = {
 
     async init() {
-        try {
-            const dados = await AlertaService.buscarDados();
-            console.log("Dados Recebidos S3:", dados);
-            _dadosCompletos = dados;
+    try {
+        const [dados, dadosOperacao] = await Promise.all([
+            AlertaService.buscarDados(),
+            fetchDadosOperacao()
+        ]);
 
-            this.atualizarKPIs(dados.kpis);
-            this.atualizarJira(dados.jira);
-            this.renderizarBotoesZona(dados.zonas);
-            AlertaApex.renderizarTodos(dados);
+        console.log("Dados Recebidos S3:", dados);
+        console.log("Dados Operação:", dadosOperacao);
 
-        } catch (erro) {
-            console.error("Falha ao inicializar dashboard:", erro);
-            this.exibirErro(erro.message);
-        }
-    },
+        _dadosCompletos = dados;
+
+        this.atualizarKPIs(dados.kpis);
+        this.atualizarJira(dadosOperacao);
+        this.renderizarBotoesZona(dados.zonas);
+        AlertaApex.renderizarTodos(dados);
+
+    } catch (erro) {
+        console.error("Falha ao inicializar dashboard:", erro);
+        this.exibirErro(erro.message);
+    }
+},
 
     atualizarKPIs(kpis) {
         if (!kpis) return;
@@ -78,24 +94,33 @@ const AlertaController = {
         }
     },
 
-    atualizarJira(jira) {
-        if (!jira) return;
+    atualizarJira(dadosOperacao) {
+    const periodo = dadosOperacao?.periodos?.duas_semanas;
+    const mttr = periodo?.mttr;
+    const jira = dadosOperacao?.jira;
 
-        const statValue = document.querySelector(".kpi-card:nth-child(3) .stat-value");
-        if (statValue) statValue.textContent = `${Math.round(jira.mttr_medio)} min`;
+    if (!mttr) return;
 
-        const statValue2 = document.querySelector(".stat-value-2");
-        if (statValue2) statValue2.textContent = `MTTR médio calculado`;
+    const mttrMedio = mttr.medio_min ?? 0;
+    const melhorMttr = mttr.melhor_zona?.mttr_min ?? jira?.mttr?.melhor_min ?? 0;
+    const piorMttr = mttr.pior_zona?.mttr_min ?? jira?.mttr?.pior_min ?? 0;
+    const abertos = jira?.abertos ?? periodo?.incidentes?.abertos ?? 0;
 
-        const minMax = document.querySelectorAll(".min-max-info strong");
-        if (minMax.length >= 2) {
-            minMax[0].textContent = `${Math.round(jira.melhor_mttr)} min`;
-            minMax[1].textContent = `${Math.round(jira.pior_mttr)} min`;
-        }
+    const statValue = document.querySelector(".kpi-card:nth-child(3) .stat-value");
+    if (statValue) statValue.textContent = `${Math.round(mttrMedio)} min`;
 
-        const footerSpan = document.querySelector(".kpi-card:nth-child(3) .card-footer span:last-child");
-        if (footerSpan) footerSpan.textContent = `${jira.abertos} alertas(s) em aberto`;
-    },
+    const statValue2 = document.querySelector(".stat-value-2");
+    if (statValue2) statValue2.textContent = `MTTR médio calculado`;
+
+    const minMax = document.querySelectorAll(".min-max-info strong");
+    if (minMax.length >= 2) {
+        minMax[0].textContent = `${Math.round(melhorMttr)} min`;
+        minMax[1].textContent = `${Math.round(piorMttr)} min`;
+    }
+
+    const footerSpan = document.querySelector(".kpi-card:nth-child(3) .card-footer span:last-child");
+    if (footerSpan) footerSpan.textContent = `${abertos} alertas(s) em aberto`;
+},
 
     renderizarBotoesZona(zonas) {
         if (!zonas) return;
