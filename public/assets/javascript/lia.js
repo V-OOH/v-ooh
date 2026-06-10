@@ -150,7 +150,7 @@ async function enviarMensagem() {
   tocarAudio();
 
   try {
-    const response = await fetch("/lia/perguntar", {
+    const response = await fetch("/lia/perguntar-lia", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
