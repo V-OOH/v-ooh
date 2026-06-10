@@ -33,19 +33,18 @@ async function request(mensagem) {
   }
 }
 
-
 async function recomendacaoIncidente(ultimaLeitura) {
-    const chatAI = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-    const model = process.env.MODEL;
-    
-    const kpis = ultimaLeitura.kpis;
-    const displaysOffline = ultimaLeitura.displaysOffline || [];
+  const chatAI = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+  const model = process.env.MODEL;
 
-    if (displaysOffline.length === 0) {
-        return "Tudo certo! Nenhum display offline no momento.";
-    }
+  const kpis = ultimaLeitura.kpis;
+  const displaysOffline = ultimaLeitura.displaysOffline || [];
 
-    const comportamento = `
+  if (displaysOffline.length === 0) {
+    return "Tudo certo! Nenhum display offline no momento.";
+  }
+
+  const comportamento = `
 Você é a LIA, assistente inteligente da dashboard de monitoramento da VOOH.
 
 A VOOH monitora displays DOOH espalhados em diversas localidades e sua função é analisar os dados de incidentes obtidos a partir do JSON de monitoramento gerado pelo sistema.
@@ -73,15 +72,15 @@ Regras:
 - Quando não houver incidentes, informe que o ambiente está operando normalmente.
 `;
 
-const resumo = { 
-        displaysOffline: displaysOffline.map(displays => ({
-        endereco: displays.logradouro,
-        bairro: displays.bairro,
-        motivo: displays.motivoOffline
-    }))
-};
+  const resumo = {
+    displaysOffline: displaysOffline.map((displays) => ({
+      endereco: displays.logradouro,
+      bairro: displays.bairro,
+      motivo: displays.motivoOffline,
+    })),
+  };
 
-    const prompt = `
+  const prompt = `
 Dados atuais do monitoramento:
 
 Data: ${ultimaLeitura.Data}
@@ -96,22 +95,19 @@ ${JSON.stringify(resumo, null, 2)}
 Gere uma recomendação para o gestor.
 `;
 
-    try {
-        const ai = await chatAI.models.generateContent({
-            model: model,
-            contents: comportamento + "\n\n" + prompt
-        });
+  try {
+    const ai = await chatAI.models.generateContent({
+      model: model,
+      contents: comportamento + "\n\n" + prompt,
+    });
 
-        console.log("Tokens usados na recomendação:", ai.usageMetadata);
+    console.log("Tokens usados na recomendação:", ai.usageMetadata);
 
-        return ai.text;
-
-    } catch (error) {
-        console.error("Erro ao gerar recomendação:", error);
-        throw error;
-    }
+    return ai.text;
+  } catch (error) {
+    console.error("Erro ao gerar recomendação:", error);
+    throw error;
+  }
 }
 
-
-
-module.exports = {request,recomendacaoIncidente};
+module.exports = { request, recomendacaoIncidente };

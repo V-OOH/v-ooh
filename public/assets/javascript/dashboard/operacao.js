@@ -510,7 +510,25 @@ const renderTudo = (periodo, nomePeriodo, dados) => {
 
     let dataAtt = dadosAtualizacao[0];
 
-    let dataObjeto = new Date(dataAtt);
+    let dataSeparada = dataAtt.split("/");
+
+    let diaData = Number(dataSeparada[0]);
+
+    let mesData = Number(dataSeparada[1]) - 1;
+
+    let anoData = Number(dataSeparada[2]);
+
+    let horaAtt = dadosAtualizacao[1];
+
+    let horaSeparada = horaAtt.split(":");
+
+    let hora = Number(horaSeparada[0]);
+
+    let minuto = Number(horaSeparada[1]);
+
+    let segundo = Number(horaSeparada[2]);
+
+    let dataObjeto = new Date(anoData, mesData, diaData, hora, minuto, segundo);
 
     let dia = dataObjeto.toLocaleString("pt-BR", {
       weekday: "long",
@@ -518,8 +536,6 @@ const renderTudo = (periodo, nomePeriodo, dados) => {
       month: "long",
       year: "numeric",
     });
-
-    let horaAtt = dadosAtualizacao[1];
 
     let formatado = `${dia} às ${horaAtt}`;
 
