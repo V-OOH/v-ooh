@@ -484,7 +484,7 @@
     .btns {
         display: flex;
         width: 50%;
-        justify-content: space-between;
+        justify-content: flex-end;
     }
 
     .btns button {
