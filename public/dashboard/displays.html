@@ -511,48 +511,6 @@
       </div>
     </dialog>
 
-    <!-- <dialog id="dialogComp">
-      <div class="info-dialog">
-        <div class="info-tela">
-          <svg width="35" height="35" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g>
-              <path
-                d="M2.5 17.5L0 17.5C0 17.5 0 16.25 0 16.25C0 13.9202 1.59346 11.9625 3.75 11.4075M6.25 7.28662C4.79351 6.77187 3.75 5.38278 3.75 3.75001C3.75 2.11723 4.79351 0.728182 6.25 0.213394M25 17.5L27.5 17.5C27.5 17.5 27.5 16.25 27.5 16.25C27.5 13.9202 25.9065 11.9625 23.75 11.4075M21.25 0.213394C22.7065 0.728182 23.75 2.11723 23.75 3.75001C23.75 5.38278 22.7065 6.77187 21.25 7.28662M16.25 11.25C19.0114 11.25 21.25 13.4886 21.25 16.25C21.25 16.25 21.25 17.5 21.25 17.5L6.25 17.5C6.25 17.5 6.25 16.25 6.25 16.25C6.25 13.4886 8.48857 11.25 11.25 11.25C11.25 11.25 16.25 11.25 16.25 11.25ZM17.5 3.75C17.5 5.82106 15.8211 7.5 13.75 7.5C11.6789 7.5 10 5.82106 10 3.75C10 1.67894 11.6789 0 13.75 0C15.8211 0 17.5 1.67894 17.5 3.75Z"
-                fill="none" stroke-width="2" stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round"
-                transform="translate(1.25 6.25)" />
-            </g>
-          </svg>
-          <p>Cadastrar Componentes</p>
-        </div>
-      </div>
-
-      <div class="input-dialog">
-        <div class="checkbox-container">
-          <label class="checkbox-item">
-            <input type="checkbox" id="input_cpu" />
-            <i>Processador (CPU)</i>
-          </label>
-          <label class="checkbox-item">
-            <input type="checkbox" id="input_memoriaRam" />
-            <i>Memória RAM</i>
-          </label>
-          <label class="checkbox-item">
-            <input type="checkbox" id="input_armazenamento" />
-            <i>Armazenamento (HDD/SSD)</i>
-          </label>
-        </div>
-      </div>
-
-      <div class="buttons">
-        <button class="button-white" onclick="document.getElementById('dialogComp').close()">
-          Cancelar
-        </button>
-        <button class="button-purple" onclick="cadastrarComp()">
-          Cadastrar
-        </button>
-      </div>
-    </dialog> -->
-
     <dialog id="dialogEnd">
       <div class="info-dialog">
         <div class="info-tela">
@@ -1174,13 +1132,6 @@
 </html>
 
 <script>
-  // function verificar(){
-  //     if(sessionStorage.TIPO_USUARIO != 'Gestor'){
-  //         alert("Seu usuário não tem permissão para acessar essas página!")
-  //         window.location = "./dashboard.html";
-  //     }
-  // }
-
   function validarModal() {
     if (sessionStorage.TIPO_USUARIO != "Gestor") {
       alert("Seu usuário não tem permissão para acessar essa página!");
@@ -1225,9 +1176,6 @@
           console.log(resposta);
           if (resposta.ok) {
             resposta.json().then((json) => {
-              console.log(json);
-
-              console.log(JSON.stringify(json));
 
               sessionStorage.ID_SERVIDOR = json.insertId;
 
@@ -1267,15 +1215,10 @@
       }),
     })
       .then((resposta) => {
-        console.log("ESTOU NO THEN DO entrar()!");
-        console.log(resposta);
         if (resposta.ok) {
-          console.log(resposta);
 
           resposta.json().then((json) => {
-            console.log(json);
 
-            console.log(JSON.stringify(json));
             setTimeout(function () {
               document.getElementById("dialogComp").close();
               document.getElementById("dialogEnd").showModal();
@@ -1338,11 +1281,8 @@
         }),
       })
         .then((resposta) => {
-          console.log("ESTOU NO THEN DO cadastrarFuncionario()!");
-          console.log(resposta);
           if (resposta.ok) {
             resposta.json().then((json) => {
-              console.log(json);
 
               console.log(JSON.stringify(json));
 
@@ -1423,7 +1363,6 @@
       }),
     })
       .then((resposta) => {
-        console.log("ESTOU NO THEN DO entrar()!");
 
         if (resposta.ok) {
           resposta.json().then((json) => {
@@ -1450,5 +1389,62 @@
       .catch(function (erro) {
         console.log(erro);
       });
+  }
+
+
+  let searchInput = document.getElementById('input_pesquisa');
+  let searchButton = document.getElementById('search');
+
+  async function realizarBusca() {
+    let sentence = searchInput.value;
+
+    if (sentence.trim() === "") {
+      carregarTodosDisplays();
+      return;
+    }
+
+    if (sentence.length < 3) return;
+
+    let dados = await busca(sentence);
+
+    if (dados && !dados.mensagem) {
+      renderizarTabela(dados);
+    } else {
+      renderizarTabela([]);
+    }
+  }
+
+  searchInput.addEventListener("input", realizarBusca);
+  searchButton.addEventListener("click", realizarBusca);
+
+  async function busca(sentenca) {
+    sentenca = sentenca.toLowerCase().trim();
+
+    try {
+      let response = await fetch("/display/buscar-display", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          sentenca: sentenca,
+          fkEmpresa: sessionStorage.FKEMPRESA
+        })
+      });
+
+      if (response.status === 404) {
+        return [];
+      }
+
+      if (!response.ok) {
+        throw new Error(`Erro na requisição: ${response.status}`);
+      }
+
+      return await response.json();
+
+    } catch (error) {
+      console.error("Erro ao buscar dados:", error);
+      return [];
+    }
   }
 </script>
