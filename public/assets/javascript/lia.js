@@ -3,6 +3,12 @@ const chatBody = document.querySelector(".chat-body");
 const iconChat = document.getElementById("chat-icon");
 const baloons = document.querySelector(".baloon");
 
+const getLanguage = () => {
+  let htmlTag = document.querySelector("html");
+
+  return htmlTag.getAttribute("lang");
+};
+
 window.addEventListener("scroll", () => {
   const currentScroll = window.scrollY;
   const baloes = document.querySelectorAll(".baloon .b");
@@ -51,7 +57,7 @@ const msgErroSpan = divError.querySelector("span");
 function obterDataHora() {
   const data = new Date();
   let dia = data.getDate();
-  let mesExtenso = data.toLocaleDateString("pt-BR", { month: "long" });
+  let mesExtenso = data.toLocaleDateString(getLanguage(), { month: "long" });
   let ano = data.getFullYear();
   let hora = data.getHours();
   let minutos = data.getMinutes();
@@ -188,7 +194,12 @@ btnSend.onclick = async (e) => {
 document.addEventListener("DOMContentLoaded", () => {
   setTimeout(() => {
     tocarAudio();
-    lia("Olá!, Como posso te ajudar?");
+
+    if (getLanguage() == "en-us") {
+      lia("Hi!, How can I help you today?");
+    } else {
+      lia("Olá!, Como posso te ajudar hoje?");
+    }
   }, 2000);
 });
 
