@@ -484,12 +484,19 @@
     .btns {
         display: flex;
         width: 50%;
+        justify-content: space-between;
     }
 
     .btns button {
-        margin: 0 10px 0 0;
+        margin: 5px;
         width: max-content;
-        padding: 15px;
+        padding: 15px 20px;
+    }
+
+    .btns button span {
+        width: 100%;
+        display: flex;
+        flex-wrap: nowrap;
     }
 
     dialog {
@@ -578,15 +585,15 @@
         margin: 0 5px;
     }
 
-    .button-white:hover {
+    /*.button-white:hover {
         background-color: var(--color-purple);
         color: var(--color-white);
-    }
+    }*/
 
-    .button-white:hover > svg path {
+    /*.button-white:hover > svg path {
         fill: var(--color-white);
         stroke: var(--color-white);
-    }
+    }*/
 
     .button-purple {
         height: 7vh;
@@ -704,8 +711,8 @@
         color: #9b1c26;
     }
     .g-status.status-critico .status {
-        background-color: #DC3545;
-        box-shadow: 0 0 6px 2px #DC354555;
+        background-color: #dc3545;
+        box-shadow: 0 0 6px 2px #dc354555;
     }
 
     /* Atenção */
@@ -714,8 +721,8 @@
         color: #856404;
     }
     .g-status.status-atencao .status {
-        background-color: #FFC107;
-        box-shadow: 0 0 6px 2px #FFC10755;
+        background-color: #ffc107;
+        box-shadow: 0 0 6px 2px #ffc10755;
     }
 
     /* Desconhecido */
@@ -748,6 +755,7 @@
     .button-white span {
         display: flex;
         flex-wrap: nowrap;
+        width: max-content;
     }
 
     .container-table th {
@@ -1041,13 +1049,13 @@
     .filtro-opcoes {
         display: flex;
         flex-direction: column;
-        gap: 8px;
+        align-items: center;
+        justify-content: space-around;
     }
 
     .filtro-chip {
         display: flex;
         align-items: center;
-        gap: 8px;
         padding: 8px 14px;
         border-radius: 20px;
         border: 2px solid transparent;
@@ -1056,8 +1064,9 @@
         cursor: pointer;
         background-color: #f3f3f3;
         color: var(--color-deep-purple);
-        transition: 0.15s ease;
+        transition: 180ms ease-in-out;
         text-align: left;
+        width: 100% !important;
     }
 
     .filtro-chip.active,
@@ -1065,25 +1074,26 @@
         border-color: var(--color-purple);
         background-color: #f3e8ff;
         color: var(--color-purple);
+        width: 100%;
     }
 
     .filtro-chip.chip-critico.active,
     .filtro-chip.chip-critico:hover {
-        border-color: #DC3545;
+        border-color: #dc3545;
         background-color: #ffd6d9;
         color: #9b1c26;
     }
 
     .filtro-chip.chip-atencao.active,
     .filtro-chip.chip-atencao:hover {
-        border-color: #FFC107;
+        border-color: #ffc107;
         background-color: #fff3cd;
         color: #856404;
     }
 
     .filtro-chip.chip-estavel.active,
     .filtro-chip.chip-estavel:hover {
-        border-color: #28A745;
+        border-color: #28a745;
         background-color: #7cf2a9;
         color: #016630;
     }
@@ -1093,6 +1103,4 @@
         border-color: var(--color-purple);
         background-color: #f3e8ff;
     }
-
-
 }

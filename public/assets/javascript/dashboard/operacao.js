@@ -22,6 +22,7 @@ const fetchZonas = async () => {
       });
     }
   } catch (error) {
+    notification("Erro inesperado", "Erro ao carregar nomes das zonas", 25000);
     console.error("Erro ao carregar nomes das zonas:", error);
   }
 };
@@ -43,22 +44,29 @@ const fetchData = async () => {
 
     const response = await fetch("/operacao/dados/operacao");
 
-    if (!response.ok) throw new Error("Erro ao buscar JSON");
+    if (!response.ok) {
+      notification("Erro inesperado", "Erro ao buscar JSON", 25000);
+      throw new Error("Erro ao buscar JSON");
+    }
 
     return await response.json();
   } catch (error) {
+    notification("Erro inesperado", "Erro ao buscar dados", 25000);
     console.error("Erro ao buscar dados:", error);
   }
 };
 
 const fetchDadosOperacao = async () => {
-    const response = await fetch("/operacao/dados/operacao", { cache: "no-cache" });
+  const response = await fetch("/operacao/dados/operacao", {
+    cache: "no-cache",
+  });
 
-    if (!response.ok) {
-        throw new Error("Erro ao buscar dados de operação");
-    }
+  if (!response.ok) {
+    notification("Erro inesperado", "Erro ao buscar dados de operação", 25000);
+    throw new Error("Erro ao buscar dados de operação");
+  }
 
-    return await response.json();
+  return await response.json();
 };
 
 const buscarMetaContratual = () => {
